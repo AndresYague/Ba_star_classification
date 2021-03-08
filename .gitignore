@@ -1,0 +1,9 @@
+# Files
+*.txt
+*.pdf
+label_dict*
+
+# Directories
+__pycache__
+best_so_far*
+Ba_star_classification_data
