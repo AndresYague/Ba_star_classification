@@ -376,10 +376,10 @@ def main():
         fwrite.write(header)
 
     # Process fruity
-    #process_fruity(fruity_dir, processed_models, names, zero = 0.2)
+    process_fruity(fruity_dir, processed_models, names, zero = 0.2)
 
     # Process monash
-    process_monash(monash_dir, processed_models, names, zero = 0.2)
+    #process_monash(monash_dir, processed_models, names, zero = 0.2)
 
     # Check that all models are different enough
     print("Eliminating same models...")

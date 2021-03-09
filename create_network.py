@@ -1,7 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import struct, os, sys
-from nn_lib import *
+
+from silence_tensorflow import silence_tensorflow
+silence_tensorflow()
+import tensorflow as tf
 
 def give_inputs_labels(all_models):
     """
@@ -28,8 +31,67 @@ def give_inputs_labels(all_models):
 
     return np.array(inputs), np.array(labels), label_dict
 
+def create_model(train_inputs, train_labels, label_dict, layers = [], mod_dir = None):
+    """
+    Create or load the model, depending on mod_dir
+    """
+
+    # Check if this model exists
+    model_exists = False
+    if mod_dir is not None:
+        model_exists = os.path.isdir(mod_dir)
+
+    # Just load model
+    if model_exists:
+
+        model = tf.keras.models.load_model(mod_dir)
+
+        # Print architecture
+        model.summary()
+
+    # Or create and train it
+    else:
+
+        # Numbers for the model
+        nn = len(train_inputs[0])
+        outpt = len(label_dict)
+
+        # Create the network
+        model = tf.keras.Sequential()
+
+        # Input layer
+        model.add(tf.keras.layers.Dense(layers[0], input_shape = (nn, ), activation = "relu"))
+
+        # Hidden layers
+        for lay in layers[1:]:
+            model.add(tf.keras.layers.Dropout(0.1))
+            model.add(tf.keras.layers.Dense(lay, activation = "relu"))
+
+        # output layer
+        model.add(tf.keras.layers.Dense(outpt, activation = "sigmoid"))
+
+        # Compile
+        model.compile(optimizer = "adam",
+                metrics = ["sparse_categorical_accuracy"],
+                loss = tf.keras.losses.SparseCategoricalCrossentropy())
+
+        # Train
+        model.fit(train_inputs, train_labels, epochs = 10000, validation_split = 0.3)
+
+        # Save model
+        if mod_dir is not None:
+            model.save(mod_dir)
+
+    return model
+
 def main():
     """Create and train neural network"""
+
+    # Create or load model
+    if len(sys.argv) > 1:
+        mod_dir = sys.argv[1]
+    else:
+        mod_dir = None
 
     # Read the data
     shuffled_models = "shuffled_models.txt"
@@ -41,93 +103,67 @@ def main():
 
     # Now divide in training, CV and test
     tot_num = len(all_models)
-    train_num = int(tot_num * 0.6)
-    cv_num = int(tot_num * 0.2)
-    test_num = tot_num - train_num - cv_num
+    train_num = int(tot_num * 0.8)
+    test_num = tot_num - train_num
 
     # Report back numbers
     print("Total models: {}".format(tot_num))
     print("Train models: {}".format(train_num))
-    print("Cross-validation models: {}".format(cv_num))
     print("Test models: {}".format(test_num))
 
     # Transform models into input and labels
     inputs, labels, label_dict = give_inputs_labels(all_models)
 
+    # Save label dictionary
+    if mod_dir is not None:
+        name_dict_file = "label_dict_" + sys.argv[1] + ".txt"
+        with open(name_dict_file, "w") as fwrite:
+            for key in label_dict:
+                fwrite.write(f"{key} {label_dict[key]}\n")
+
     # Separate
     ii0, iif = 0, train_num
-    train_inptus, train_labels = inputs[ii0:iif], labels[ii0:iif]
-
-    ii0, iif = iif, iif + cv_num
-    cv_inputs, cv_labels = inputs[ii0:iif], labels[ii0:iif]
+    train_inputs, train_labels = inputs[ii0:iif], labels[ii0:iif]
 
     ii0, iif = iif, iif + test_num
     test_inputs, test_labels = inputs[ii0:iif], labels[ii0:iif]
 
-    # Create the network
-    nn = len(inputs[0])
+    # Hidden layers for model
     outpt = len(label_dict)
-    hidden = [outpt, outpt, outpt]
-    #hidden = [10, 10, 100]
-    models_nn = NetworkObject(inpt = nn, hidden = hidden, outpt = outpt,
-                                lbda = 1e-5)
+    layers = [100, 100, 100, 100]
 
-    cost = models_nn.train(train_inptus, train_labels, batch_siz = 10,
-                           cv_in = cv_inputs, cv_lab = cv_labels,
-                           alpha = 5e-1, verbose = True,
-                           tol = 1e-8, low_cost = 0.3)
-    #cost = models_nn.train(train_inptus, train_labels, batch_siz = 10,
-                           #alpha = 5e-1, verbose = True,
-                           #tol = 1e-8, low_cost = 0.3)
+    # Create model
+    model = create_model(train_inputs, train_labels, label_dict, layers = layers, mod_dir = mod_dir)
 
-    # Trained, save thetas
-    models_nn.save_network(cost)
+    # Check
+    test_loss, test_acc = model.evaluate(test_inputs, test_labels, verbose = 2)
 
-    # Let user know that the network is trained
-    print("Trained, last cost is {:.4f}".format(cost))
+    # Predict
+    predictions = model.predict(test_inputs)
 
-    # Save the dictionary label
-    name_dict_file = "label_dict_cost_{:.4f}".format(cost)
-    with open(name_dict_file, "w") as fwrite:
-        for key in label_dict:
-            fwrite.write("{} {}\n".format(key, label_dict[key]))
-
-    # Check network in cv set:
-    print("Checking accuracy with cross validation set")
+    # Count correct cases
     correct_cases = 0; confident_cases = 0; confident_correct = 0
-    lab_net, conf = models_nn.propagate_indx_conf(cv_inputs)
-    for ii in range(len(cv_labels)):
-        if lab_net[ii] == cv_labels[ii]:
+    for ii in range(len(predictions)):
+        conf = max(predictions[ii])/sum(predictions[ii])
+        if test_labels[ii] == np.argmax(predictions[ii]):
             correct_cases += 1
-            if conf[ii] > 0.75:
+            if conf > 0.75:
                 confident_correct += 1
 
-        if conf[ii] >= 0.75:
+        if conf > 0.75:
             confident_cases += 1
 
-    acc = correct_cases/len(cv_labels) * 100
-    print("Correct cases = {:.2f}%".format(acc))
-
-    acc = confident_correct/confident_cases * 100
-    print("Confidently correct cases = {:.2f}%".format(acc))
-
-    # Check network in test set:
-    print("Checking accuracy with test set")
-    correct_cases = 0; confident_cases = 0; confident_correct = 0
-    lab_net, conf = models_nn.propagate_indx_conf(test_inputs)
-    for ii in range(len(test_labels)):
-        if lab_net[ii] == test_labels[ii]:
-            correct_cases += 1
-            if conf[ii] > 0.75:
-                confident_correct += 1
-
-        if conf[ii] >= 0.75:
-            confident_cases += 1
-
+    print()
     acc = correct_cases/len(test_labels) * 100
     print("Correct cases = {:.2f}%".format(acc))
 
-    acc = confident_correct/confident_cases * 100
+    prop = confident_cases/len(test_labels) * 100
+    print("Proportion of confident cases = {:.2f}%".format(prop))
+
+    try:
+        acc = confident_correct/confident_cases * 100
+    except ZeroDivisionError:
+        acc = 0
     print("Confidently correct cases = {:.2f}%".format(acc))
 
 if __name__ == "__main__":

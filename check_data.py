@@ -1,5 +1,9 @@
-from nn_lib import *
 import numpy as np
+import sys
+
+from silence_tensorflow import silence_tensorflow
+silence_tensorflow()
+import tensorflow as tf
 
 def load_label_dict(label_dict_file):
     """
@@ -14,12 +18,12 @@ def load_label_dict(label_dict_file):
 
     return label_dict
 
-def apply_errors(arr, arr_err):
+def apply_errors(arr, arr_err, nn):
     """
     Apply random errors drawn in a MC fashion
     """
 
-    new_arr = arr + np.random.random(len(arr)) * 2 * arr_err - arr_err
+    new_arr = arr + np.random.random((nn, len(arr))) * 2 * arr_err - arr_err
 
     return new_arr
 
@@ -102,15 +106,19 @@ def do_mc_this_star(network, data, errors, name, label_dict, nn):
     Calculate the MC runs for this star to the network
     """
 
+    # Apply errors
+    use_data = apply_errors(data, errors, nn)
+
+    # Propagate
+    predictions = network.predict(use_data)
+
+    # Store data
     all_labels = []
-    for ii in range(nn):
-        # Apply errors
-        use_data = apply_errors(data, errors)
+    for prediction in predictions:
+        index = np.argmax(prediction)
+        conf = max(prediction)/(sum(prediction) + 1e-20)
 
-        # Propagate
-        out, conf = network.propagate_indx_conf(use_data)
-
-        all_labels.append((label_dict[out[0]], conf[0]))
+        all_labels.append((label_dict[index], conf))
 
     # Now make a dictionary with all the labels and their weight
     norm_labels = {}; norm_fact = 0
@@ -143,12 +151,16 @@ def main():
     Load network and pass the Ba stars data
     """
 
+    if len(sys.argv) < 3:
+        print(f"Use: python3 {sys.argv[0]} <network> <label_dict>")
+        return 1
+
     # Load network
-    filename = "saved_nn_9_93_93_93_93_cost_0.010.monash.npy"
-    network = NetworkObject(fileName = filename)
+    filename = sys.argv[1]
+    network = tf.keras.models.load_model(filename)
 
     # Load label dictionary
-    label_dict_file = "label_dict_cost_0.0199_monash"
+    label_dict_file = sys.argv[2]
     label_dict = load_label_dict(label_dict_file)
 
     # Now load Ba stars data

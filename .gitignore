@@ -7,3 +7,4 @@ label_dict*
 __pycache__
 best_so_far*
 Ba_star_classification_data
+tensorflow_*
