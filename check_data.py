@@ -112,17 +112,18 @@ def do_mc_this_star(network, data, errors, name, label_dict, nn):
     # Propagate
     predictions = network.predict(use_data)
 
-    # Store data
-    all_labels = []
-    for prediction in predictions:
-        index = np.argmax(prediction)
-        conf = max(prediction)/(sum(prediction) + 1e-20)
-
-        all_labels.append((label_dict[index], conf))
+    # Get vectors and confidences
+    vect_indx = np.argmax(predictions, axis = 1)
+    conf_indx = np.max(predictions, axis = 1)/(np.sum(predictions, axis = 1) + 1e-20)
 
     # Now make a dictionary with all the labels and their weight
     norm_labels = {}; norm_fact = 0
-    for lab, conf in all_labels:
+    for index, conf in zip(vect_indx, conf_indx):
+
+        # Retrieve the label
+        lab = label_dict[index]
+
+        # Add the weight
         if lab in norm_labels:
             norm_labels[lab] += conf
         else:
