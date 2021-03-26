@@ -1,4 +1,4 @@
-import os, glob, random
+import os, glob
 import numpy as np
 
 def apply_dilution(elems, kk, names, zero = 0):
@@ -246,27 +246,6 @@ def eliminate_same_models(processed_models):
 
     os.rename("temp.txt", processed_models)
 
-def shuffle_models(processed_models, shuffled_models):
-    """
-    Shuffle the models
-    """
-
-    # Load models to memory
-    all_models = []
-    with open(processed_models, "r") as fread:
-        header = fread.readline()
-        for line in fread:
-            all_models.append(line)
-
-    # Now shuffle them
-    random.shuffle(all_models)
-
-    # And write them
-    with open(shuffled_models, "w") as fwrite:
-        fwrite.write(header)
-        for line in all_models:
-            fwrite.write(line)
-
 def process_data(data_file, processed_data, names):
     """
     Get the information out for all the Ba stars
@@ -366,31 +345,35 @@ def main():
     data_file = os.path.join(dir_data, data_file)
 
     # Names for output files
-    processed_models = "processed_models.txt"
-    shuffled_models = "shuffled_models.txt"
+    processed_models_fruity = "processed_models_fruity.txt"
+    processed_models_monash = "processed_models_monash.txt"
     processed_data = "processed_data.txt"
 
     # Write the header
     header = "# " + " ".join(names) + " Label " + "\n"
-    with open(processed_models, "w") as fwrite:
-        fwrite.write(header)
 
     # Process fruity
-    process_fruity(fruity_dir, processed_models, names, zero = 0.2)
+    print("Processing fruity...")
+    with open(processed_models_fruity, "w") as fwrite:
+        fwrite.write(header)
+    process_fruity(fruity_dir, processed_models_fruity, names, zero = 0.2)
 
     # Process monash
-    #process_monash(monash_dir, processed_models, names, zero = 0.2)
+    print("Processing monash...")
+    with open(processed_models_monash, "w") as fwrite:
+        fwrite.write(header)
+    process_monash(monash_dir, processed_models_monash, names, zero = 0.2)
 
     # Check that all models are different enough
     print("Eliminating same models...")
-    eliminate_same_models(processed_models)
-
-    # Now shuffle the models
-    print("Shuffling models")
-    shuffle_models(processed_models, shuffled_models)
+    eliminate_same_models(processed_models_fruity)
+    eliminate_same_models(processed_models_monash)
 
     # Process data
+    print("Processing observations...")
     process_data(data_file, processed_data, names)
+
+    print("Done!")
 
 if __name__ == "__main__":
     main()

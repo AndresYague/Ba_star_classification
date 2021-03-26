@@ -1,5 +1,5 @@
 import numpy as np
-import sys
+import sys, os
 
 from silence_tensorflow import silence_tensorflow
 silence_tensorflow()
@@ -49,21 +49,21 @@ def get_distance(model, data, err):
     x0 = data - err
     x1 = data + err
 
-    # Simple average of squared distances
-    #dist = np.sqrt(sum((model[1:] - data[1:])**2)) / (len(data) - 1)
-
     # Weighted by the inverse of the size of the uncertainty
-    sumInverses = sum(1/(x1[1:] - x0[1:]))
-    dist = sum((model[1:] - data[1:])**2 / (x1[1:] - x0[1:])) / sumInverses
+    #sumInverses = np.sum(1/(x1[1:] - x0[1:]))
+    #dist = np.sum((model[1:] - data[1:])**2 / (x1[1:] - x0[1:])) / sumInverses
+
+    # Chi square
+    dist = np.average(np.abs((model[1:] - data[1:]) ** 2 / data[1:]))
 
     return dist
 
-def calculate_dilution(data, err, label):
+def calculate_dilution(data, err, label, processed_models):
     """
     Calculate best dilution for this label and data
     """
 
-    with open("processed_models.txt", "r") as fread:
+    with open(processed_models, "r") as fread:
         # Read header
         fread.readline()
 
@@ -101,7 +101,8 @@ def calculate_dilution(data, err, label):
 
     return minDil, minDist
 
-def do_mc_this_star(network, data, errors, name, label_dict, nn):
+def do_mc_this_star(network, data, errors, name, label_dict, nn,
+                    processed_models, maxSize = None):
     """
     Calculate the MC runs for this star to the network
     """
@@ -109,12 +110,49 @@ def do_mc_this_star(network, data, errors, name, label_dict, nn):
     # Apply errors
     use_data = apply_errors(data, errors, nn)
 
-    # Propagate
-    predictions = network.predict(use_data)
+    # In case size is bearable
+    if maxSize is None or maxSize > nn:
+        # Propagate
+        predictions = network.predict(use_data)
 
-    # Get vectors and confidences
-    vect_indx = np.argmax(predictions, axis = 1)
-    conf_indx = np.max(predictions, axis = 1)/(np.sum(predictions, axis = 1) + 1e-20)
+        # Get vectors and confidences
+        vect_indx = np.argmax(predictions, axis = 1)
+        conf_indx = np.max(predictions, axis = 1)
+        conf_indx /= np.sum(predictions, axis = 1) + 1e-20
+
+    # Otherwise
+    else:
+        # Make sure it is integer
+        maxSize = int(maxSize)
+
+        # Initialize
+        vect_indx = np.array([])
+        conf_indx = np.array([])
+
+        # Divide data
+        ii = 0
+        while True:
+
+            # Get init and end indices
+            init = ii * maxSize
+            end = min(init + maxSize, nn)
+
+            # Predict
+            predictions = network.predict(use_data[init:end])
+
+            # Save
+            vect_indx = np.append(vect_indx, np.argmax(predictions, axis = 1))
+
+            conf = np.max(predictions, axis = 1)
+            conf /= np.sum(predictions, axis = 1) + 1e-20
+            conf_indx = np.append(conf_indx, conf)
+
+            # Check if end
+            if end == nn:
+                break
+
+            # Advance ii
+            ii += 1
 
     # Now make a dictionary with all the labels and their weight
     norm_labels = {}; norm_fact = 0
@@ -129,23 +167,33 @@ def do_mc_this_star(network, data, errors, name, label_dict, nn):
         else:
             norm_labels[lab] = conf
 
-        norm_fact += conf
+    # Calculate dilution and adjust weights
+    dil_labels = {}
+    for key in norm_labels:
 
-    # Normalize and calculate dilution
+        # Calculate dilution for this case
+        dilut, resd = calculate_dilution(data, errors, key, processed_models)
+
+        # Save dilution and adjust weights
+        dil_labels[key] = (dilut, resd)
+        norm_labels[key] /= abs(resd)
+
+    # Print
+    norm_fact = sum(norm_labels.values())
     for key in norm_labels:
 
         # Normalize
-        norm_labels[key] /= norm_fact
+        prob = norm_labels[key] / norm_fact
+        dilut, resd = dil_labels[key]
 
-        if norm_labels[key] >= 0.1:
-            # Calculate dilution for this case
-            dilut, resd = calculate_dilution(data, errors, key)
+        # Skip lower probability
+        if prob < 0.1:
+            continue
 
-            # Print
-            s = "Label {} with probability of {:.2f}%".format(key,
-                                                       norm_labels[key] * 100)
-            s += " dilution {:.2f} average residual {:.2f}".format(dilut, resd)
-            print(s)
+        # Print
+        s = "Label {} with probability of {:.2f}%".format(key, prob * 100)
+        s += " dilution {:.2f} average residual {:.2f}".format(dilut, resd)
+        print(s)
 
 def main():
     """
@@ -153,16 +201,26 @@ def main():
     """
 
     if len(sys.argv) < 3:
-        print(f"Use: python3 {sys.argv[0]} <network> <label_dict>")
+        print(f"Use: python3 {sys.argv[0]} <network> <nn>")
         return 1
 
     # Load network
-    filename = sys.argv[1]
-    network = tf.keras.models.load_model(filename)
+    dirname = sys.argv[1]
+    network = tf.keras.models.load_model(dirname)
+
+    # Get number of MC runs varying the parameters of each star
+    nn = int(float(sys.argv[2]))
 
     # Load label dictionary
-    label_dict_file = sys.argv[2]
+    label_name = "label_dict_" + dirname + ".txt"
+    label_dict_file = os.path.join(dirname, label_name)
     label_dict = load_label_dict(label_dict_file)
+
+    # File with models
+    if "fruity" in dirname:
+        processed_models = "processed_models_fruity.txt"
+    elif "monash" in dirname:
+        processed_models = "processed_models_monash.txt"
 
     # Now load Ba stars data
     all_data = []; all_names = []; all_errors = []
@@ -201,7 +259,10 @@ def main():
             all_data.append(arr)
             all_errors.append(arr_err)
 
-    nn = int(1e5) # number of MC runs varying the parameters of each star
+    # Maximum number of predictions at once
+    maxSize = 5e5
+
+    # Start
     for ii in range(len(all_names)):
         data = all_data[ii]
         errors = all_errors[ii]
@@ -211,7 +272,8 @@ def main():
         print("For star {}:".format(name))
 
         # Do the MC study here
-        do_mc_this_star(network, data, errors, name, label_dict, nn)
+        do_mc_this_star(network, data, errors, name, label_dict, nn,
+                        processed_models, maxSize = maxSize)
 
         # Separate for the next case
         print("------")

@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import struct, os, sys
+import struct, os, sys, random
 
 from silence_tensorflow import silence_tensorflow
 silence_tensorflow()
@@ -31,15 +31,20 @@ def give_inputs_labels(all_models):
 
     return np.array(inputs), np.array(labels), label_dict
 
-def create_model(train_inputs, train_labels, label_dict, layers = [], mod_dir = None):
+def create_model(train_inputs, train_labels, label_dict, layers = [],
+                 mod_dir = None):
     """
     Create or load the model, depending on mod_dir
     """
 
-    # Check if this model exists
+    # Flags for model existence
     model_exists = False
+    created = True
+
+    # Check if this model exists
     if mod_dir is not None:
         model_exists = os.path.isdir(mod_dir)
+        created = not model_exists
 
     # Just load model
     if model_exists:
@@ -60,7 +65,8 @@ def create_model(train_inputs, train_labels, label_dict, layers = [], mod_dir = 
         model = tf.keras.Sequential()
 
         # Input layer
-        model.add(tf.keras.layers.Dense(layers[0], input_shape = (nn, ), activation = "relu"))
+        model.add(tf.keras.layers.Dense(layers[0], input_shape = (nn, ),
+                  activation = "relu"))
 
         # Hidden layers
         for lay in layers[1:]:
@@ -76,13 +82,14 @@ def create_model(train_inputs, train_labels, label_dict, layers = [], mod_dir = 
                 loss = tf.keras.losses.SparseCategoricalCrossentropy())
 
         # Train
-        model.fit(train_inputs, train_labels, epochs = 10000, validation_split = 0.3)
+        model.fit(train_inputs, train_labels, epochs = 10000,
+                  validation_split = 0.3)
 
         # Save model
         if mod_dir is not None:
             model.save(mod_dir)
 
-    return model
+    return model, created
 
 def main():
     """Create and train neural network"""
@@ -91,12 +98,17 @@ def main():
     if len(sys.argv) > 1:
         mod_dir = sys.argv[1]
     else:
-        mod_dir = None
+        print(f"Use: python3 {sys.argv[0]} <network_name>")
+        return 1
 
     # Read the data
-    shuffled_models = "shuffled_models.txt"
+    if "fruity" in mod_dir:
+        models_file = "processed_models_fruity.txt"
+    elif "monash" in mod_dir:
+        models_file = "processed_models_monash.txt"
+
     all_models = []
-    with open(shuffled_models, "r") as fread:
+    with open(models_file, "r") as fread:
         header = fread.readline()
         for line in fread:
             all_models.append(line)
@@ -114,12 +126,14 @@ def main():
     # Transform models into input and labels
     inputs, labels, label_dict = give_inputs_labels(all_models)
 
-    # Save label dictionary
-    if mod_dir is not None:
-        name_dict_file = "label_dict_" + sys.argv[1] + ".txt"
-        with open(name_dict_file, "w") as fwrite:
-            for key in label_dict:
-                fwrite.write(f"{key} {label_dict[key]}\n")
+    # Shuffle models
+    inpt_labs = list(zip(inputs, labels))
+    random.shuffle(inpt_labs)
+    inputs, labels = zip(*inpt_labs)
+
+    # Convert into numpy arrays
+    inputs = np.array(inputs)
+    labels = np.array(labels)
 
     # Separate
     ii0, iif = 0, train_num
@@ -129,23 +143,45 @@ def main():
     test_inputs, test_labels = inputs[ii0:iif], labels[ii0:iif]
 
     # Hidden layers for model
-    outpt = len(label_dict)
     layers = [100, 100, 100, 100]
 
     # Create model
-    model = create_model(train_inputs, train_labels, label_dict, layers = layers, mod_dir = mod_dir)
+    model, created = create_model(train_inputs, train_labels, label_dict,
+                                  layers = layers, mod_dir = mod_dir)
+
+    # Save label dictionary in network directory
+    name_dict_file = os.path.join(mod_dir, "label_dict_" + mod_dir + ".txt")
+    with open(name_dict_file, "w") as fwrite:
+        for key in label_dict:
+            fwrite.write(f"{key} {label_dict[key]}\n")
 
     # Check
-    test_loss, test_acc = model.evaluate(test_inputs, test_labels, verbose = 2)
+    print(2 * "\n", "=============================", 2 * "\n")
+    if created:
+        print("Checking with training set")
+        check_model(model, test_inputs, test_labels)
+    else:
+        print("Checking with whole set")
+        check_model(model, inputs, labels)
+
+def check_model(model, inputs, labels):
+    """
+    Do a check with the provided inputs and labels
+    """
+
+    test_loss, test_acc = model.evaluate(inputs, labels, verbose = 2)
 
     # Predict
-    predictions = model.predict(test_inputs)
+    predictions = model.predict(inputs)
 
     # Count correct cases
     correct_cases = 0; confident_cases = 0; confident_correct = 0
     for ii in range(len(predictions)):
-        conf = max(predictions[ii])/sum(predictions[ii])
-        if test_labels[ii] == np.argmax(predictions[ii]):
+
+        conf = np.max(predictions[ii]) + 1e-40
+        conf /= np.sum(predictions[ii]) + 1e-20
+
+        if labels[ii] == np.argmax(predictions[ii]):
             correct_cases += 1
             if conf > 0.75:
                 confident_correct += 1
@@ -154,10 +190,10 @@ def main():
             confident_cases += 1
 
     print()
-    acc = correct_cases/len(test_labels) * 100
+    acc = correct_cases/len(labels) * 100
     print("Correct cases = {:.2f}%".format(acc))
 
-    prop = confident_cases/len(test_labels) * 100
+    prop = confident_cases/len(labels) * 100
     print("Proportion of confident cases = {:.2f}%".format(prop))
 
     try:
