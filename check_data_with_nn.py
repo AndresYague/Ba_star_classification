@@ -19,50 +19,6 @@ def load_label_dict(label_dict_file):
 
     return label_dict
 
-def calculate_dilution(data, err, label, processed_models):
-    """
-    Calculate best dilution for this label and data
-    """
-
-    with open(processed_models, "r") as fread:
-        # Read header
-        fread.readline()
-
-        # Find undiluted model
-        model = None
-        for line in fread:
-            lnlst = line.split()
-            if lnlst[-1] == label:
-                model = lnlst[0:-1]
-            elif model is None:
-                continue
-            else:
-                break
-
-    if model is None:
-        raise Exception("Label {} not found".format(label))
-
-    # Now transform into floats and np array
-    model = np.array(list(map(lambda x: float(x), model)))
-
-    # Dilute
-    dk = 0.001
-    dil_fact = np.arange(0, 1 + dk, dk)
-    minDist = None; minDil = None
-    for kk in dil_fact:
-        # Apply dilution ignoring Fe/H
-        dilut = apply_dilution(model, kk, ignoreFirst = True)
-
-        # Check distance between data and diluted model
-        dist = get_distance(dilut, data)
-
-        # Save smallest distance
-        if minDist is None or dist < minDist:
-            minDist = dist
-            minDil = kk
-
-    return minDil, minDist
-
 def do_mc_this_star(network, data, errors, label_dict, nn,
                     processed_models, maxSize = None):
     """
@@ -134,7 +90,7 @@ def do_mc_this_star(network, data, errors, label_dict, nn,
     for key in norm_labels:
 
         # Calculate dilution for this case
-        dilut, resd = calculate_dilution(data, errors, key, processed_models)
+        dilut, resd = calculate_dilution(data, key, processed_models)
 
         # Save dilution and adjust weights
         dil_labels[key] = (dilut, resd)

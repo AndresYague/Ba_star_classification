@@ -2,107 +2,86 @@ import sys
 import numpy as np
 from check_data_lib import *
 
-def find_k(model, data, tol = 1e-3):
+def get_short_distances(all_data, model, tol = 1e-3):
     """
-    Find the minimum dilution and distance for this model
-    """
-
-    # Start with the extremes
-    k0 = 0
-    k1 = 1
-    km = 0.5
-
-    while True:
-
-        # Each of the gradients
-        sum_dist0, grad0 = get_one_gradient(model, data, k0)
-        sum_distm, gradm = get_one_gradient(model, data, km)
-        sum_dist1, grad1 = get_one_gradient(model, data, k1)
-
-        # Check what to change
-        if gradm/grad0 < 0:
-            k1 = km
-        elif gradm/grad1 < 0:
-            k0 = km
-        else:
-            return sum_dist1, k1
-
-        # Get the middle point
-        new_km = (k0 + k1) * 0.5
-
-        # Check if converged
-        dif = np.abs(new_km - km)/km
-        if dif < tol:
-            return sum_distm, km
-
-        # Update
-        km = new_km
-
-def get_distances_dilutions(data, all_models, tol = 1e-3):
-    """
-    Get the minimum distance and dilution to each model from each data point
+    Get the minimum distance to this model from each data point
     """
 
-    # For each model
-    all_dist = []
-    all_dil = []
+    # Remove metallicity
+    all_datat = all_data.T
+    data_no_metal = all_datat[1:].T
 
-    # Find minimum distance and dilution
-    for model in all_models:
-        sum_dist, dil = find_k(model[1:], data[1:], tol = tol)
+    # Calculate dilutions
+    all_dil = find_k(model[1:], data_no_metal, tol = tol)
 
-        # Calculate distance for this dilution
-        sum_dist += np.abs((model[0] - data[0]) ** 2 / data[0])
-        all_dist.append(sum_dist / len(model))
-        all_dil.append(dil)
+    # Dilute
+    dil_model = np.array(
+            [np.log10((1 - all_dil) + all_dil * 10 ** mod) for mod in model[1:]]
+            )
 
-    return np.array(all_dist), np.array(all_dil)
+    # Distance to everything but iron (diluted)
+    all_dist = np.sum(
+            (dil_model.T - data_no_metal) ** 2 / np.abs(data_no_metal),
+                axis = 1)
 
-def get_closest(data, all_models, all_labels):
+    # Distance to iron
+    all_dist += (model[0] - all_datat[0]) ** 2 / np.abs(all_datat[0])
+
+    # Normalize
+    all_dist /= all_data.shape[1]
+
+    return all_dist
+
+def get_closest(data, errors, nn, all_models, all_labels):
     """
     Find closest model
     """
 
+    # Apply errors
+    use_data = apply_errors(data, errors, nn)
+
     # Get distances and dilutions
-    distances, dilutions = get_distances_dilutions(data, all_models, tol = 1e-5)
+    all_distances = []
+    all_dilutions = []
+    for model in all_models:
+        distances = get_short_distances(use_data, model, tol = 1e-2)
+        all_distances.append(distances)
 
-    # Remove from the list those dilutions above threshold
+    # Save the numpy arrays
+    distances = np.array(all_distances).T
+
+    # Get confidences
+    abs_dist = np.abs(distances)
+    confidences = np.maximum(1 - abs_dist / np.mean(abs_dist), 0)
+
+    # Give best indices
+    indices = np.argmax(confidences, axis = 1)
+
+    # Assign
+    label_weight = [0] * len(all_labels)
+    for ii, index in enumerate(indices):
+        label_weight[index] += confidences[ii][index]
+
+    # Normalize
+    label_weight /= np.sum(label_weight)
+
+    # And print
     threshold = 0.9
-    change = True
-    while change:
+    for ii, lab in enumerate(all_labels):
 
-        change = False
+        if label_weight[ii] > 0.1:
+            # Get dilution and distance
+            dilution, dist = calculate_dilution(data, all_models[ii])
 
-        # Get confidences
-        confidences = np.maximum(
-                1 - np.abs(distances) / np.average(np.abs(distances)), 0)
+            if dilution > threshold or dist > 0.5:
+                continue
 
-        # Give index
-        index = np.argmax(confidences)
-
-        # Remove element
-        if dilutions[index] > threshold and np.min(dilutions) < threshold:
-
-            # Convert to lists
-            lst_dst = list(distances)
-            lst_dil = list(dilutions)
-
-            # Remove
-            lst_dst.pop(index)
-            lst_dil.pop(index)
-
-            # Back to arrays
-            distances = np.array(lst_dst)
-            dilutions = np.array(lst_dil)
-
-            # Flag change
-            change = True
-
-    # Print
-    s = "Label {} with probability of {:.2f}%".format(all_labels[index], 0)
-    s += " dilution {:.2f} average residual {:.2f}".format(dilutions[index],
-            distances[index])
-    print(s)
+            # Print
+            s = f"Label {lab} with probability of"
+            s += " {:.2f}%".format(label_weight[ii] * 100)
+            s += " dilution {:.2f}".format(dilution)
+            s += " average residual {:.2f}".format(dist)
+            print(s)
 
 def load_models(*args):
     """
@@ -137,10 +116,17 @@ def main():
     Load models and pass the Ba stars data
     """
 
+    if len(sys.argv) < 2:
+        print(f"Use: python3 {sys.argv[0]} <nn> [models]")
+        return 1
+
+    # Get nn
+    nn = int(float(sys.argv[1]))
+
     # Get mode
     mode = None
-    if len(sys.argv) > 1:
-        mode = sys.argv[1]
+    if len(sys.argv) > 2:
+        mode = sys.argv[2]
 
     file_monash = "processed_models_monash.txt"
     file_fruity = "processed_models_fruity.txt"
@@ -197,12 +183,12 @@ def main():
 
         # Get the closest model in monash and then in fruity
         if mode is None:
-            get_closest(data, models_monash, labels_monash)
-            get_closest(data, models_fruity, labels_fruity)
+            get_closest(data, errors, nn, models_monash, labels_monash)
+            get_closest(data, errors, nn, models_fruity, labels_fruity)
         elif "monash" == mode:
-            get_closest(data, models_monash, labels_monash)
+            get_closest(data, errors, nn, models_monash, labels_monash)
         elif "fruity" == mode:
-            get_closest(data, models_fruity, labels_fruity)
+            get_closest(data, errors, nn, models_fruity, labels_fruity)
         else:
             raise Exception("mode must be monash or fruity")
 
