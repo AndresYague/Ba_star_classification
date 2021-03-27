@@ -1,4 +1,4 @@
-import os, glob
+import os, glob, sys
 import numpy as np
 
 def apply_dilution(elems, kk, names, zero = 0):
@@ -89,7 +89,7 @@ def get_string_names(feH, elems, names, label):
 
     return ss
 
-def process_fruity(directory, outpt, names, zero = 0):
+def process_fruity(directory, outpt, names, zero = 0, with_dilution = True):
     """
     Process fruity data to extract the elements we want
     """
@@ -135,7 +135,10 @@ def process_fruity(directory, outpt, names, zero = 0):
         for kk in kk_arr:
 
             # Calculate dilution
-            new_elements = apply_dilution(elems, kk, names, zero = zero)
+            if with_dilution or kk == kk_arr[-1]:
+                new_elements = apply_dilution(elems, kk, names, zero = zero)
+            else:
+                continue
 
             # Ignore too much dilution
             if new_elements is None:
@@ -148,7 +151,7 @@ def process_fruity(directory, outpt, names, zero = 0):
             with open(outpt, "a") as fappend:
                 fappend.write(ss)
 
-def process_monash(directory, outpt, names, zero = 0):
+def process_monash(directory, outpt, names, zero = 0, with_dilution = True):
     """
     Process fruity data to extract the elements we want
     """
@@ -211,8 +214,11 @@ def process_monash(directory, outpt, names, zero = 0):
                     for kk in kk_arr:
 
                         # Calculate dilution
-                        new_elements = apply_dilution(elems, kk, names,
-                                                      zero = zero)
+                        if with_dilution or kk == kk_arr[-1]:
+                            new_elements = apply_dilution(elems, kk, names,
+                                                          zero = zero)
+                        else:
+                            continue
 
                         # Ignore too much dilution
                         if new_elements is None:
@@ -321,6 +327,23 @@ def main():
     Just process all the data to create consistent models
     """
 
+    s = f'Use: python3 {sys.argv[0]} [y/n]\n'
+    s += 'Where "y" indicates the use of dilution for the models.\n'
+    s += 'Default option is y.\n'
+    print(s)
+
+    with_dilution = True
+    if len(sys.argv) > 1:
+        with_dilution = True if  sys.argv[1] == "y" else False
+
+    s = "Processing data "
+    if with_dilution:
+        s += "with "
+    else:
+        s += "without "
+    s += "dilution\n"
+    print(s)
+
     # Names of quantities we want
     # Element set 1
     names = [
@@ -356,18 +379,21 @@ def main():
     print("Processing fruity...")
     with open(processed_models_fruity, "w") as fwrite:
         fwrite.write(header)
-    process_fruity(fruity_dir, processed_models_fruity, names, zero = 0.2)
+    process_fruity(fruity_dir, processed_models_fruity, names, zero = 0.2,
+                    with_dilution = with_dilution)
 
     # Process monash
     print("Processing monash...")
     with open(processed_models_monash, "w") as fwrite:
         fwrite.write(header)
-    process_monash(monash_dir, processed_models_monash, names, zero = 0.2)
+    process_monash(monash_dir, processed_models_monash, names, zero = 0.2,
+                    with_dilution = with_dilution)
 
     # Check that all models are different enough
-    print("Eliminating same models...")
-    eliminate_same_models(processed_models_fruity)
-    eliminate_same_models(processed_models_monash)
+    if with_dilution:
+        print("Eliminating same models...")
+        eliminate_same_models(processed_models_fruity)
+        eliminate_same_models(processed_models_monash)
 
     # Process data
     print("Processing observations...")

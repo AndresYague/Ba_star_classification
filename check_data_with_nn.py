@@ -1,5 +1,6 @@
 import numpy as np
 import sys, os
+from check_data_lib import *
 
 from silence_tensorflow import silence_tensorflow
 silence_tensorflow()
@@ -17,46 +18,6 @@ def load_label_dict(label_dict_file):
             label_dict[int(lnlst[-1])] = lnlst[0]
 
     return label_dict
-
-def apply_errors(arr, arr_err, nn):
-    """
-    Apply random errors drawn in a MC fashion
-    """
-
-    new_arr = arr + np.random.random((nn, len(arr))) * 2 * arr_err - arr_err
-
-    return new_arr
-
-def apply_dilution(model, kk):
-    """
-    Apply dilution of kk. This formula only works for heavy elements
-
-    kk is the fraction of the Ba-star envelope that comes from the AGB
-    """
-
-    # Just apply the formula to each element except Fe/H
-    new_model = model * 1
-    new_model[1:] = np.log10((1 - kk) + kk * 10 ** model[1:])
-
-    return new_model
-
-def get_distance(model, data, err):
-    """
-    Calculate a distance between model and data
-    """
-
-    # Limits of uncertainty box
-    x0 = data - err
-    x1 = data + err
-
-    # Weighted by the inverse of the size of the uncertainty
-    #sumInverses = np.sum(1/(x1[1:] - x0[1:]))
-    #dist = np.sum((model[1:] - data[1:])**2 / (x1[1:] - x0[1:])) / sumInverses
-
-    # Chi square
-    dist = np.average(np.abs((model[1:] - data[1:]) ** 2 / data[1:]))
-
-    return dist
 
 def calculate_dilution(data, err, label, processed_models):
     """
@@ -89,10 +50,11 @@ def calculate_dilution(data, err, label, processed_models):
     dil_fact = np.arange(0, 1 + dk, dk)
     minDist = None; minDil = None
     for kk in dil_fact:
-        dilut = apply_dilution(model, kk)
+        # Apply dilution ignoring Fe/H
+        dilut = apply_dilution(model, kk, ignoreFirst = True)
 
         # Check distance between data and diluted model
-        dist = get_distance(dilut, data, err)
+        dist = get_distance(dilut, data)
 
         # Save smallest distance
         if minDist is None or dist < minDist:
@@ -101,7 +63,7 @@ def calculate_dilution(data, err, label, processed_models):
 
     return minDil, minDist
 
-def do_mc_this_star(network, data, errors, name, label_dict, nn,
+def do_mc_this_star(network, data, errors, label_dict, nn,
                     processed_models, maxSize = None):
     """
     Calculate the MC runs for this star to the network
@@ -272,7 +234,7 @@ def main():
         print("For star {}:".format(name))
 
         # Do the MC study here
-        do_mc_this_star(network, data, errors, name, label_dict, nn,
+        do_mc_this_star(network, data, errors, label_dict, nn,
                         processed_models, maxSize = maxSize)
 
         # Separate for the next case
