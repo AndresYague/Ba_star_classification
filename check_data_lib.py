@@ -84,12 +84,12 @@ def get_distance(model, data):
     Calculate a distance between model and data
     """
 
-    # Chi square
-    dist = np.mean(np.abs((model - data) ** 2 / data))
+    # L square
+    dist = np.mean((model - data) ** 2)
 
     return dist
 
-def get_one_gradient(pow_mod, k_arr, x_k, log_x_k, invData, k):
+def get_one_gradient(pow_mod, k_arr, x_k, log_x_k, data, k):
     """
     Get gradients
     """
@@ -101,7 +101,7 @@ def get_one_gradient(pow_mod, k_arr, x_k, log_x_k, invData, k):
     indx = np.searchsorted(k_arr, k)
 
     # Now get diff
-    diff = log_x_k[indx] * invData - 1
+    diff = log_x_k[indx] - data
 
     # And the gradient
     grad = np.mean((pow_mod - 1)/x_k[indx] * diff, axis = 1) * invLog
@@ -114,7 +114,6 @@ def find_k(model, data, tol = 1e-3):
     """
 
     # Store the quantities that never change
-    invData = 1/data
     pow_mod = 10 ** model
 
     # Make the array x_k 10 times finer than the tolerance
@@ -131,9 +130,9 @@ def find_k(model, data, tol = 1e-3):
     while True:
 
         # Each of the gradients
-        grad0 = get_one_gradient(pow_mod, k_arr, x_k, log_x_k, invData, k0)
-        gradm = get_one_gradient(pow_mod, k_arr, x_k, log_x_k, invData, km)
-        grad1 = get_one_gradient(pow_mod, k_arr, x_k, log_x_k, invData, k1)
+        grad0 = get_one_gradient(pow_mod, k_arr, x_k, log_x_k, data, k0)
+        gradm = get_one_gradient(pow_mod, k_arr, x_k, log_x_k, data, km)
+        grad1 = get_one_gradient(pow_mod, k_arr, x_k, log_x_k, data, k1)
 
         # Get signs
         sign0 = np.sign(grad0)

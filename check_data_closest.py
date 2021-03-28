@@ -20,12 +20,10 @@ def get_short_distances(all_data, model, tol = 1e-3):
             )
 
     # Distance to everything but iron (diluted)
-    all_dist = np.sum(
-            (dil_model.T - data_no_metal) ** 2 / np.abs(data_no_metal),
-                axis = 1)
+    all_dist = np.sum((dil_model.T - data_no_metal) ** 2, axis = 1)
 
     # Distance to iron
-    all_dist += (model[0] - all_datat[0]) ** 2 / np.abs(all_datat[0])
+    all_dist += (model[0] - all_datat[0]) ** 2
 
     # Normalize
     all_dist /= all_data.shape[1]
