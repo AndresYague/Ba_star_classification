@@ -6,22 +6,26 @@ def fruity_existing_files2(mass_dict, met_dict, model_type, patterndict, currmod
     df_fr = []
     fr_rotvel = []  # for storing the rotation velocity values
     for mod_ind in range(len(currmodels['mod_files'])):
-        currmodels['masses'][mod_ind] = patterndict[mass_dict][0][patterndict[mass_dict][1].index(
-            currmodels['mod_files'][mod_ind][9:13])]
-        currmodels['mets'][mod_ind] = patterndict[met_dict][0][patterndict[met_dict][1].index(
-            currmodels['mod_files'][mod_ind][13:])]
 
-        if currmodels['mod_files'][mod_ind][currmodels['mod_files'][mod_ind].find('_')+1:] == "000.txt":
+        # Separate the name of the file
+        name_file = os.path.split(currmodels["mod_files"][mod_ind])[-1]
+
+        currmodels['masses'][mod_ind] = patterndict[mass_dict][0][patterndict[mass_dict][1].index(
+            name_file[0:4])]
+        currmodels['mets'][mod_ind] = patterndict[met_dict][0][patterndict[met_dict][1].index(
+            name_file[4:])]
+
+        if name_file[name_file.find('_')+1:] == "000.dat":
             currmodels['mod_types'][mod_ind] = "fruity"
-        elif currmodels['mod_files'][mod_ind][currmodels['mod_files'][mod_ind].find('_')+1:] == "ext.txt":
+        elif name_file[name_file.find('_')+1:] == "ext.dat":
             currmodels['mod_types'][mod_ind] = "ext"
-        elif currmodels['mod_files'][mod_ind][currmodels['mod_files'][mod_ind].find('_')+1:] == "T60.txt":
+        elif name_file[name_file.find('_')+1:] == "T60.dat":
             currmodels['mod_types'][mod_ind] = "t60"
         else:
             currmodels['mod_types'][mod_ind] = "rot"
 
-        fr_rotvel.append(currmodels['mod_files'][mod_ind][-7:-4])
-        currmodels['rotvel'][mod_ind] = currmodels['mod_files'][mod_ind][-7:-4]
+        fr_rotvel.append(name_file[-7:-4])
+        currmodels['rotvel'][mod_ind] = name_file[-7:-4]
 
         df_fr.append(fruity_import(currmodels['masses'], currmodels[
             'mod_files']))  # Searching for matches in the measured and Fruity atomic numbers

@@ -69,4 +69,12 @@ only for the chosen model set.
 PLOTTING DATA
 ============================================================================
 
-TODO
+To use just go to the plotter directory and there run
+
+python3 main.py <file1> <file2> <directory>
+
+where "file1" is the path to the first file with output to plot and "file2"
+the second one. "directory" is the path to the directory where the figures
+will be plotted
+
+TODO: Allow for any number of files to be specified

@@ -1,28 +1,42 @@
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 from matplotlib.ticker import (MultipleLocator, FixedLocator, AutoMinorLocator)
-#from funcs_chis import *
 import funcs_datastruct, funcs_sorter, funcs_fruity_models, funcs_chis, funcs_readin
-import os
+import os, sys
 import pandas as pd
 import numpy as np
 
-# look for all the stars in the text files
-#inp_fr = open("results_fruity_v2.txt", "r")
-#inp_mon = open("results_monash_v2.txt", "r")
-#pathn = './results_v2/'  # path of figures to be saved in
+if len(sys.argv) != 4:
+    s = "Incorrect number of arguments. "
+    s += f"Use: python3 {sys.argv[0]} <file1> <file2> <directory>"
+    raise Exception(s)
 
-inp_fr = open("results_closest_fruity_L2.txt", "r")
-inp_mon = open("results_closest_monash_L2.txt", "r")
-pathn = './results_closest_L2/'  # path of figures to be saved in
+# Save files with data and directory
+files = sys.argv[1:-1]
+pathn = sys.argv[-1]
 
+# Sort files in fruity and monash
+inp_fr = None
+inp_mon = None
+for file_ in files:
+    if "fruity" in file_:
+        inp_fr = open(file_, "r")
+    elif "monash" in file_:
+        inp_mon = open(file_, "r")
+
+if inp_fr is None or inp_mon is None:
+    s = "Please, provide one file for Monash and another for Fruity"
+    raise Exception(s)
+
+# TODO put this as an external option
 red_elements = ['Rb', 'Sr', 'Zr', 'Y', 'La', 'Ce', 'Nd', 'Eu']
+#raise NotImplementedError
 
 # general settings
 rest = False # False if deC, True if Rest
 eps = False      # True if format is eps, False if png
 nolegend = False  # if True, no legend is plotted
-rej_file = open("./rej_models_moremass_extra_models_dec_newdata.txt", "w")  # rejection file
+rej_file = open("rej_models_moremass_extra_models_dec_newdata.txt", "w")  # rejection file
 res_file = open("res_rest_Nb_newdata.dat", "w")
 bestres = open("bestres_rest_Nb_newdata.dat", "w")
 mass_tolerance = 0.3  # tolerance in mass -- plus AND minus
@@ -39,26 +53,68 @@ xaxlim, yaxlim, y2axlim = [4.2, 83.6], [-1.3, 2.5], [-0.75, 0.75]  # axis limits
 font = {'family': 'sans-serif', 'size': 52}  # for paper: 42
 plt.rc('font', **font)
 
-def model_names_read(inp_file, type):
+def get_clean_lnlst(line):
+    """
+    Clean the input data so it's easier to handle
+    """
+
+    # Split line
+    lnlst = line.split()
+
+    # Return proper value
+    if "Label" in line:
+        return [lnlst[1], lnlst[7]]
+    elif "star" in line:
+        return lnlst
+    else:
+        return None
+
+def model_names_read(inp_file):
+
+    # Lists
     lst_tmp1 = []
-    starnames, mods, dils, masses, mets, mod_types, rotvel, mmix, num_star = [], [], [], [], [], [], [], [], -1
+    dils = []
+    starnames = []
+    mods = []
+    masses = []
+    mets = []
+    mod_types = []
+    rotvel = []
+    mmix = []
+    num_star = -1
+
+
     for line in inp_file:
-        lnlst = line.split()
+        lnlst = get_clean_lnlst(line)
+
+        # Skipe lines without content
+        if lnlst is None:
+            continue
+
         if "star" in lnlst:
             starnames.append(lnlst[-1][:-1])
             num_star += 1
-            [x.append(y) for x, y in zip([mods, dils, masses, mets, mod_types, rotvel, mmix], [[] for i in range(7)])]
+            [x.append(y) for x, y in zip([mods, dils, masses, mets, mod_types,
+                rotvel, mmix], [[] for i in range(7)])]
             lst_tmp1.append({'starname': starnames[num_star], 'mod_files': mods[num_star],
-                             'masses': masses[num_star], 'mets': mets[num_star], 'dils': dils[num_star],
-                             'mod_types': mod_types[num_star], 'rotvel': rotvel[num_star], 'mmix': mmix[num_star]})
+                             'masses': masses[num_star], 'mets': mets[num_star],
+                             'dils': dils[num_star],
+                             'mod_types': mod_types[num_star],
+                             'rotvel': rotvel[num_star], 'mmix': mmix[num_star]})
         else:
-            if type == "fr":
-                mods[num_star].append("./fruity/"+lnlst[0][lnlst[0].find('_')+1:]+".txt")
+
+            # Separate lines in fruity or monash
+            if "fruity" in lnlst[0]:
+                surfname = lnlst[0][lnlst[0].find('_')+1:] + ".dat"
+                file_name = os.path.join("fruity", surfname)
+                mods[num_star].append(file_name)
                 [x.append(y) for x, y in zip([masses[num_star], mets[num_star], rotvel[num_star], mmix[num_star],
                             mod_types[num_star]], [0, 0, 0, 0, ""])] # will be found later with fruity_existing_files2 func
-            elif type == "mon":
+
+            elif "monash" in lnlst[0]:
                 surfname = "surf_" + lnlst[0][lnlst[0].rfind('_')+1:] + ".dat"
-                mods[num_star].append("./monash/"+ surfname)
+                file_name = os.path.join("monash", surfname)
+                mods[num_star].append(file_name)
                 mets[num_star].append(patterndict['mon_met'][0][patterndict['mon_met'][1].index(surfname)])
 
                 pos = lnlst[0].find("mix_")+4 # position of m_mix data in input
@@ -66,14 +122,16 @@ def model_names_read(inp_file, type):
                 pos = lnlst[0].find("_m")+2
                 masses[num_star].append(float(lnlst[0][pos:lnlst[0].find("_", pos)]))
                 [x.append(y) for x, y in zip([rotvel[num_star], mod_types[num_star]], [0, ""])] # those are for FRUITY
+
             dils[num_star].append(float(lnlst[1]))
 
         df_models = pd.DataFrame(lst_tmp1)
         df_models.set_index('starname', inplace=True)
+
     return df_models
 
 # atomic numbers for x axis of the plot
-df_atnum = pd.read_csv("inp_model_patterns/atomic_nums.txt", delim_whitespace=True, index_col='Z')
+df_atnum = pd.read_csv("inp_model_patterns/atomic_nums.dat", delim_whitespace=True, index_col='Z')
 
 # ----------------------------------------------------------------
 df_all, obs_elements = funcs_datastruct.import_deC()
@@ -82,18 +140,19 @@ df_all, obs_elements = funcs_datastruct.import_deC()
 patternarr_name = ['fr_mass', 'fr_met', 'mon_met', 'fr_mass_ext', 'fr_met_ext', 'fr_mass_rot', 'fr_met_rot',
                    'fr_mass_T60', 'fr_met_T60']  # name of each pattern type
 patterndict = dict()  # dictionary to hold the pattern-value for each pattern type
-patternfiles = ["inp_model_patterns/fruity_beginnings.txt", "inp_model_patterns/fruity_endings.txt",
-                "inp_model_patterns/monash_beginnings.txt", "inp_model_patterns/fruity_beginnings_ext.txt",
-                "inp_model_patterns/fruity_endings_ext.txt", "inp_model_patterns/fruity_beginnings_rot.txt",
-                "inp_model_patterns/fruity_endings_rot.txt", "inp_model_patterns/fruity_beginnings_T60.txt",
-                "inp_model_patterns/fruity_endings_T60.txt"]  # files consisting of pattern-value
+dir_pattrn = "inp_model_patterns"
+patternfiles = ["fruity_beginnings.dat", "fruity_endings.dat",
+                "monash_beginnings.dat", "fruity_beginnings_ext.dat",
+                "fruity_endings_ext.dat", "fruity_beginnings_rot.dat",
+                "fruity_endings_rot.dat", "fruity_beginnings_T60.dat",
+                "fruity_endings_T60.dat"]  # files consisting of pattern-value
+patternfiles = [os.path.join(dir_pattrn, x) for x in patternfiles]
 
 for nn in range(len(patternarr_name)):  # for each pattern type
     patterndict[patternarr_name[nn]] = funcs_sorter.namefinder_import(patternfiles[nn])
 
-models_fr = model_names_read(inp_fr, "fr")
-models_mon = model_names_read(inp_mon, "mon")
-
+mod_fr = model_names_read(inp_fr)
+mod_mon = model_names_read(inp_mon)
 
 starnames_lst = df_all.index.values  # all starnames into a list
 for starn in starnames_lst:  # for each star
@@ -111,10 +170,10 @@ for starn in starnames_lst:  # for each star
         feh_nanerr = True
     vars = [patterndict, curr_agbm, mass_tolerance, rej_file, curr_feh, curr_feh_err, feh_tolerance]
 
-    currmodels_fr = models_fr.loc[starn]
+    currmodels_fr = mod_fr.loc[starn]
     df_fr, fr_mass, fr_feh, fr_rotvel = funcs_fruity_models.fruity_existing_files2('fr_mass', 'fr_met', 'FRUITY', patterndict, currmodels_fr, starn)
 
-    currmodels_mon = models_mon.loc[starn]
+    currmodels_mon = mod_mon.loc[starn]
     mon_metnum = 0
     mon_masses_inzfile, mon_mass_matching, mon_mmixes = ([] for k in range(3))
     df_moni, df_moni_loge, df_monf, df_monf_loge = ([] for k in range(4))
