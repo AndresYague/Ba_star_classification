@@ -1,0 +1,11 @@
+# Simply write the list of elements wanted separated by a space
+# The first list that it is not commented with "#" will be taken
+
+# Set 1
+#Fe/H Rb/Fe Sr/Fe Zr/Fe Mo/Fe Ru/Fe La/Fe Ce/Fe Nd/Fe Eu/Fe
+
+# Set 2
+Fe/H Rb/Fe Sr/Fe Zr/Fe Y/Fe La/Fe Ce/Fe Nd/Fe Eu/Fe
+
+# Set 3
+Fe/H Rb/Fe Sr/Fe Zr/Fe Y/Fe La/Fe Ce/Fe Nd/Fe Eu/Fe Sm/Fe Ru/Fe

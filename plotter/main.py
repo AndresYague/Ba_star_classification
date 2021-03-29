@@ -28,9 +28,21 @@ if inp_fr is None or inp_mon is None:
     s = "Please, provide one file for Monash and another for Fruity"
     raise Exception(s)
 
-# TODO put this as an external option
-red_elements = ['Rb', 'Sr', 'Zr', 'Y', 'La', 'Ce', 'Nd', 'Eu']
-#raise NotImplementedError
+# Load the red elements
+with open(os.path.join("..", "element_set.dat"), "r") as fread:
+    for line in fread:
+        lnlst = line.split()
+
+        # Skip comments and empty lines
+        if len(lnlst) == 0 or "#" in lnlst[0]:
+            continue
+
+        red_elements = lnlst
+        break
+
+# Remove "/Fe"
+red_elements = [elem.split("/")[0] for elem in red_elements]
+red_elements.remove("Fe")
 
 # general settings
 rest = False # False if deC, True if Rest

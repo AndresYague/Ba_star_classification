@@ -11,13 +11,16 @@ All of the classificators need a first run of process_data.py. To run it:
 python3 process_data.py [y/n]
 
 where the last optional argument, "y" or "n" decides whether to dilute the
-models. The models must be diluted for the neural network classificator to
-work, but not the closest point classificator. If nothing is specified, then
-the models will be diluted.
+models. The models must be diluted for the neural network training to
+work, but not the closest point classificator nor the neural network
+classificator. If nothing is specified, then the models will be diluted.
 
-Inside of process_data.py a set of elemental names in "names" is given.
+The element set for process_data.py is taken from element_set.dat.
 Currently, "Fe/H" must be the first element present. All the other elements
 are optional, but they have to exist in the database.
+
+# TODO
+Allow for Fe/H to be optional or not first
 
 Once run, this script will create three files:
 -processed_models_fruity.txt
@@ -77,4 +80,6 @@ where "file1" is the path to the first file with output to plot and "file2"
 the second one. "directory" is the path to the directory where the figures
 will be plotted
 
-TODO: Allow for any number of files to be specified
+The red stars are the elements taken from element_set.dat
+
+#TODO: Allow for any number of files to be specified

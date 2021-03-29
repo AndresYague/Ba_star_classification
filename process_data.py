@@ -344,18 +344,20 @@ def main():
     s += "dilution\n"
     print(s)
 
-    # Names of quantities we want
-    # Element set 1
-    names = [
-             "Fe/H", "Rb/Fe", "Sr/Fe", "Zr/Fe", "Mo/Fe", "Ru/Fe"
-             "La/Fe", "Ce/Fe", "Nd/Fe", "Eu/Fe"
-            ]
+    # Load element set
+    with open("element_set.dat") as fread:
+        for line in fread:
+            lnlst = line.split()
 
-    # Element set 2
-    names = [
-             "Fe/H", "Rb/Fe", "Sr/Fe", "Zr/Fe", "Y/Fe",
-             "La/Fe", "Ce/Fe", "Nd/Fe", "Eu/Fe"
-            ]
+            # Skip comments and empty lines
+            if len(lnlst) == 0 or "#" in lnlst[0]:
+                continue
+
+            names = lnlst
+            break
+
+    # Echo element list
+    print(f"Element list: {' '.join(names)}")
 
     # Define all the directories
     dir_data = "Ba_star_classification_data"
