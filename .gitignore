@@ -2,6 +2,7 @@
 *.txt
 *.pdf
 label_dict*
+*.png
 
 # Directories
 __pycache__
