@@ -69,10 +69,8 @@ def get_closest(data, errors, nn, all_models, all_labels):
 
         if label_weight[ii] > 0.1:
             # Get dilution and distance
-            dilution, dist = calculate_dilution(data, all_models[ii])
-
-            if dilution > threshold or dist > 0.5:
-                continue
+            dilution, dist = calculate_dilution(data, all_models[ii],
+                                                upper = threshold)
 
             # Print
             s = f"Label {lab} with probability of"

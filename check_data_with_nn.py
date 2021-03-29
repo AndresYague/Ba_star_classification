@@ -87,10 +87,12 @@ def do_mc_this_star(network, data, errors, label_dict, nn,
 
     # Calculate dilution and adjust weights
     dil_labels = {}
+    threshold = 0.9
     for key in norm_labels:
 
         # Calculate dilution for this case
-        dilut, resd = calculate_dilution(data, key, processed_models)
+        dilut, resd = calculate_dilution(data, key, processed_models,
+                                        upper = threshold)
 
         # Save dilution and adjust weights
         dil_labels[key] = (dilut, resd)

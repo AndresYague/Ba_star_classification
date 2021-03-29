@@ -28,7 +28,8 @@ def apply_dilution(model, kk, ignoreFirst = False):
 
     return new_model
 
-def calculate_dilution(data, model, processed_models = None):
+def calculate_dilution(data, model, processed_models = None, lower = 0,
+                       upper = 1):
     """
     Calculate best dilution for this model and data
 
@@ -63,7 +64,7 @@ def calculate_dilution(data, model, processed_models = None):
 
     # Dilute
     dk = 0.001
-    dil_fact = np.arange(0, 1 + dk, dk)
+    dil_fact = np.arange(lower, upper + dk, dk)
     minDist = None; minDil = None
     for kk in dil_fact:
         # Apply dilution ignoring Fe/H
