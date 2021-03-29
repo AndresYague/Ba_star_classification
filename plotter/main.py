@@ -8,9 +8,14 @@ import pandas as pd
 import numpy as np
 
 # look for all the stars in the text files
-inp_fr = open("results_fruity_v1.txt", "r")
-inp_mon = open("results_monash_v1.txt", "r")
-pathn = './03-20-redstar/'  # path of figures to be saved in
+#inp_fr = open("results_fruity_v2.txt", "r")
+#inp_mon = open("results_monash_v2.txt", "r")
+#pathn = './results_v2/'  # path of figures to be saved in
+
+inp_fr = open("results_closest_fruity_L2.txt", "r")
+inp_mon = open("results_closest_monash_L2.txt", "r")
+pathn = './results_closest_L2/'  # path of figures to be saved in
+
 red_elements = ['Rb', 'Sr', 'Zr', 'Y', 'La', 'Ce', 'Nd', 'Eu']
 
 # general settings
@@ -26,7 +31,7 @@ dil_tolerance = 0.9  # tolerance in dilution
 chi_start = 37 # first peak: 37 (Rb), only second peak: 57 (La)
 
 # plotting settings
-figsiz = [55, 23]  # for paper: [28,10]
+figsiz = [60, 16]  # for paper: [28,10]
 errbcolor = 'yellow'  # color of deC measured errorbar plot
 erredgecolor = 'midnightblue'  # color of deC measured errorbar plot border
 pmin = 2  # gap between atomic numbers on plot
@@ -135,7 +140,7 @@ for starn in starnames_lst:  # for each star
     # FRUITY labels
     fr_label_arr = funcs_fruity_models.fr_labels2(fr_mass, fr_feh, "{:10}".format("FRUITY:"), currmodels_fr)
 
-        # labels for Monash (mon_label_arr, list)
+    # labels for Monash (mon_label_arr, list)
     mon_label_arr = []  # array for the labels
 
     for kk in range(len(currmodels_mon['masses'])):  # if no mmixes left after dilution rejection, does nothing
@@ -156,7 +161,7 @@ for starn in starnames_lst:  # for each star
     dec_label = "{:5}, {:5}, {:5}".format(dec_massjor, dec_agb_inimass, dec_fehdec)
 
 
-       # deC measurements dataframe - df_dec_toplot
+    # deC measurements dataframe - df_dec_toplot
     df_dec_toplot = pd.DataFrame(
         df_all.loc[starn, obs_elements])  # reading in the deC measurements for current star to a df
     df_dec_toplot.index.names = ['element']  # the index is renamed to 'elements'
@@ -182,12 +187,12 @@ for starn in starnames_lst:  # for each star
     ax1 = plt.subplot(gs[0:2, :])
     ax2 = plt.subplot(gs[2, :], sharex=ax1)
 
-        # deC points
+    # deC points
     df_dec_toplot['deC_abund'] = df_dec_toplot['deC_abund'].astype(float)  # convert everything to float
     df_dec_toplot['error'] = df_dec_toplot['error'].astype(float)
     ax1.errorbar(df_dec_toplot.index, df_dec_toplot['deC_abund'], yerr=df_dec_toplot['error'], color=errbcolor,
                  mec=erredgecolor, ecolor=erredgecolor, label=dec_label, marker='*',
-                 linestyle='', markersize=22, elinewidth=3, markeredgewidth=2, capsize=4, zorder=5)
+                 linestyle='', markersize=35, elinewidth=4, markeredgewidth=2, capsize=4, zorder=5)
 
     # red starred ones
     print(df_dec_toplot)
@@ -200,33 +205,33 @@ for starn in starnames_lst:  # for each star
             yerr_val = df_dec_toplot.iloc[ind]['error']
             if not yerr_val > 0: yerr_val = 0.5
             ax1.errorbar(atnums[ind], df_dec_toplot.iloc[ind]['deC_abund'], yerr=yerr_val, color='red',
-                         mec=erredgecolor, ecolor='red', label=dec_label, marker='*',
-                         linestyle='', markersize=28, elinewidth=4, markeredgewidth=2, capsize=4, zorder=5)
+                         mec=erredgecolor, ecolor='red', marker='*',
+                         linestyle='', markersize=35, elinewidth=4, markeredgewidth=2, capsize=4, zorder=5)
 
     if found != len(red_elements): print("EZZAAAZZZZZZ")
 
-        # FRUITY
+    # FRUITY
     nplotted_all = 0
 
-            # dilute the models
+    # dilute the models
     chiok_arr = [0 for i in range(len(df_dec_toplot[(df_dec_toplot.index >= chi_start) & (df_dec_toplot.index <= 63)]['deC_abund']
                            [df_dec_toplot['deC_abund'].notna()]))]
     chiok_arr, fr_plotarr, df_fr_res_arr, modelnum_fr = funcs_chis.chi_fruity2(len(fr_mass), fr_mass, currmodels_fr['dils'],
                                  chiok_arr, chi_start, df_fr, df_dec_toplot, fr_label_arr)
 
-            # plot them
+    # plot them
     coloridx_fr = plt.cm.cool(np.linspace(0.1, 1, num=len(fr_mass) + 1))  # colormap distribution for Fruity
     for zind in range(len(fr_mass)):
         ax1.plot(df_fr[zind].index, fr_plotarr[zind], color=coloridx_fr[zind], linestyle='-', linewidth=3,
                  label=fr_label_arr[zind],  # + " - {:^3.0f}".format(chis_rank[nplotted_all]+1)		# chi2 kiiras
-                 zorder=3, marker='v', alpha=0.8, markersize=10)
+                 zorder=3, marker='v', alpha=0.8, markersize=15)
         ax1.plot(df_fr[zind].index, fr_plotarr[zind].interpolate(), color=coloridx_fr[zind], linestyle='-',
-                 linewidth=3, zorder=3, marker='', alpha=0.8, markersize=10)  # interpolates between missing data
+                 linewidth=3, zorder=3, marker='', alpha=0.8, markersize=15)  # interpolates between missing data
         ax2.plot(df_fr_res_arr[zind].index, df_fr_res_arr[zind]['res_dil'], color=coloridx_fr[zind],
                  marker='v',
-                 linestyle='', markersize=10, markeredgewidth=1, zorder=3, alpha=0.8)
+                 linestyle='', markersize=20, markeredgewidth=1, zorder=3, alpha=0.8)
 
-        # MONASH
+    # MONASH
     chiok_arr, mon_plotarr, df_mon_res_arr, modelnum_mon = funcs_chis.chi_res_mon2(currmodels_mon['masses'], currmodels_mon['mmix'],
                                 currmodels_mon['dils'], chiok_arr, chi_start, df_moni, df_monf, df_dec_toplot, mon_label_arr)
 
@@ -234,10 +239,10 @@ for starn in starnames_lst:  # for each star
     for mod in range(modelnum_mon):
         ax1.plot(df_monf[0].index, mon_plotarr[mod], color=plt.cm.jet(coloridx_mon[mod]),
                  label=mon_label_arr[mod], #+ " - {:^3.0f}".format(chis_rank[nplotted_all]+1),	#chi2 kiiras
-                 zorder=3, linestyle='--', marker='o', markersize=10, alpha=0.8, linewidth=3)
+                 zorder=3, linestyle='--', marker='o', markersize=15, alpha=0.8, linewidth=3)
         ax2.plot(df_mon_res_arr[mod].index, df_mon_res_arr[mod]['res_dil'], color=plt.cm.jet(coloridx_mon[mod]), zorder=5,
                  marker='o', linestyle='',
-                 markersize=10, markeredgewidth=1, alpha=0.8)
+                 markersize=20, markeredgewidth=1, alpha=0.8)
 
     # df_ok.dropna(inplace=True, how='all')
 
@@ -255,7 +260,7 @@ for starn in starnames_lst:  # for each star
 
         atnum_counter += pmin * 2  # next toptick_label
 
-        # ticks settings
+    # ticks settings
     maj_ticks = np.linspace(xaxlim[0], xaxlim[1], 2*pmin)
     ax2.xaxis.set_major_locator(MultipleLocator(2 * pmin))
     #ax2.xaxis.set_major_locator(FixedLocator(maj_ticks))
@@ -277,10 +282,10 @@ for starn in starnames_lst:  # for each star
     ax1.set_ylabel('[X/Fe]')
     if rest == True:
         curref = df_all.loc[starn, 'ref']
-        plt.title("{:} ({:.0f})".format(starn, curref), size=45, weight='bold', y=3.0)
+        plt.title("{:} ({:.0f})".format(starn, curref), size=60, weight='bold', y=3.0)
     else:
 #        plt.title("{:} ({:})".format(starn, "deC"), size=45, weight='bold', y=3.0)
-        plt.title("{:}".format(starn), size=45, weight='bold', y=3.0)
+        plt.title("{:}".format(starn), size=60, weight='bold', y=3.0)
     fig.subplots_adjust(hspace=0)
 
     plt.setp(ax1, xlim=xaxlim)  # ylim=[ymin - extray, ymax + extray + legend_height]
