@@ -6,9 +6,148 @@ import os, sys
 import pandas as pd
 import numpy as np
 
-if len(sys.argv) != 4:
+def get_clean_lnlst(line):
+    """
+    Clean the input data so it's easier to handle
+    """
+
+    # Split line
+    lnlst = line.split()
+
+    # Return proper value
+    if "Label" in line:
+        return [lnlst[1], lnlst[7]]
+    elif "star" in line:
+        return lnlst
+    else:
+        return None
+
+def get_dict_models(files):
+    """
+    Make input dictionary to combine all files
+    """
+
+    # Initialize dictionary
+    dict_ = {}
+    dict_["fruity"] = {}
+    dict_["monash"] = {}
+
+    # Keep an inventory of repeated models
+    repeated = {}
+    repeated["fruity"] = {}
+    repeated["monash"] = {}
+
+    # Go for file and line
+    for file_ in files:
+        with open(file_, "r") as fread:
+
+            for line in fread:
+                lnlst = get_clean_lnlst(line)
+
+                # Skipe lines without content
+                if lnlst is None:
+                    continue
+
+                # Read the star name and add the sets in
+                # the dictionaries if they were not there
+                if "star" in lnlst:
+                    star_name = lnlst[-1][:-1]
+                    if star_name not in dict_["fruity"]:
+
+                        # The starname set
+                        dict_["fruity"][star_name] = set()
+                        dict_["monash"][star_name] = set()
+
+                        # Add the list to the repeated models
+                        repeated["fruity"][star_name] = []
+                        repeated["monash"][star_name] = []
+
+                # Add this line in fruity or monash
+                else:
+                    if "fruity" in lnlst[0]:
+                        type_ = "fruity"
+                    elif "monash" in lnlst[0]:
+                        type_ = "monash"
+
+                    # Check if repeated to skip
+                    if lnlst[0] in repeated[type_][star_name]:
+                        continue
+
+                    # Add this model here to avoid repeating it
+                    repeated[type_][star_name].append(lnlst[0])
+
+                    # Add to the set
+                    dict_[type_][star_name].add(tuple(lnlst))
+
+    return dict_
+
+def model_names_read(dict_models, type_):
+    """
+    Create the pandas table
+    """
+
+    # Lists
+    lst_tmp1 = []
+    dils = []
+    starnames = []
+    mods = []
+    masses = []
+    mets = []
+    mod_types = []
+    rotvel = []
+    mmix = []
+    num_star = -1
+
+    # Select dictionary
+    sub_dict = dict_models[type_]
+
+    for star in sub_dict:
+        starnames.append(star)
+        num_star += 1
+        [x.append(y) for x, y in zip([mods, dils, masses, mets, mod_types,
+            rotvel, mmix], [[] for i in range(7)])]
+        lst_tmp1.append({'starname': starnames[num_star], 'mod_files': mods[num_star],
+                         'masses': masses[num_star], 'mets': mets[num_star],
+                         'dils': dils[num_star],
+                         'mod_types': mod_types[num_star],
+                         'rotvel': rotvel[num_star], 'mmix': mmix[num_star]})
+
+        for lnlst in sub_dict[star]:
+
+            # Separate lines in fruity or monash
+            if type_ == "fruity":
+                surfname = lnlst[0][lnlst[0].find('_')+1:] + ".dat"
+                file_name = os.path.join(type_, surfname)
+
+                mods[num_star].append(file_name)
+                [x.append(y) for x, y in zip([masses[num_star], mets[num_star],
+                                              rotvel[num_star], mmix[num_star],
+                                              mod_types[num_star]], [0, 0, 0, 0, ""])] # will be found later with fruity_existing_files2 func
+
+            elif type_ == "monash":
+                surfname = "surf_" + lnlst[0][lnlst[0].rfind('_')+1:] + ".dat"
+                file_name = os.path.join(type_, surfname)
+
+                mods[num_star].append(file_name)
+                mets[num_star].append(patterndict['mon_met'][0][patterndict['mon_met'][1].index(surfname)])
+
+                pos = lnlst[0].find("mix_")+4 # position of m_mix data in input
+                mmix[num_star].append(float(lnlst[0][pos:lnlst[0].find("_", pos)]))
+                pos = lnlst[0].find("_m")+2
+                masses[num_star].append(float(lnlst[0][pos:lnlst[0].find("_", pos)]))
+                [x.append(y) for x, y in zip([rotvel[num_star],
+                                              mod_types[num_star]], [0, ""])] # those are for FRUITY
+
+            dils[num_star].append(float(lnlst[1]))
+
+        df_models = pd.DataFrame(lst_tmp1)
+        df_models.set_index('starname', inplace=True)
+
+    return df_models
+
+if len(sys.argv) < 3:
     s = "Incorrect number of arguments. "
-    s += f"Use: python3 {sys.argv[0]} <file1> <file2> <directory>"
+    s += f"Use: python3 {sys.argv[0]} <file1> [file2 ...] <directory>"
     raise Exception(s)
 
 # Save files with data and directory
@@ -16,17 +155,7 @@ files = sys.argv[1:-1]
 pathn = sys.argv[-1]
 
 # Sort files in fruity and monash
-inp_fr = None
-inp_mon = None
-for file_ in files:
-    if "fruity" in file_:
-        inp_fr = open(file_, "r")
-    elif "monash" in file_:
-        inp_mon = open(file_, "r")
-
-if inp_fr is None or inp_mon is None:
-    s = "Please, provide one file for Monash and another for Fruity"
-    raise Exception(s)
+dict_models = get_dict_models(files)
 
 # Load the red elements
 with open(os.path.join("..", "element_set.dat"), "r") as fread:
@@ -65,83 +194,6 @@ xaxlim, yaxlim, y2axlim = [4.2, 83.6], [-1.3, 2.5], [-0.75, 0.75]  # axis limits
 font = {'family': 'sans-serif', 'size': 52}  # for paper: 42
 plt.rc('font', **font)
 
-def get_clean_lnlst(line):
-    """
-    Clean the input data so it's easier to handle
-    """
-
-    # Split line
-    lnlst = line.split()
-
-    # Return proper value
-    if "Label" in line:
-        return [lnlst[1], lnlst[7]]
-    elif "star" in line:
-        return lnlst
-    else:
-        return None
-
-def model_names_read(inp_file):
-
-    # Lists
-    lst_tmp1 = []
-    dils = []
-    starnames = []
-    mods = []
-    masses = []
-    mets = []
-    mod_types = []
-    rotvel = []
-    mmix = []
-    num_star = -1
-
-
-    for line in inp_file:
-        lnlst = get_clean_lnlst(line)
-
-        # Skipe lines without content
-        if lnlst is None:
-            continue
-
-        if "star" in lnlst:
-            starnames.append(lnlst[-1][:-1])
-            num_star += 1
-            [x.append(y) for x, y in zip([mods, dils, masses, mets, mod_types,
-                rotvel, mmix], [[] for i in range(7)])]
-            lst_tmp1.append({'starname': starnames[num_star], 'mod_files': mods[num_star],
-                             'masses': masses[num_star], 'mets': mets[num_star],
-                             'dils': dils[num_star],
-                             'mod_types': mod_types[num_star],
-                             'rotvel': rotvel[num_star], 'mmix': mmix[num_star]})
-        else:
-
-            # Separate lines in fruity or monash
-            if "fruity" in lnlst[0]:
-                surfname = lnlst[0][lnlst[0].find('_')+1:] + ".dat"
-                file_name = os.path.join("fruity", surfname)
-                mods[num_star].append(file_name)
-                [x.append(y) for x, y in zip([masses[num_star], mets[num_star], rotvel[num_star], mmix[num_star],
-                            mod_types[num_star]], [0, 0, 0, 0, ""])] # will be found later with fruity_existing_files2 func
-
-            elif "monash" in lnlst[0]:
-                surfname = "surf_" + lnlst[0][lnlst[0].rfind('_')+1:] + ".dat"
-                file_name = os.path.join("monash", surfname)
-                mods[num_star].append(file_name)
-                mets[num_star].append(patterndict['mon_met'][0][patterndict['mon_met'][1].index(surfname)])
-
-                pos = lnlst[0].find("mix_")+4 # position of m_mix data in input
-                mmix[num_star].append(float(lnlst[0][pos:lnlst[0].find("_", pos)]))
-                pos = lnlst[0].find("_m")+2
-                masses[num_star].append(float(lnlst[0][pos:lnlst[0].find("_", pos)]))
-                [x.append(y) for x, y in zip([rotvel[num_star], mod_types[num_star]], [0, ""])] # those are for FRUITY
-
-            dils[num_star].append(float(lnlst[1]))
-
-        df_models = pd.DataFrame(lst_tmp1)
-        df_models.set_index('starname', inplace=True)
-
-    return df_models
-
 # atomic numbers for x axis of the plot
 df_atnum = pd.read_csv("inp_model_patterns/atomic_nums.dat", delim_whitespace=True, index_col='Z')
 
@@ -163,8 +215,8 @@ patternfiles = [os.path.join(dir_pattrn, x) for x in patternfiles]
 for nn in range(len(patternarr_name)):  # for each pattern type
     patterndict[patternarr_name[nn]] = funcs_sorter.namefinder_import(patternfiles[nn])
 
-mod_fr = model_names_read(inp_fr)
-mod_mon = model_names_read(inp_mon)
+mod_fr = model_names_read(dict_models, "fruity")
+mod_mon = model_names_read(dict_models, "monash")
 
 starnames_lst = df_all.index.values  # all starnames into a list
 for starn in starnames_lst:  # for each star

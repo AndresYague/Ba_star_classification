@@ -74,12 +74,12 @@ PLOTTING DATA
 
 To use just go to the plotter directory and there run
 
-python3 main.py <file1> <file2> <directory>
+python3 main.py <file1> [file2 ...] <directory>
 
-where "file1" is the path to the first file with output to plot and "file2"
-the second one. "directory" is the path to the directory where the figures
-will be plotted
+where "file1" is the path to the first file with output to plot and "file2",
+"file3", etc are the optional rest. "directory" is the path to the directory
+where the figures will be plotted.
+
+The output files can have any combination of models.
 
 The red stars are the elements taken from element_set.dat
-
-#TODO: Allow for any number of files to be specified
