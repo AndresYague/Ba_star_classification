@@ -42,7 +42,7 @@ def get_closest(data, errors, nn, all_models, all_labels):
     all_distances = []
     all_dilutions = []
     for model in all_models:
-        distances = get_short_distances(use_data, model, tol = 1e-2)
+        distances = get_short_distances(use_data, model)
         all_distances.append(distances)
 
     # Save the numpy arrays
@@ -102,8 +102,15 @@ def load_models(*args):
                 model = np.array(list(map(lambda x: float(x), model)))
 
                 # Save
-                all_models.append(model)
-                all_labels.append(label)
+
+                # If unique, add
+                if len(all_labels) == 0 or label != all_labels[-1]:
+                    all_models.append(model)
+                    all_labels.append(label)
+
+                # If diluted, only take last model
+                else:
+                    all_models[-1] = model
 
     return np.array(all_models), all_labels
 
