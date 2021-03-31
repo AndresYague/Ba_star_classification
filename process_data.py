@@ -130,7 +130,7 @@ def process_fruity(directory, outpt, names, zero = 0, with_dilution = True):
                     raise
 
         # Apply dilutions from kk = 0 to kk = 1 with n steps
-        dk = 0.01
+        dk = 0.001
         kk_arr = np.arange(0, 1 + dk, dk)
         for kk in kk_arr:
 
@@ -209,7 +209,7 @@ def process_monash(directory, outpt, names, zero = 0, with_dilution = True):
                             elems[name] = float(lnlst[4])
 
                     # Apply dilutions from kk = 0 to kk = 1 with difference dk
-                    dk = 0.01
+                    dk = 0.001
                     kk_arr = np.arange(0, 1 + dk, dk)
                     for kk in kk_arr:
 

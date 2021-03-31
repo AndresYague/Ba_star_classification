@@ -28,6 +28,9 @@ def do_mc_this_star(network, data, errors, label_dict, nn,
     # Apply errors
     use_data = apply_errors(data, errors, nn)
 
+    # Modify input so it fits the network training
+    use_data = modify_input(use_data)
+
     # In case size is bearable
     if maxSize is None or maxSize > nn:
         # Propagate

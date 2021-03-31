@@ -1,5 +1,46 @@
 import numpy as np
 
+def modify_input(inputs):
+    """
+    Add features to the inputs so that they fit better the network
+    """
+
+    # Transpose for operation
+    inputs = inputs.T
+
+    # Old length
+    old_len = inputs.shape[0]
+
+    # Calculate new length
+    new_len = (old_len - 2) * (old_len - 1) // 2 + old_len
+
+    # Initialize new input
+    new_inputs = np.zeros((new_len, inputs.shape[1]))
+
+    # Copy first part
+    new_inputs[0:old_len] = inputs
+
+    # Initialize values for loop
+    init = old_len
+    for ii in range(1, old_len):
+
+        # Update slice
+        slice_ = old_len - ii - 1
+
+        # Substract
+        new_inputs[init:init + slice_] = inputs[ii + 1:] - inputs[ii]
+
+        # Update init
+        init += slice_
+
+    # Normalize
+    new_inputs[1:] /= np.mean(np.abs(inputs[1:]), axis = 0)
+
+    # Correct transposition
+    new_inputs = new_inputs.T
+
+    return new_inputs
+
 def apply_errors(arr, arr_err, nn):
     """
     Apply random errors drawn in a MC fashion

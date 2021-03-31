@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import struct, os, sys, random
+from check_data_lib import *
 
 from silence_tensorflow import silence_tensorflow
 silence_tensorflow()
@@ -70,19 +71,23 @@ def create_model(train_inputs, train_labels, label_dict, layers = [],
 
         # Hidden layers
         for lay in layers[1:]:
-            model.add(tf.keras.layers.Dropout(0.1))
+            model.add(tf.keras.layers.Dropout(0.2))
             model.add(tf.keras.layers.Dense(lay, activation = "relu"))
 
         # output layer
+        model.add(tf.keras.layers.Dropout(0.2))
         model.add(tf.keras.layers.Dense(outpt, activation = "sigmoid"))
 
         # Compile
-        model.compile(optimizer = "adam",
+        alpha = 0.002
+        epochs = 10
+        optimizer = tf.keras.optimizers.RMSprop(learning_rate = alpha)
+        model.compile(optimizer = optimizer,
                 metrics = ["sparse_categorical_accuracy"],
                 loss = tf.keras.losses.SparseCategoricalCrossentropy())
 
         # Train
-        model.fit(train_inputs, train_labels, epochs = 10000,
+        model.fit(train_inputs, train_labels, epochs = epochs,
                   validation_split = 0.3)
 
         # Save model
@@ -90,6 +95,87 @@ def create_model(train_inputs, train_labels, label_dict, layers = [],
             model.save(mod_dir)
 
     return model, created
+
+def check_model(model, inputs, labels, label_dict, conf_threshold = 0.75,
+                verbose = False):
+    """
+    Do a check with the provided inputs and labels
+    """
+
+    correct_per_label = [0] * len(labels)
+    total_per_label = [0] * len(labels)
+    confident_per_label = [0] * len(labels)
+    confident_correct_per_label = [0] * len(labels)
+
+    # Predict
+    predictions = model.predict(inputs)
+
+    if verbose:
+        for ii in range(len(predictions)):
+
+            # Confidence
+            conf = np.max(predictions[ii]) + 1e-40
+            conf /= np.sum(predictions[ii]) + 1e-20
+
+            # Check threshold
+            if conf > conf_threshold:
+                confident_per_label[labels[ii]] += 1
+
+            # Add the total
+            total_per_label[labels[ii]] += 1
+
+            # And the correct
+            if labels[ii] == np.argmax(predictions[ii]):
+                correct_per_label[labels[ii]] += 1
+                if conf > conf_threshold:
+                    confident_correct_per_label[labels[ii]] += 1
+
+        s = "\n" + "=" * 10 + "\n"
+        avg = np.average(total_per_label, weights = total_per_label)
+        tot = np.sum(total_per_label)
+        s += "Average cases per label = {:.2f}\n".format(avg)
+        s += f"Total cases = {tot}\n"
+
+        prop = [divide(x, y) for x, y in
+                zip(correct_per_label, total_per_label)]
+        avg = np.average(prop, weights = total_per_label) * 100
+        tot = divide(np.sum(correct_per_label), np.sum(total_per_label)) * 100
+        s += "The average accuracy is {:.2f}%\n".format(avg)
+        s += "The total accuracy is {:.2f}%\n".format(tot)
+
+        prop = [divide(x, y) for x, y in
+                zip(confident_per_label, total_per_label)]
+        avg = np.average(prop, weights = total_per_label) * 100
+        tot = divide(np.sum(confident_per_label), np.sum(total_per_label)) * 100
+        s += "Average confident cases {:.2f}%\n".format(avg)
+        s += "Total confident cases {:.2f}%\n".format(tot)
+
+
+        prop = [divide(x, y) for x, y in
+                zip(confident_correct_per_label, confident_per_label)]
+        avg = np.average(prop, weights = total_per_label) * 100
+        tot = divide(np.sum(confident_correct_per_label),
+                     np.sum(confident_per_label))
+        tot = tot * 100
+        s += "Average confidently correct cases {:.2f}%\n".format(avg)
+        s += "Total confidently correct cases {:.2f}%\n".format(tot)
+
+        print(s)
+
+    # Give tensorflow values
+    test_loss, test_acc = model.evaluate(inputs, labels, verbose = 2)
+
+def divide(a, b):
+    """
+    Safe divide a and b
+    """
+
+    try:
+        return a/b
+    except ZeroDivisionError:
+        return 0
+    except:
+        raise
 
 def main():
     """Create and train neural network"""
@@ -126,6 +212,9 @@ def main():
     # Transform models into input and labels
     inputs, labels, label_dict = give_inputs_labels(all_models)
 
+    # Add more features to the inputs
+    inputs = modify_input(inputs)
+
     # Shuffle models
     inpt_labs = list(zip(inputs, labels))
     random.shuffle(inpt_labs)
@@ -143,7 +232,7 @@ def main():
     test_inputs, test_labels = inputs[ii0:iif], labels[ii0:iif]
 
     # Hidden layers for model
-    layers = [100, 100, 100, 100]
+    layers = [len(label_dict) * 100]
 
     # Create model
     model, created = create_model(train_inputs, train_labels, label_dict,
@@ -159,48 +248,10 @@ def main():
     print(2 * "\n", "=============================", 2 * "\n")
     if created:
         print("Checking with training set")
-        check_model(model, test_inputs, test_labels)
+        check_model(model, test_inputs, test_labels, label_dict, verbose = True)
     else:
         print("Checking with whole set")
-        check_model(model, inputs, labels)
-
-def check_model(model, inputs, labels):
-    """
-    Do a check with the provided inputs and labels
-    """
-
-    test_loss, test_acc = model.evaluate(inputs, labels, verbose = 2)
-
-    # Predict
-    predictions = model.predict(inputs)
-
-    # Count correct cases
-    correct_cases = 0; confident_cases = 0; confident_correct = 0
-    for ii in range(len(predictions)):
-
-        conf = np.max(predictions[ii]) + 1e-40
-        conf /= np.sum(predictions[ii]) + 1e-20
-
-        if labels[ii] == np.argmax(predictions[ii]):
-            correct_cases += 1
-            if conf > 0.75:
-                confident_correct += 1
-
-        if conf > 0.75:
-            confident_cases += 1
-
-    print()
-    acc = correct_cases/len(labels) * 100
-    print("Correct cases = {:.2f}%".format(acc))
-
-    prop = confident_cases/len(labels) * 100
-    print("Proportion of confident cases = {:.2f}%".format(prop))
-
-    try:
-        acc = confident_correct/confident_cases * 100
-    except ZeroDivisionError:
-        acc = 0
-    print("Confidently correct cases = {:.2f}%".format(acc))
+        check_model(model, inputs, labels, label_dict, verbose = True)
 
 if __name__ == "__main__":
     main()
