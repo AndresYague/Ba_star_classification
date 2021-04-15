@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import os
 
 class ErrorClass(object):
     """
@@ -58,6 +59,11 @@ class ErrorClass(object):
             s = f"{self.__str__()}.element_set is not specified"
             raise Exception(s)
 
+        if not os.path.isfile(self.element_set):
+            print(f"File {self.element_set} does not exist")
+            print(f"Element set not loaded")
+            return
+
         with open(self.element_set) as fread:
             for line in fread:
                 lnlst = line.split()
@@ -92,6 +98,11 @@ class ErrorClass(object):
         if self.error_tables is None:
             s = f"{self.__str__()}.error_tables is not specified"
             raise Exception(s)
+
+        if not os.path.isfile(self.error_tables):
+            print(f"File {self.error_tables} does not exist")
+            print(f"Error tables not loaded")
+            return
 
         self.groups = []
         self.element_lines = set()
@@ -145,6 +156,11 @@ class ErrorClass(object):
             s = f"{self}.temperature_table is not specified"
             raise Exception(s)
 
+        if not os.path.isfile(self.temperature_table):
+            print(f"File {self.temperature_table} does not exist")
+            print(f"Temperature table not loaded")
+            return
+
         self.temperatures = {}
         with open(self.temperature_table) as fread:
 
@@ -170,6 +186,14 @@ class ErrorClass(object):
         random_errors = np.random.random((nn, len_))
         random_errors *= 2 * elements_range
         random_errors -= elements_range
+
+        # Return if tables not loaded
+        if self.groups is None:
+            return random_errors
+        if self.temperatures is None:
+            return random_errors
+        if self.element_names is None:
+            return random_errors
 
         # Return if the star is not on the table
         if star_name not in self.temperatures:
