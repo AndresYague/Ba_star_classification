@@ -30,13 +30,13 @@ def get_short_distances(all_data, model, tol = 1e-3):
 
     return all_dist
 
-def get_closest(data, errors, nn, all_models, all_labels):
+def get_closest(data, errors, nn, all_models, all_labels, star_name):
     """
     Find closest model
     """
 
     # Apply errors
-    use_data = apply_errors(data, errors, nn)
+    use_data = apply_errors(star_name, data, errors, nn)
 
     # Get distances and dilutions
     all_distances = []
@@ -186,12 +186,12 @@ def main():
 
         # Get the closest model in monash and then in fruity
         if mode is None:
-            get_closest(data, errors, nn, models_monash, labels_monash)
-            get_closest(data, errors, nn, models_fruity, labels_fruity)
+            get_closest(data, errors, nn, models_monash, labels_monash, name)
+            get_closest(data, errors, nn, models_fruity, labels_fruity, name)
         elif "monash" == mode:
-            get_closest(data, errors, nn, models_monash, labels_monash)
+            get_closest(data, errors, nn, models_monash, labels_monash, name)
         elif "fruity" == mode:
-            get_closest(data, errors, nn, models_fruity, labels_fruity)
+            get_closest(data, errors, nn, models_fruity, labels_fruity, name)
         else:
             raise Exception("mode must be monash or fruity")
 

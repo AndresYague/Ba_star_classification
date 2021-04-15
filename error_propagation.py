@@ -7,20 +7,34 @@ class ErrorClass(object):
     to calculate how the errors depend on each other
     """
 
-    def __init__(self, error_tables = None, temperature_table = None):
+    def __init__(self, error_tables = None, temperature_table = None,
+                 element_set = None, verbose = 0):
         """
         Initialize variables and read tables
         """
 
+        # Files
         self.error_tables = error_tables
         self.temperature_table = temperature_table
+        self.element_set = element_set
+
+        # Variables
+        self.element_names = None
         self.groups = None
         self.temperatures = None
-        self.elements = None
+        self.element_lines = None
+        self.verbose = verbose
+
+        # Header
         self.header = ["temp", "logg", "xi", "feh", "w"]
 
         # Load the tables automatically
-        self.load_tables()
+        if self.element_set is not None:
+            self.load_element_set()
+        if self.error_tables is not None:
+            self.load_error_tables()
+        if self.temperature_table is not None:
+            self.load_temperature_table()
 
     def _transfom_numbers(self, char):
         """
@@ -34,72 +48,217 @@ class ErrorClass(object):
         except:
             raise
 
-    def load_tables(self):
+    def load_element_set(self):
         """
-        Load the error and temperature tables
+        Load the element set to use in this object
+        It will be loaded into self.element_names
+        """
+
+        if self.element_set is None:
+            s = f"{self.__str__()}.element_set is not specified"
+            raise Exception(s)
+
+        with open(self.element_set) as fread:
+            for line in fread:
+                lnlst = line.split()
+
+                # Get first uncommented, non-empty line
+                if len(lnlst) > 0 and lnlst[0][0] != "#":
+                    this_set = lnlst
+                    break
+
+        # Remove "Fe/H" if present
+        try:
+            this_set.remove("Fe/H")
+        except ValueError:
+            pass
+        except:
+            raise
+
+        # Remove the "/Fe" part of the name
+        self.element_names = []
+        for name in this_set:
+            self.element_names.append(name.split("/")[0])
+
+    def load_error_tables(self):
+        """
+        Load the error tables
 
         The error tables are loaded into the self.groups list as
         a dictionary with the temperature, the differences and
         each line errors
-
-        The temperature tables are loaded into self.temperatures
         """
 
-        if self.error_tables is not None:
-            self.groups = []
-            self.elements = set()
-            with open(self.error_tables) as fread:
-                for line in fread:
-                    lnlst = line.split()
+        if self.error_tables is None:
+            s = f"{self.__str__()}.error_tables is not specified"
+            raise Exception(s)
 
-                    if len(lnlst) > 0:
+        self.groups = []
+        self.element_lines = set()
+        with open(self.error_tables) as fread:
+            for line in fread:
+                lnlst = line.split()
 
-                        # Store temperature in kelvin
-                        if "Temp" in line:
-                            self.groups.append({})
-                            self.groups[-1]["temp"] = float(lnlst[-2])
+                if len(lnlst) > 0:
 
-                        # Store the other values
-                        elif "Logg" in line:
-                            self.groups[-1]["logg"] = float(lnlst[-1])
-                        elif "FeH" in line:
-                            self.groups[-1]["feh"] = float(lnlst[-1])
-                        elif "Xi" in line:
-                            self.groups[-1]["xi"] = float(lnlst[-1])
+                    # Store temperature in kelvin
+                    if "Temp" in line:
+                        self.groups.append({})
+                        self.groups[-1]["temp"] = float(lnlst[-2])
 
-                        # Store differences in the measurements
-                        elif "Diff" in line:
-                            numbers = map(self._transfom_numbers, lnlst[2:])
-                            self.groups[-1]["diff"] = list(numbers)
+                    # Store the other values
+                    elif "Logg" in line:
+                        self.groups[-1]["logg"] = float(lnlst[-1])
+                    elif "FeH" in line:
+                        self.groups[-1]["feh"] = float(lnlst[-1])
+                    elif "Xi" in line:
+                        self.groups[-1]["xi"] = float(lnlst[-1])
 
-                        # Store the line name and the differences
-                        # Store element names
-                        else:
-                            numbers = map(self._transfom_numbers, lnlst[1:])
-                            name = lnlst[0]
+                    # Store differences in the measurements
+                    elif "Diff" in line:
+                        numbers = map(self._transfom_numbers, lnlst[2:])
+                        self.groups[-1]["diff"] = list(numbers)
 
-                            self.groups[-1][name] = list(numbers)
-                            self.elements.add(name)
+                    # Store the line name and the differences
+                    # Store element names
+                    else:
+                        numbers = list(map(self._transfom_numbers, lnlst[1:]))
 
-                            # Give value of 0.1 to w when not defined
-                            if self.groups[-1][name][4] == "-":
-                                self.groups[-1][name][4] = 0.1
+                        # Give value of 0.1 to w when not defined
+                        if numbers[4] == "-":
+                            numbers[4] = 0.1
 
-        if self.temperature_table is not None:
-            self.temperatures = {}
-            with open(self.temperature_table) as fread:
+                        sum_abs = np.sum(np.abs(numbers[:-1]))
+                        name = lnlst[0].split("I")[0]
 
-                # Skip header
-                next(fread)
+                        self.groups[-1][name] = (numbers, sum_abs)
+                        self.element_lines.add(name)
 
-                # Now read
-                for line in fread:
-                    lnlst = line.split()
-                    name = lnlst[0]
-                    temperature = float(lnlst[1])
-                    self.temperatures[name] = temperature
+    def load_temperature_table(self):
+        """
+        Load the temperature table
 
-    def get_derivative(self, element, value, measure = "temp"):
+        The temperature table is loaded into self.temperatures
+        """
+
+        if self.temperature_table is None:
+            s = f"{self}.temperature_table is not specified"
+            raise Exception(s)
+
+        self.temperatures = {}
+        with open(self.temperature_table) as fread:
+
+            # Skip header
+            next(fread)
+
+            # Now read
+            for line in fread:
+                lnlst = line.split()
+                name = lnlst[0]
+                temperature = float(lnlst[1])
+                group = int(lnlst[2]) - 9
+                self.temperatures[name] = (temperature, group)
+
+    def calculate_errors(self, star_name, elements_range, nn):
+        """
+        Calculate errors for elements. Those that appear in self.element_lines
+        should be changed with the physical values
+        """
+
+        # Create random errors
+        len_ = len(elements_range)
+        random_errors = np.random.random((nn, len_))
+        random_errors *= 2 * elements_range
+        random_errors -= elements_range
+
+        # Return if the star is not on the table
+        if star_name not in self.temperatures:
+            print("==============================")
+            print(f"{star_name} not in temperature table, skipping")
+            print("==============================")
+            self.plot_correlations(random_errors.T)
+            return random_errors
+
+        # Transpose to substitute
+        random_errors = random_errors.T
+
+        # Retrieve this star group
+        temp, group = self.temperatures[star_name]
+        group = self.groups[group]
+
+        # Now specific errors
+        diffs = np.array(group["diff"])
+        random_changes = np.random.random((nn, diffs.shape[0]))
+        random_changes *= 2 * diffs
+        random_changes -= diffs
+
+        # Put the Fe/H
+        random_errors[0] = random_changes.T[3] / diffs[3] * elements_range[0]
+
+        # For each element, sum the contributions of each error
+        for ii, elem in enumerate(self.element_names):
+
+            # If in the lines
+            if elem in self.element_lines:
+
+                # Apply changes
+                diff_abund = np.array(group[elem][0][:-2])
+                abund_changes = diff_abund / diffs * random_changes
+
+                # Calculate normalized total change
+                total_change = np.sum(abund_changes, axis = 1) / group[elem][1]
+
+                # And now multiply by the appropriate range
+                total_change *= elements_range[ii + 1]
+
+                # Finally substitute the random_errors
+                # Knowing that we are not dealing with Fe/H
+                random_errors[ii + 1] = total_change
+
+        self.plot_correlations(random_errors)
+
+        # Transpose back
+        random_errors = random_errors.T
+
+        return random_errors
+
+    def plot_correlations(self, random_errors):
+        """
+        Plot the covariances between the errors
+        """
+
+        if self.verbose < 1:
+            return
+
+        # How many panels:
+        names = ["Fe/H"] + [x + "/Fe" for x in self.element_names]
+        nn = len(names)
+
+        if self.verbose > 1:
+            fig, axes = plt.subplots(nrows = nn, ncols = nn)
+
+        for ii in range(len(names)):
+            for jj in range(len(names)):
+
+                if self.verbose > 1:
+                    if ii == 0:
+                        axes[ii][jj].set_title(names[jj])
+                    if jj == 0:
+                        axes[ii][jj].set_ylabel(names[ii])
+
+                if jj < ii:
+                    corr = np.corrcoef(random_errors[ii], random_errors[jj])
+                    print(f"Correlation of {names[jj]} and {names[ii]} =",
+                            end = " ")
+                    print(f"{corr[0][1]:.2f}")
+
+                if self.verbose > 1:
+                    axes[ii][jj].plot(random_errors[ii], random_errors[jj], "o")
+
+        if self.verbose > 1:
+            plt.show()
+
+    def _get_derivative(self, element, value, measure = "temp"):
         """
         Give interpolated derivative of desired measure
         """
@@ -137,21 +296,21 @@ class ErrorClass(object):
         # Interpolate
         return np.interp(value, all_x, derivs)
 
-    def calculate_errors(self, elements, elements_range, nn):
-        """
-        Calculate errors for elements. Those that appear in self.elements
-        should be changed with the physical values
-        """
-
-        return NotImplementedError
-
     def plot_changes(self, measure = "temp", type_ = "derivative"):
         """
         Plot how the abundances depend on the index choosen
         """
 
         # Create the x_array
-        all_x = [x[measure] for x in self.groups]
+        try:
+            all_x = [x[measure] for x in self.groups]
+        except KeyError:
+            print("Accepted measures: ")
+            print(self.header[:-1])
+            raise
+        except:
+            raise
+
         all_x.sort()
         all_x = np.array(all_x)
 
@@ -159,8 +318,8 @@ class ErrorClass(object):
         x_array = np.arange(all_x[0], all_x[-1] + dx, dx)
 
         # Now for every element plot the derivatives
-        for element in self.elements:
-            derivs = self.get_derivative(element, x_array, measure = measure)
+        for element in self.element_lines:
+            derivs = self._get_derivative(element, x_array, measure = measure)
 
             if type_ == "derivative":
 
@@ -188,4 +347,4 @@ if __name__ == "__main__":
     errors = ErrorClass(error_tables = "error_tables_ba.dat",
                         temperature_table = "bastars_temp.dat")
 
-    errors.plot_changes(measure = "xi", type_ = "derivative")
+    errors.plot_changes(measure = "temp", type_ = "derivative")

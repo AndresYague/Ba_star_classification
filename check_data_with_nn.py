@@ -20,13 +20,13 @@ def load_label_dict(label_dict_file):
     return label_dict
 
 def do_mc_this_star(network, data, errors, label_dict, nn,
-                    processed_models, maxSize = None):
+                    processed_models, star_name, maxSize = None):
     """
     Calculate the MC runs for this star to the network
     """
 
     # Apply errors
-    use_data = apply_errors(data, errors, nn)
+    use_data = apply_errors(star_name, data, errors, nn)
 
     # Modify input so it fits the network training
     use_data = modify_input(use_data)
@@ -196,7 +196,7 @@ def main():
 
         # Do the MC study here
         do_mc_this_star(network, data, errors, label_dict, nn,
-                        processed_models, maxSize = maxSize)
+                        processed_models, name, maxSize = maxSize)
 
         # Separate for the next case
         print("------")

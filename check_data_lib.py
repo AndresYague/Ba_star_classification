@@ -1,4 +1,5 @@
 import numpy as np
+import error_propagation
 
 def modify_input(inputs):
     """
@@ -41,13 +42,21 @@ def modify_input(inputs):
 
     return new_inputs
 
-def apply_errors(arr, arr_err, nn):
+def apply_errors(star_name, arr, arr_err, nn):
     """
-    Apply random errors drawn in a MC fashion
+    Apply random errors using ErrorClass.calculate_errors
     """
 
     if nn > 0:
-        new_arr = arr + np.random.random((nn, len(arr))) * 2 * arr_err - arr_err
+        errors = error_propagation.ErrorClass(
+                error_tables = "error_tables_ba.dat",
+                temperature_table = "bastars_temp.dat",
+                element_set = "element_set.dat")
+
+        error_diff = errors.calculate_errors(star_name, arr_err, nn)
+        new_arr = arr + error_diff
+
+    # If not applying errors
     else:
         new_arr = arr + np.random.random((1, len(arr))) * 0
 
