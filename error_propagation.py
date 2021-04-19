@@ -298,7 +298,7 @@ class ErrorClass(object):
             raise
 
         # Get derivatives
-        m_change = np.array([x[element][index] for x in self.groups])
+        m_change = np.array([x[element][0][index] for x in self.groups])
         diffs = np.array([x["diff"][index] for x in self.groups])
 
         derivs = m_change / diffs
