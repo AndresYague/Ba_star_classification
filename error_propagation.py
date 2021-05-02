@@ -22,6 +22,7 @@ class ErrorClass(object):
         # Variables
         self.element_names = None
         self.groups = None
+        self.average_group = None
         self.temperatures = None
         self.element_lines = None
         self.verbose = verbose
@@ -105,6 +106,7 @@ class ErrorClass(object):
             return
 
         self.groups = []
+        self.average_group = {}
         self.element_lines = set()
         with open(self.error_tables) as fread:
             for line in fread:
@@ -127,8 +129,11 @@ class ErrorClass(object):
 
                     # Store differences in the measurements
                     elif "Diff" in line:
-                        numbers = map(self._transfom_numbers, lnlst[2:])
-                        self.groups[-1]["diff"] = list(numbers)
+                        numbers = list(map(self._transfom_numbers, lnlst[2:]))
+                        self.groups[-1]["diff"] = numbers
+
+                        # Add to average group
+                        self._add_to_average("diff", numbers)
 
                     # Store the line name and the differences
                     # Store element names
@@ -144,6 +149,61 @@ class ErrorClass(object):
 
                         self.groups[-1][name] = (numbers, sum_abs)
                         self.element_lines.add(name)
+
+                        # Add to average group
+                        self._add_to_average(name, numbers)
+
+        # Do average
+        nn = len(self.groups)
+        for key in self.average_group:
+            for ii, val in enumerate(self.average_group[key]):
+
+                # Skip undefined values
+                if val == "-":
+                    continue
+
+                self.average_group[key][ii] /= nn
+
+            # Nothing else to do
+            if key == "diff":
+                continue
+
+            # If this key is not "diff", add the absolute sum
+            numbers = self.average_group[key]
+            sum_abs = np.sum(np.abs(numbers[:-1]))
+            self.average_group[key] = (numbers, sum_abs)
+
+    def _add_to_average(self, key, new):
+        """
+        Add new list to key value of self.average_group
+        """
+
+        # If key is already there, add
+        if key in self.average_group:
+            next_ = self._add_lists(self.average_group[key], new)
+            self.average_group[key] = next_
+
+        # Otherwise, set new one
+        else:
+            self.average_group[key] = new
+
+    def _add_lists(self, current, new):
+        """
+        Piecewise sum of mixed lists. Returns current + new
+        """
+
+        new_values = []
+        for ii in range(len(current)):
+
+            # If undefined value, return undefined value
+            if current[ii] == "-" or new[ii] == "-":
+                new_values.append("-")
+
+            # Else, just add
+            else:
+                new_values.append(current[ii] + new[ii])
+
+        return new_values
 
     def load_temperature_table(self):
         """
@@ -175,7 +235,7 @@ class ErrorClass(object):
                 group = int(lnlst[2]) - 9
                 self.temperatures[name] = (temperature, group)
 
-    def calculate_errors(self, star_name, elements_range, nn):
+    def calculate_errors(self, star_name, elements_range, nn, use_average=True):
         """
         Calculate errors for elements. Those that appear in self.element_lines
         should be changed with the physical values
@@ -206,9 +266,14 @@ class ErrorClass(object):
         # Transpose to substitute
         random_errors = random_errors.T
 
+        # Check which group to use:
+        if use_average:
+            group = self.average_group
+
         # Retrieve this star group
-        temp, group = self.temperatures[star_name]
-        group = self.groups[group]
+        else:
+            temp, group = self.temperatures[star_name]
+            group = self.groups[group]
 
         # Now specific errors
         diffs = np.array(group["diff"])
