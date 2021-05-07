@@ -124,8 +124,7 @@ def main():
     """
 
     if len(sys.argv) < 3:
-        print(f"Use: python3 {sys.argv[0]} <network> <nn>")
-        return 1
+        sys.exit(f"Use: python3 {sys.argv[0]} <network> <nn>")
 
     # Load network
     dirname = sys.argv[1]

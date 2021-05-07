@@ -120,8 +120,7 @@ def main():
     """
 
     if len(sys.argv) < 2:
-        print(f"Use: python3 {sys.argv[0]} <nn> [models]")
-        return 1
+        sys.exit(f"Use: python3 {sys.argv[0]} <nn> [models]")
 
     # Get nn
     nn = int(float(sys.argv[1]))

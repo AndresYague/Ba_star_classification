@@ -136,7 +136,13 @@ def get_distance(model, data):
     """
 
     # L square
-    dist = np.mean((model - data) ** 2)
+    len_shape = len(data.shape)
+    if len_shape == 2:
+        dist = np.mean((model - data) ** 2, axis = 1)
+    elif len_shape == 1:
+        dist = np.mean((model - data) ** 2)
+    else:
+        raise NotImplementedError
 
     return dist
 

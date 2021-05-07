@@ -184,8 +184,7 @@ def main():
     if len(sys.argv) > 1:
         mod_dir = sys.argv[1]
     else:
-        print(f"Use: python3 {sys.argv[0]} <network_name>")
-        return 1
+        sys.exit(f"Use: python3 {sys.argv[0]} <network_name>")
 
     # Read the data
     if "fruity" in mod_dir:

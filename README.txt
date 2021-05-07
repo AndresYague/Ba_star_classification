@@ -55,6 +55,8 @@ python3 check_data_with_nn.py <network_name> <MC_nn>
 where <MC_nn> is the number of runs to explore the uncertainty values for the
 classification. If MC_nn == 0, then errors are not applied.
 
+The output will be written to stdout.
+
 ============================================================================
 CLOSEST ELEMENT CLASSIFICATION
 ============================================================================
@@ -68,9 +70,14 @@ argument that can be either "fruity" or "monash". If [models] is not given,
 the classification for all the models will be done. Otherwise, it will done
 only for the chosen model set.
 
+The output will be written to stdout.
+
 ============================================================================
 PLOTTING DATA
 ============================================================================
+
+This script needs the output from the classificators to be written into a
+textfile.
 
 To use just go to the plotter directory and there run
 
