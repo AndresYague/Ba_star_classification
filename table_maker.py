@@ -239,8 +239,7 @@ def write_into_latex_table(star_di,tab_name,tab_label,tab_caption):
     
     num_columns=len(star_di[starname].keys())
     cols=4 #labels, prob, dil, res
-            
-    #table_def='\\begin{landscape}\n\\begin{longtable}{c'
+
     table_def='\\begin{longtable}{c'
     for i in range(num_columns):
         table_def += '|l'+'c'*(cols-1)
@@ -278,8 +277,7 @@ def write_into_latex_table(star_di,tab_name,tab_label,tab_caption):
         g.write('\\hline\n')
         #stop
     g.write('\\hline\n')        
-    
-    #table_end=('\\end{longtable}\n\\end{landscape}')
+
     table_end=('\\end{longtable}')
     g.write(table_end)       
        
@@ -295,15 +293,6 @@ def main():
        raise Exception(s)
 
     files = sys.argv[1:]
-    
-    '''#Check if fruity and monash files are included (which is bad!)
-    P,Q=0,0
-    for filename in files:        
-        if 'fruity' in filename:
-           Q=1
-           
-        elif 'monash' in filename:
-           P=1'''
             
     #Make dictionaries with all the data 
     dict_models,dict_stars = read_files_into_dicts(files)
@@ -312,7 +301,7 @@ def main():
     create_names_table('names.tex')
     
     #Set name, label, caption of table
-    table_name='Latex_set2corr.tex'
+    table_name='Latex_table_results.tex'
     table_label='tab:one'    
     table_caption='caption check'
     

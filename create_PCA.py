@@ -1,51 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import struct, os, sys
+
 from numpy import linalg as LA
+from PCA_lib import *
 
-def give_inputs_labels(all_models):
-    """
-    Divide into input and labels
-    """
-    inputs = []
-    labels = []
-    label_dict = {}
-    labellist = []
-    ii = 0
-    for model in all_models:
-        lnlst = model.split()
-
-        # Add the inputs
-        inputs.append(np.array(list(map(lambda x: float(x), lnlst[0:-1]))))
-        label = lnlst[-1]
-        labellist.append(label)
-
-        # Number the label
-        if label not in label_dict:
-            label_dict[label] = ii
-            ii += 1
-
-        labels.append(label_dict[label])
-
-    return np.array(inputs), np.array(labels), label_dict, labellist
-
-def feature_normalise(inputs):
-    '''Performing mean normalisation and feature scaling'''
-
-    mu = inputs.mean(0)
-    X_norm1 = inputs-mu
-    sigma = X_norm1.std(0)
-
-    return X_norm1/sigma, mu, sigma
-
-def PCA(inputs_norm,mu):
-    '''Find the eigenvalues and eigenvectors'''
-
-    Sigma = (1/len(mu))*np.cov(inputs_norm.T)
-    #print(np.cov(inputs_norm.T))
-    eigval,eigvec = LA.eig(Sigma)
-
-    return eigval, eigvec
 
 def save_eigs(eigval,eigvec,filename):
     '''Save this network in file'''
@@ -54,22 +13,7 @@ def save_eigs(eigval,eigvec,filename):
        np.save(fwrite,eigval)
        for eigv in eigvec:
            np.save(fwrite, eigv)
-
-def ProjectData(inputs,eigvec,K):
-    '''Calculate the reduced data set'''
-
-    Vec_reduce = eigvec[0:K,:].T
-    Z = np.matmul(inputs,Vec_reduce)
-
-    return Z
-
-def RecoverData(outputs,eigvec,K):
-    '''Approximate original input'''
-
-    Vec_reduce = eigvec[0:K,:].T
-    approx_X = np.matmul(outputs,Vec_reduce.T)
-
-    return approx_X 
+ 
 
 def GetError(model,data):
     '''Calculate distance between model and data
@@ -100,6 +44,7 @@ def GetError(model,data):
 
     return dist
     
+    
 def plot_error(err):
     '''Plot the error between original and approximated data '''
     
@@ -110,6 +55,7 @@ def plot_error(err):
     plt.axhline(y=0.05, color='k', linestyle='--')
     plt.plot(listmu,err)
     plt.show()
+    
 
 def main():
     """Create PCA framework and plot the outcome to decide on the numbe
@@ -118,10 +64,13 @@ def main():
     #Get file names from input
     if len(sys.argv) < 2:
        s = "Incorrect number of arguments. "
-       s += f"Use: python3 {sys.argv[0]} <processed_models.....txt> "
+       s += f"Use: python3 {sys.argv[0]} <monash or fruity> "
        raise Exception(s)
 
-    models = sys.argv[1]
+    if sys.argv[1]=='monash':
+        models = 'processed_models_monash.txt'
+    if sys.argv[1]=='fruity':
+        models = 'processed_models_fruity.txt'    
 
     all_models = []
     with open(models, "r") as fread:
@@ -135,16 +84,12 @@ def main():
     inputs=inputs_full #[:,1:]
 
     # Perform mean normalisation and feature scaling
-    inputs_norm,mu,sigma = feature_normalise(inputs)
-
     # Calculate the eigenvalues and eigenvectors
-    eigval,eigvec = PCA(inputs_norm,mu)
+    eigval,eigvec,mu = get_PCs(inputs)
 
     # Save the eigval and eigvec
     filename_eigs = 'eigenVs'    
     save_eigs(eigval,eigvec,filename_eigs)
-    #print(eigval)
-    #print(eigvec)
 
     # Calculate the dim. reduced data, approx data, and distance using K eigenvectors
     err = np.zeros(len(mu))
@@ -155,8 +100,7 @@ def main():
        err[K] = np.mean(approx_error)
     
     s='Now you can decide on how many eigenvectors you want to include\n' 
-    s+='in your PCA classification. We added a dashed line at the 5% error,\n' 
-    s+='for your convenience.'
+    s+='in your PCA classification. We added a dashed line at the 5% error.'
     print(s)
     
     #Plot error on distance between model and approx model vs K eigenvectors

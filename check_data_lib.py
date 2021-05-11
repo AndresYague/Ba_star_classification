@@ -129,16 +129,22 @@ def calculate_dilution(data, model, processed_models = None, lower = 0,
             minDil = kk
 
     return minDil, minDist
-
+    
 def get_distance(model, data):
     """
     Calculate a distance between model and data
     """
 
     # L square
-    dist = np.mean((model - data) ** 2)
+    len_shape = len(data.shape)
+    if len_shape == 2:
+        dist = np.mean((model - data) ** 2, axis = 1)
+    elif len_shape == 1:
+        dist = np.mean((model - data) ** 2)
+    else:
+        raise NotImplementedError
 
-    return dist
+    return dist    
 
 def get_one_gradient(k_arr, coef, log_x_k, data, k):
     """
