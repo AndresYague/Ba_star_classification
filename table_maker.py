@@ -1,16 +1,97 @@
 import os, glob, re, sys
+import string
 import numpy as np
+
+def short_name_generator(name, shortnames):
+    '''
+    Generate a short name from a long name
+    '''
+
+    # Break down the name
+    split_name = name.split("_")
+
+    # Fruity or monash?
+    if "fruity" in name:
+
+        # Break down the name further
+        split_name = split_name[1].split("z")
+
+        # Get the mass
+        mass = split_name[0].replace("p", ".")
+
+        # Get the metallicity
+        metallicity = "z"
+        try:
+            metallicity += "0" * (int(split_name[1][-1]) - 1)
+            metallicity += split_name[1][0]
+        except ValueError:
+            metallicity += "014"
+        except:
+            raise
+
+        # Final short name
+        short = f"F-{mass}{metallicity}"
+
+    elif "monash" in name:
+        short += "M-"
+
+        # Mass and metallicity
+        mass = split_name[1]
+        metallicity = split_name[-1]
+
+        short = f"M-{mass}{metallicity}"
+
+    else:
+        raise Exception("Cannot transform this name")
+
+    # Put the letter at the end
+    for letter in string.ascii_lowercase:
+        if short + letter not in shortnames:
+            return short + letter
 
 def new_names():
     '''Fills the name-lists'''
 
-    fullnames=['fruity_m3p0z1m3_000', 'fruity_m4p0z1m2_000', 'fruity_m2p0zsun_060', 'fruity_m2p0z2m2_000', 'fruity_m1p3z8m3_000', 'fruity_m1p5z2m2_000', 'fruity_m3p0z3m4_000', 'fruity_m2p5z2m3_000', 'fruity_m5p0z2m3_000', 'fruity_m2p0z2m3_000', 'fruity_m1p5z2m3_000', 'fruity_m2p5z2m2_000', 'fruity_m1p3z3m3_000', 'fruity_m6p0z2m3_000', 'fruity_m4p0z3m4_000', 'fruity_m2p0z6m3_ext', 'fruity_m1p5z3m3_060', 'fruity_m3p0z1m2_000', 'fruity_m1p5z6m3_ext', 'fruity_m4p0z1m3_000', 'fruity_m2p5z3m3_000', 'fruity_m6p0z8m3_000', 'fruity_m4p0z6m3_000', 'fruity_m1p5z8m3_000', 'fruity_m1p5z1m3_ext', 'fruity_m2p0zsun_000', 'fruity_m2p0z8m3_000', 'fruity_m2p0z1m3_ext', 'fruity_m5p0z3m3_000', 'fruity_m1p5zsun_000', 'fruity_m1p5z3m3_000', 'fruity_m5p0zsun_000', 'fruity_m2p0zsun_010', 'fruity_m5p0z8m3_000', 'fruity_m2p0z3m3_000', 'fruity_m1p5z1m2_ext', 'fruity_m2p5z8m3_000', 'fruity_m1p3z2m3_000', 'fruity_m2p5zsun_000', 'fruity_m2p0z1m2_ext', 'fruity_m3p0z6m3_000', 'fruity_m2p0z6m3_000', 'fruity_m1p5z6m3_000', 'fruity_m3p0z3m3_000', 'fruity_m2p0z1m2_T60', 'fruity_m1p5z1m2_060', 'fruity_m6p0z6m3_000', 'fruity_m4p0z8m3_000', 'fruity_m1p5z1m2_T60', 'fruity_m4p0zsun_000', 'fruity_m1p5z2m3_ext', 'fruity_m1p3z1m3_000', 'fruity_m1p5z3m4_T60', 'fruity_m2p0zsun_030', 'fruity_m1p5z3m4_060', 'fruity_m4p0z3m3_000', 'fruity_m3p0z8m3_000', 'fruity_m1p3z3m4_000', 'fruity_m3p0zsun_000', 'fruity_m2p5z6m3_000', 'fruity_m5p0z6m3_000', 'fruity_m1p5z1m3_060', 'fruity_m1p5z1m3_T60', 'fruity_m5p0z3m4_000', 'fruity_m4p0z2m2_000', 'fruity_m3p0z2m3_000', 'fruity_m2p5z3m4_000', 'fruity_m1p3z6m3_000', 'fruity_m1p5z3m3_ext', 'fruity_m1p5z6m3_060', 'fruity_m6p0z1m2_000', 'fruity_m2p0z3m3_ext', 'fruity_m5p0z1m3_000', 'fruity_m2p5z1m3_000', 'fruity_m1p5z1m2_000', 'fruity_m2p0z1m2_000', 'fruity_m6p0z1m3_000', 'fruity_m5p0z1m2_000', 'fruity_m2p0zsun_ext', 'fruity_m2p5z1m2_000', 'fruity_m1p5z1m3_000', 'fruity_m2p0z1m3_000', 'fruity_m6p0z3m4_000', 'fruity_m4p0z2m3_000', 'fruity_m2p0z3m4_000', 'fruity_m3p0z2m2_000', 'fruity_m1p5z3m4_000', 'monash_m1.25_mix_2.00E-03_z0028', 'monash_m1.25_mix_6.00E-03_z0028', 'monash_m1.50_mix_2.00E-03_z0028', 'monash_m1.50_mix_6.00E-03_z0028', 'monash_m1.75_mix_2.00E-03_z0028', 'monash_m2.00_mix_2.00E-03_z0028', 'monash_m2.00_mix_6.00E-03_z0028', 'monash_m2.25_mix_2.00E-03_z0028', 'monash_m2.50_mix_2.00E-03_z0028', 'monash_m2.50_mix_4.00E-03_z0028', 'monash_m2.75_mix_2.00E-03_z0028', 'monash_m3.00_mix_1.00E-03_z0028', 'monash_m3.00_mix_2.00E-03_z0028', 'monash_m3.25_mix_1.00E-03_z0028', 'monash_m3.50_mix_1.00E-03_z0028', 'monash_m4.00_mix_1.00E-04_z0028', 'monash_m4.50_mix_0.00E+00_z0028', 'monash_m4.50_mix_1.00E-04_z0028', 'monash_m5.00_mix_0.00E+00_z0028', 'monash_m5.50_mix_0.00E+00_z0028', 'monash_m6.00_mix_0.00E+00_z0028', 'monash_m6.50_mix_0.00E+00_z0028', 'monash_m7.00_mix_0.00E+00_z0028', 'monash_m1.50_mix_2.00E-03_N_ov_3.0_z014', 'monash_m1.75_mix_2.00E-03_N_ov_2.0_z014', 'monash_m2.00_mix_1.00E-03_z014', 'monash_m2.00_mix_2.00E-03_z014', 'monash_m2.00_mix_4.00E-03_z014', 'monash_m2.25_mix_2.00E-03_z014', 'monash_m2.50_mix_2.00E-03_z014', 'monash_m2.75_mix_2.00E-03_z014', 'monash_m3.00_mix_1.00E-04_z014', 'monash_m3.00_mix_1.00E-03_z014', 'monash_m3.00_mix_2.00E-03_z014', 'monash_m3.25_mix_1.00E-03_z014', 'monash_m3.25_mix_2.00E-03_z014', 'monash_m3.50_mix_1.00E-03_z014', 'monash_m3.75_mix_1.00E-03_z014', 'monash_m4.00_mix_1.00E-04_z014', 'monash_m4.00_mix_1.00E-03_z014', 'monash_m4.25_mix_1.00E-04_z014', 'monash_m4.25_mix_1.00E-03_z014', 'monash_m4.50_mix_1.00E-04_z014', 'monash_m4.50_mix_1.00E-03_z014', 'monash_m4.75_mix_1.00E-04_z014', 'monash_m5.00_mix_1.00E-04_z014', 'monash_m5.50_mix_0.00E+00_z014', 'monash_m7.00_mix_0.00E+00_z014', 'monash_m8.00_mix_0.00E+00_z014', 'monash_m2.00_mix_2.00E-03_z01', 'monash_m3.00_mix_2.00E-03_z01', 'monash_m1.50_mix_2.00E-03_N_ov_0.0_z007', 'monash_m1.50_mix_2.00E-03_N_ov_1.0_z007', 'monash_m1.75_mix_2.00E-03_N_ov_0.0_z007', 'monash_m1.75_mix_2.00E-03_N_ov_1.0_z007', 'monash_m1.90_mix_2.00E-03_z007', 'monash_m2.10_mix_2.00E-03_z007', 'monash_m2.25_mix_2.00E-03_z007', 'monash_m2.50_mix_2.00E-03_z007', 'monash_m2.75_mix_2.00E-03_z007', 'monash_m3.00_mix_1.00E-03_z007', 'monash_m3.00_mix_2.00E-03_z007', 'monash_m3.25_mix_1.00E-03_z007', 'monash_m3.50_mix_1.00E-03_z007', 'monash_m3.75_mix_1.00E-03_z007', 'monash_m4.00_mix_1.00E-04_z007', 'monash_m4.00_mix_1.00E-03_z007', 'monash_m4.25_mix_1.00E-04_z007', 'monash_m4.50_mix_0.00E+00_z007', 'monash_m4.50_mix_1.00E-04_z007', 'monash_m4.75_mix_0.00E+00_z007', 'monash_m5.00_mix_0.00E+00_z007', 'monash_m5.50_mix_0.00E+00_z007', 'monash_m6.00_mix_0.00E+00_z007', 'monash_m7.00_mix_0.00E+00_z007', 'monash_m7.50_mix_0.00E+00_z007', 'monash_m2.50_mix_2.00E-03_N_ov_2.5_z03', 'monash_m2.75_mix_2.00E-03_N_ov_0.0_z03', 'monash_m2.75_mix_2.00E-03_N_ov_2.0_z03', 'monash_m3.00_mix_2.00E-03_N_ov_0.0_z03', 'monash_m3.00_mix_2.00E-03_N_ov_1.0_z03', 'monash_m3.25_mix_1.00E-03_z03', 'monash_m3.25_mix_2.00E-03_z03', 'monash_m3.50_mix_1.00E-03_z03', 'monash_m3.75_mix_1.00E-03_z03', 'monash_m4.00_mix_1.00E-03_z03', 'monash_m4.25_mix_1.00E-04_z03', 'monash_m4.25_mix_1.00E-03_z03', 'monash_m4.50_mix_1.00E-04_z03', 'monash_m4.50_mix_1.00E-03_z03', 'monash_m4.75_mix_1.00E-04_z03', 'monash_m5.00_mix_1.00E-04_z03', 'monash_m8.00_mix_0.00E+00_z03']
+    fullnames = []
+    shortnames = []
 
-    shortnames=['F-m3.0z001a', 'F-m4.0z01a', 'F-m2.0z014a', 'F-m2.0z02a', 'F-m1.3z008a', 'F-m1.5z02a', 'F-m3.0z0003a', 'F-m2.5z002a', 'F-m5.0z002a', 'F-m2.0z002a', 'F-m1.5z002a', 'F-m2.5z02a', 'F-m1.3z003a','F-m6.0z002a', 'F-m4.0z0003a', 'F-m2.0z006a', 'F-m1.5z003a', 'F-m3.0z01a', 'F-m1.5z006a', 'F-m4.0z001a', 'F-m2.5z003a', 'F-m6.0z008a', 'F-m4.0z006a', 'F-m1.5z008a', 'F-m1.5z001a', 'F-m2.0z014b', 'F-m2.0z008a', 'F-m2.0z001a', 'F-m5.0z003a', 'F-m1.5z014a', 'F-m1.5z003b', 'F-m5.0z014a', 'F-m2.0z014c', 'F-m5.0z008a', 'F-m2.0z003a', 'F-m1.5z01a', 'F-m2.5z008a', 'F-m1.3z002a', 'F-m2.5z014a', 'F-m2.0z01a', 'F-m3.0z006a', 'F-m2.0z006b', 'F-m1.5z006b', 'F-m3.0z003a', 'F-m2.0z01b', 'F-m1.5z01b', 'F-m6.0z006a', 'F-m4.0z008a', 'F-m1.5z01c', 'F-m4.0z014a', 'F-m1.5z002b', 'F-m1.3z001a', 'F-m1.5z0003a', 'F-m2.0z014d', 'F-m1.5z0003b', 'F-m4.0z003a', 'F-m3.0z008a', 'F-m1.3z0003a', 'F-m3.0z014a', 'F-m2.5z006a', 'F-m5.0z006a', 'F-m1.5z001b', 'F-m1.5z001c', 'F-m5.0z0003a', 'F-m4.0z02a', 'F-m3.0z002a', 'F-m2.5z0003a', 'F-m1.3z006a', 'F-m1.5z003c', 'F-m1.5z006c', 'F-m6.0z01a', 'F-m2.0z003b', 'F-m5.0z001a', 'F-m2.5z001a', 'F-m1.5z01d', 'F-m2.0z01c', 'F-m6.0z001a', 'F-m5.0z01a', 'F-m2.0z014e', 'F-m2.5z01a', 'F-m1.5z001d', 'F-m2.0z001b', 'F-m6.0z0003a', 'F-m4.0z002a', 'F-m2.0z0003a', 'F-m3.0z02a', 'F-m1.5z0003c',
+    if os.path.isfile("all_names.txt"):
 
-    'M-m1.25z0028a', 'M-m1.25z0028b', 'M-m1.5z0028a', 'M-m1.5z0028b', 'M-m1.75z0028a', 'M-m2.0z0028a', 'M-m2.0z0028b', 'M-m2.25z0028a', 'M-m2.5z0028a', 'M-m2.5z0028b', 'M-m2.75z0028a', 'M-m3.0z0028a', 'M-m3.0z0028b', 'M-m3.25z0028a', 'M-m3.5z0028a', 'M-m4.0z0028a', 'M-m4.5z0028a', 'M-m4.5z0028b', 'M-m5.0z0028a', 'M-m5.5z0028a', 'M-m6.0z0028a', 'M-m6.5z0028a', 'M-m7.0z0028a', 'M-m1.5z014a', 'M-m1.75z014a', 'M-m2.0z014a', 'M-m2.0z014b', 'M-m2.0z014c', 'M-m2.25z014a', 'M-m2.5z014a', 'M-m2.75z014a', 'M-m3.0z014a', 'M-m3.0z014b', 'M-m3.0z014c', 'M-m3.25z014a', 'M-m3.25z014b', 'M-m3.5z014a', 'M-m3.75z014a', 'M-m4.0z014a', 'M-m4.0z014b', 'M-m4.25z014a', 'M-m4.25z014b', 'M-m4.5z014a', 'M-m4.5z014b', 'M-m4.75z014a', 'M-m5.0z014a', 'M-m5.5z014a', 'M-m7.0z014a', 'M-m8.0z014a', 'M-m2.0z01a', 'M-m3.0z01a', 'M-m1.5z007a', 'M-m1.5z007b', 'M-m1.75z007a', 'M-m1.75z007b', 'M-m1.9z007a', 'M-m2.1z007a', 'M-m2.25z007a', 'M-m2.5z007a', 'M-m2.75z007a', 'M-m3.0z007a', 'M-m3.0z007b', 'M-m3.25z007a', 'M-m3.5z007a', 'M-m3.75z007a', 'M-m4.0z007a', 'M-m4.0z007b', 'M-m4.25z007a', 'M-m4.5z007a', 'M-m4.5z007b', 'M-m4.75z007a', 'M-m5.0z007a', 'M-m5.5z007a', 'M-m6.0z007a', 'M-m7.0z007a', 'M-m7.5z007a', 'M-m2.5z03a', 'M-m2.75z03a', 'M-m2.75z03b', 'M-m3.0z03a', 'M-m3.0z03b', 'M-m3.25z03a', 'M-m3.25z03b', 'M-m3.5z03a', 'M-m3.75z03a', 'M-m4.0z03a', 'M-m4.25z03a', 'M-m4.25z03b', 'M-m4.5z03a', 'M-m4.5z03b', 'M-m4.75z03a', 'M-m5.0z03a', 'M-m8.0z03a']
+        # Load names from all_names.txt file
+        with open("all_names.txt", "r") as fread:
+            for line in fread:
+                name, short = line.split()
 
-    return(fullnames,shortnames)
+                fullnames.append(name)
+                shortnames.append(short)
+
+    else:
+
+        files = ["processed_models_fruity.txt",
+                 "processed_models_monash.txt"]
+
+        for file_ in files:
+            with open(file_, "r") as fread:
+                # Skip header
+                next(fread)
+
+                # Get names
+                for line in fread:
+                    name = line.split()[-1]
+
+                    # Put names if not there
+                    if name not in fullnames:
+                        short = short_name_generator(name, shortnames)
+
+                        fullnames.append(name)
+                        shortnames.append(short)
+
+        # Save names in all_names.txt file
+        with open("all_names.txt", "w") as fwrite:
+            for name, short in zip(fullnames, shortnames):
+                fwrite.write(f"{name} {short}\n")
+
+    return fullnames, shortnames
 
 def name_check(name):
     '''This function rrenames the models with a short name'''
@@ -51,7 +132,8 @@ def create_names_table(filename):
     tab_lab = 'tab:names'
 
     #Step 3: Write headings etc to table
-    table_def='\\begin{longtable}{ll}\n\\centering\n\\caption{'+tab_cap+'}\\label{'+tab_lab+'}\\\ \n'
+    table_def = '\\begin{longtable}{ll}\n\\centering\n\\caption{'
+    table_def += tab_cap + '}\\label{' + tab_lab + '}\\\ \n'
     g.write(table_def)
 
     tab_headings='Full name & Short name \\\ \n'
@@ -182,11 +264,9 @@ def write_into_latex_table(star_di,tab_name,tab_label,tab_caption):
         for filename in star_di[starname].keys():
             if 'fruity' in filename:
                rem_name = 'M-'
-               i=0
                break
             elif 'monash' in filename:
                rem_name = 'F-'
-               i=-1
                break
             else:
                rem_name = 'Q-'
@@ -199,7 +279,7 @@ def write_into_latex_table(star_di,tab_name,tab_label,tab_caption):
             values = star_di[starname][filename]
 
             if len(values) > 0:
-               while rem_name in values[0][0]:
+               while len(values) > 0 and rem_name in values[0][0]:
                   star_di[starname][filename].remove(values[0])
 
             if len(values) > 1:
@@ -290,7 +370,7 @@ def main():
     if len(sys.argv) < 3:
        s = "Incorrect number of arguments. "
        s += f"Use: python3 {sys.argv[0]} <file1> [file2 ...]"
-       raise Exception(s)
+       sys.exit(s)
 
     files = sys.argv[1:]
 
