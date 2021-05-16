@@ -129,7 +129,7 @@ def calculate_dilution(data, model, processed_models = None, lower = 0,
             minDil = kk
 
     return minDil, minDist
-    
+
 def get_distance(model, data):
     """
     Calculate a distance between model and data
@@ -144,7 +144,7 @@ def get_distance(model, data):
     else:
         raise NotImplementedError
 
-    return dist    
+    return dist
 
 def get_one_gradient(k_arr, coef, log_x_k, data, k):
     """

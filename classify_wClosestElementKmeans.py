@@ -12,11 +12,11 @@ def main():
     Load data and pass the Ba stars data
     """
     nn=1e4
-    
+
     if len(sys.argv) < 2:
-        s= "Incorrect number of arguments. "        
+        s= "Incorrect number of arguments. "
         s+= f"Use: python3 {sys.argv[0]} <nn (1e5?)> [monash? fruity? or leave empty]"
-        sys.exit(s) 
+        sys.exit(s)
 
     # Get nn
     nn = int(float(sys.argv[1]))
@@ -34,18 +34,18 @@ def main():
          for line in fread:
              all_models.append(line)
          # Transform models into input and labels
-         inputs_M, labels_M, label_dict_M, labellist_M = give_inputs_labels(all_models) 
-            
+         inputs_M, labels_M, label_dict_M, labellist_M = give_inputs_labels(all_models)
 
-    file_F = "processed_models_fruity.txt" 
+
+    file_F = "processed_models_fruity.txt"
     all_models = []
     with open(file_F, "r") as fread:
          header = fread.readline()
          for line in fread:
              all_models.append(line)
          # Transform models into input and labels
-         inputs_F, labels_F, label_dict_F, labellist_F = give_inputs_labels(all_models)     
-         
+         inputs_F, labels_F, label_dict_F, labellist_F = give_inputs_labels(all_models)
+
 
     # Load Ba stars data
     all_data = []; all_names = []; all_errors = []
@@ -128,21 +128,21 @@ def main():
         print("For star {}:".format(name))
         if mode is None:
            do_mc_this_star(inputs_M, data, errors, name, labellist_M,
-                        dict_k_means_M, nn, file_M)                
+                        dict_k_means_M, nn, file_M)
            do_mc_this_star(inputs_F, data, errors, name, labellist_F,
-                        dict_k_means_F, nn, file_F)    
-                            
+                        dict_k_means_F, nn, file_F)
+
         elif mode=='monash':
            do_mc_this_star(inputs_M, data, errors, name, labellist_M,
                         dict_k_means_M, nn, file_M)
-                        
-        elif mode=='fruity':                
+
+        elif mode=='fruity':
            do_mc_this_star(inputs_F, data, errors, name, labellist_F,
-                        dict_k_means_F, nn, file_F)                                        
-                        
+                        dict_k_means_F, nn, file_F)
+
         else:
             raise Exception("mode must be monash or fruity")
-                                    
+
         # Separate for the next case
         print("------")
         print()

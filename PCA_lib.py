@@ -18,8 +18,8 @@ def get_PCs(inputs):
     eigval,eigvec = LA.eig(Sigma)
 
     return eigval, eigvec, mu
-    
-    
+
+
 def ProjectData(inputs,eigvec,K):
     '''Calculate the reduced data set'''
 
@@ -27,7 +27,7 @@ def ProjectData(inputs,eigvec,K):
     Z = np.matmul(inputs,Vec_reduce)
 
     return Z
-    
+
 
 def RecoverData(outputs,eigvec,K):
     '''Approximate original input'''
@@ -35,9 +35,9 @@ def RecoverData(outputs,eigvec,K):
     Vec_reduce = eigvec[0:K,:].T
     approx_X = np.matmul(outputs,Vec_reduce.T)
 
-    return approx_X  
-    
-    
+    return approx_X
+
+
 def load_eigs(filename):
     '''Load eigenvectors in file'''
 
@@ -49,9 +49,9 @@ def load_eigs(filename):
     eigval=np.array(eigs[0])
     eigvec=np.array(eigs[1:])
 
-    return eigval,eigvec    
-  
-    
+    return eigval,eigvec
+
+
 def give_inputs_labels(all_models):
     """Divide into input and labels    """
 
@@ -76,7 +76,7 @@ def give_inputs_labels(all_models):
         labels.append(label_dict[label])
 
     return np.array(inputs), np.array(labels), label_dict,labellist
-    
+
 def find_distance_models(inputs, use_data, maxSize = 1e4):
     ''' Calculate the closest model to the star+err in reduced dimensions'''
 
@@ -116,8 +116,8 @@ def find_distance_models(inputs, use_data, maxSize = 1e4):
         ii += 1
 
     return idxMin, min_dist, sum_dist
-    
-    
+
+
 def do_mc_this_star(inputs, data, errors, name, labellist,
                     dict_k_means, nn, file_models, eigvec=None, K=0):
     """
@@ -180,7 +180,7 @@ def do_mc_this_star(inputs, data, errors, name, labellist,
                 labels += [inpt_to_label[tuple(dict_k_means[key][int(i)])]
                            for i in indx]
 
-                # Add new distances 
+                # Add new distances
                 sum_dist += np.sum((get_distance(x, use_data[init:end])
                                     for x in keys), axis = 1)
 
@@ -226,7 +226,7 @@ def do_mc_this_star(inputs, data, errors, name, labellist,
 
     # Normalize and calculate dilution
     for key in norm_labels:
-    
+
         # Normalize
         norm_labels[key] /= norm_fact
         threshold=0.9
@@ -239,5 +239,5 @@ def do_mc_this_star(inputs, data, errors, name, labellist,
                                                        norm_labels[key] * 100)
             s += " dilution {:.2f} average residual {:.2f}".format(dilut, resd)
             print(s)
-            
-            
+
+

@@ -5,7 +5,7 @@ import time, sys
 from k_means_lib import *
 from check_data_lib import *
 from PCA_lib import *
-   
+
 
 def save_proj_obs(proj_obs,all_names,filename):
     ''' Save projected observations with their names'''
@@ -25,14 +25,14 @@ def main():
        s = "Incorrect number of arguments. "
        s += f"Use: python3 {sys.argv[0]} <monash or fruity> <MC nn> <# of eigenvectors>"
        sys.exit(s)
-       
+
     if sys.argv[1]=='monash':
         models = 'processed_models_monash.txt'
     elif sys.argv[1]=='fruity':
-        models = 'processed_models_fruity.txt' 
-        
+        models = 'processed_models_fruity.txt'
+
     nn = int(float(sys.argv[2]))
-    
+
     # Load Ba stars data
     all_data = []; all_names = []; all_errors = []
     with open("processed_data.txt", "r") as fread:
@@ -83,7 +83,7 @@ def main():
     # Transform models into input and labels
     inputs_full, labels, label_dict, labellist = give_inputs_labels(all_models)
     # Option to remove metallicity from PCA by adding: [:,1:]
-    inputs=inputs_full #[:,1:]   
+    inputs=inputs_full #[:,1:]
 
     # Calculate projected data
     all_data_full=np.array(all_data)
@@ -108,7 +108,7 @@ def main():
     # Do a K-means of the proj_mod with k = sqrt(dim)
     Knum=int(sys.argv[3])
     proj_mod = ProjectData(inputs,eigvec,Knum)
-        
+
     if nn >= 1e4:
 
         print("Doing the k-means ...")
