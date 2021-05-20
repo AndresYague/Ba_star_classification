@@ -89,35 +89,30 @@ def main():
     start = time.time()
 
     # Do a K-means of the proj_mod with k = sqrt(dim)
-    if nn >= 1e4:
 
-        print("Doing the k-means ...")
+    print("Doing the k-means ...")
 
-        # Instantiate class monash
-        k_means = K_means(inputs_M)
+    # Instantiate class monash
+    k_means = K_means(inputs_M)
 
-        # Do k-means
-        n_k = int(np.sqrt(len(inputs_M)))
-        k_means.do_k_means(n_k, tol = 1e-1, attempts = 1)
+    # Do k-means
+    n_k = int(np.sqrt(len(inputs_M)))
+    k_means.do_k_means(n_k, tol = 1e-1, attempts = 1)
 
-        # Get dictionary
-        dict_k_means_M = k_means.get_min_dictionary()
-        print("Done M")
+    # Get dictionary
+    dict_k_means_M = k_means.get_min_dictionary()
+    print("Done M")
 
-        # Instantiate class fruity
-        k_means = K_means(inputs_F)
+    # Instantiate class fruity
+    k_means = K_means(inputs_F)
 
-        # Do k-means
-        n_k = int(np.sqrt(len(inputs_F)))
-        k_means.do_k_means(n_k, tol = 1e-1, attempts = 1)
+    # Do k-means
+    n_k = int(np.sqrt(len(inputs_F)))
+    k_means.do_k_means(n_k, tol = 1e-1, attempts = 1)
 
-        # Get dictionary
-        dict_k_means_F = k_means.get_min_dictionary()
-        print("Done F")
-
-    # Ignore K-means if nn is not too large
-    else:
-        dict_k_means = None
+    # Get dictionary
+    dict_k_means_F = k_means.get_min_dictionary()
+    print("Done F")
 
     for ii in range(len(all_names)):
         data = all_data[ii]

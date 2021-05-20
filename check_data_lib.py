@@ -107,7 +107,7 @@ def calculate_dilution(data, model, processed_models = None, lower = 0,
                     break
 
         if model is None:
-            raise Exception("Label {} not found".format(label))
+            raise Exception(f"Label {label} not found")
 
         # Now transform into floats and np array
         model = np.array(list(map(lambda x: float(x), model)))

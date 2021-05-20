@@ -82,7 +82,7 @@ def get_string_names(feH, elems, names, label):
             ss += " -"
         else:
             # Add to the string
-            ss += " {:5.2f}".format(val)
+            ss += f" {val:5.4f}"
 
     # Add newline
     ss += " " + label + "\n"
@@ -305,7 +305,7 @@ def process_data(data_file, processed_data, names):
         # First the header
         header = "#"
         for name in names:
-            header += " {0} {0}_err".format(name)
+            header += f" {name} {name}_err"
         header += " Name\n"
 
         fwrite.write(header)
@@ -315,11 +315,12 @@ def process_data(data_file, processed_data, names):
             s = ""
             for name in names:
                 try:
-                    s += " {:5.2f} {:5.2f}    ".format(dic[name], dic[name + "_err"])
+                    name_err = name + "_err"
+                    s += f" {dic[name]:5.2f} {dic[name_err]:5.2f}    "
                 except ValueError:
                     s += "   -     -      "
 
-            s += "{}\n".format(dic["name"])
+            s += f"{dic['name']}\n"
             fwrite.write(s)
 
 def main():
