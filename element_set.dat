@@ -9,3 +9,6 @@ Fe/H Rb/Fe Sr/Fe Zr/Fe Y/Fe La/Fe Ce/Fe Nd/Fe Eu/Fe
 
 # Set 3
 Fe/H Rb/Fe Sr/Fe Zr/Fe Y/Fe La/Fe Ce/Fe Nd/Fe Eu/Fe Sm/Fe Ru/Fe
+
+# Set 4 (set 2 without La)
+Fe/H Rb/Fe Sr/Fe Zr/Fe Y/Fe Ce/Fe Nd/Fe Eu/Fe

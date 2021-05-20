@@ -73,7 +73,47 @@ only for the chosen model set.
 The output will be written to stdout.
 
 ============================================================================
-PLOTTING DATA
+PCA CLASSIFICATION
+============================================================================
+
+To use the PCA classificator, first the PCs have to be calculated with 
+create_PCA. The command is:
+
+python3 create_PCA.py <name>
+
+where <name> is the name of the processed models data that should be used. 
+This will create the PCs, save them to a file, and create a figure showing 
+the error between original and approximated data set. With this figure you 
+can determine the number of eigenvectors you want to include in the 
+classification (we suggest to use the lowest number of eigenvectors with an 
+error below 5%).
+
+To classify with PCA, just run:
+
+python3 classify_wPCA.py <name> <MC_nn> <# of eigenvectors>
+
+where <name> and <MC_nn> have the same meaning as before, and 
+<# of eigenvectors> is the number of eigenvectors that you want to include.
+
+The output will be written to stdout.
+
+============================================================================
+CLOSEST ELEMENT CLASSIFICATION WITH K-MEANS
+============================================================================
+
+To use the closest element classificator with k-means, just run
+
+python3 classify_wClosestElementKmeans.py <MC_nn> [models]
+
+where <MC_nn> has the same meaning as before, and [models] is an optional
+argument that can be either "fruity" or "monash". If [models] is not given,
+the classification for all the models will be done. Otherwise, it will done
+only for the chosen model set.
+
+The output will be written to stdout.
+
+============================================================================
+PLOTTING RESULTS
 ============================================================================
 
 This script needs the output from the classificators to be written into a
@@ -90,3 +130,37 @@ where the figures will be plotted.
 The output files can have any combination of models.
 
 The red stars are the elements taken from element_set.dat
+
+============================================================================
+MAKING A LATEX TABLE WITH RESULTS
+============================================================================
+
+This script needs the output from the classificators to be written into a 
+textfile. 
+
+To use just run:
+
+python3 table_maker.py <file1> [file2 ...]
+
+The latex table with be saved as 'Latex_table_results.tex', which includes
+shortened names of the models. The second table, 'names.tex', lists the 
+long and shortened names of all models. If the names of the files contain 
+either "fruity" or "monash", then the table will only list the fruity or
+monash results, respectively. 
+
+#TODO:
+automate the name change 
+
+============================================================================
+PLOTTING PCA VISUALISATION
+============================================================================
+
+PCA can also be used to visualise data-sets by reducing the dimensions to 2.
+To do this just run:
+
+python3 PCA_plot.py <models> <MC_nn> [highlight a star? like 'BD-142678']
+
+where models and MC_nn have the same meaning as before, and there is an 
+extra option to highlight one star to show the uncertainty range in 2D. 
+
+

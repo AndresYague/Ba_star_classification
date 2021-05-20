@@ -3,6 +3,7 @@
 *.pdf
 label_dict*
 *.png
+*.tex
 
 # Directories
 __pycache__
