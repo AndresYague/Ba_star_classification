@@ -13,7 +13,7 @@ def modify_input(inputs):
     old_len = inputs.shape[0]
 
     # Calculate new length
-    new_len = (old_len - 2) * (old_len - 1) // 2 + old_len
+    new_len = (old_len - 1) * old_len // 2 + old_len
 
     # Initialize new input
     new_inputs = np.zeros((new_len, inputs.shape[1]))
@@ -21,9 +21,12 @@ def modify_input(inputs):
     # Copy first part
     new_inputs[0:old_len] = inputs
 
+    # Normalize
+    new_inputs[1:] /= np.mean(np.abs(inputs[1:]), axis = 0)
+
     # Initialize values for loop
     init = old_len
-    for ii in range(1, old_len):
+    for ii in range(old_len):
 
         # Update slice
         slice_ = old_len - ii - 1
@@ -33,9 +36,6 @@ def modify_input(inputs):
 
         # Update init
         init += slice_
-
-    # Normalize
-    new_inputs[1:] /= np.mean(np.abs(inputs[1:]), axis = 0)
 
     # Correct transposition
     new_inputs = new_inputs.T
