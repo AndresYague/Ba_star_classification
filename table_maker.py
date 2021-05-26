@@ -33,7 +33,6 @@ def short_name_generator(name, shortnames):
         short = f"F-{mass}{metallicity}"
 
     elif "monash" in name:
-        short += "M-"
 
         # Mass and metallicity
         mass = split_name[1]
