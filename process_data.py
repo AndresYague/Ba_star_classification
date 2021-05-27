@@ -82,7 +82,7 @@ def get_string_names(feH, elems, names, label):
             ss += " -"
         else:
             # Add to the string
-            ss += f" {val:5.4f}"
+            ss += f" {val:5.2f}"
 
     # Add newline
     ss += " " + label + "\n"
