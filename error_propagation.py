@@ -256,7 +256,7 @@ class ErrorClass(object):
             return random_errors
 
         # Return if the star is not on the table
-        if star_name not in self.temperatures:
+        if star_name not in self.temperatures and not use_average:
             print("==============================")
             print(f"{star_name} not in temperature table, skipping")
             print("==============================")
