@@ -1,8 +1,99 @@
 import os, glob
+import string
 import numpy as np
 
 ZERO_ERROR = 0.5
 MIN_VAL_ERR = 1e-2
+
+def short_name_generator(name, shortnames):
+    '''
+    Generate a short name from a long name
+    '''
+
+    # Break down the name
+    split_name = name.split("_")
+
+    # Fruity or monash?
+    if "fruity" in name:
+
+        # Break down the name further
+        split_name = split_name[1].split("z")
+
+        # Get the mass
+        mass = split_name[0].replace("p", ".")
+
+        # Get the metallicity
+        metallicity = "z"
+        try:
+            metallicity += "0" * (int(split_name[1][-1]) - 1)
+            metallicity += split_name[1][0]
+        except ValueError:
+            metallicity += "014"
+        except:
+            raise
+
+        # Final short name
+        short = f"F-{mass}{metallicity}"
+
+    elif "monash" in name:
+
+        # Mass and metallicity
+        mass = split_name[1]
+        metallicity = split_name[-1]
+
+        short = f"M-{mass}{metallicity}"
+
+    else:
+        raise Exception("Cannot transform this name")
+
+    # Put the letter at the end
+    for letter in string.ascii_lowercase:
+        if short + letter not in shortnames:
+            return short + letter
+
+def new_names():
+    '''Fills the name-lists'''
+
+    fullnames = []
+    shortnames = []
+
+    if os.path.isfile("all_names.txt"):
+
+        # Load names from all_names.txt file
+        with open("all_names.txt", "r") as fread:
+            for line in fread:
+                name, short = line.split()
+
+                fullnames.append(name)
+                shortnames.append(short)
+
+    else:
+
+        files = ["processed_models_fruity.txt",
+                 "processed_models_monash.txt"]
+
+        for file_ in files:
+            with open(file_, "r") as fread:
+                # Skip header
+                next(fread)
+
+                # Get names
+                for line in fread:
+                    name = line.split()[-1]
+
+                    # Put names if not there
+                    if name not in fullnames:
+                        short = short_name_generator(name, shortnames)
+
+                        fullnames.append(name)
+                        shortnames.append(short)
+
+        # Save names in all_names.txt file
+        with open("all_names.txt", "w") as fwrite:
+            for name, short in zip(fullnames, shortnames):
+                fwrite.write(f"{name} {short}\n")
+
+    return fullnames, shortnames
 
 def convert_metallicity(zz):
     """
@@ -206,11 +297,16 @@ def apply_dilution(elems, kk, names, zero=0):
 
     # Just apply the formula to each element in name
     new_elements = {}
-    for key in elems:
+    for name in elems:
 
         # Skip metallicity
-        if (key in names) and (key != "Fe/H"):
-            new_elements[name] = np.log10((1 - kk) + kk * 10 ** elems[name])
+        if (name in names) and (name != "Fe/H"):
+            try:
+                new_elements[name] = np.log10((1 - kk) + kk * 10 ** elems[name])
+            except TypeError:
+                new_elements[name] = elems[name]
+            except:
+                raise
         else:
             new_elements[name] = elems[name]
 

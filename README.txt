@@ -6,6 +6,8 @@ Use of the software:
 PROCESS DATA
 ============================================================================
 
+All processing data scripts are in the data_processing_and_plotting directory
+
 All of the classificators need a first run of process_data.py. To run it:
 
 python3 process_data.py [y/n]
@@ -76,23 +78,23 @@ The output will be written to stdout.
 PCA CLASSIFICATION
 ============================================================================
 
-To use the PCA classificator, first the PCs have to be calculated with 
+To use the PCA classificator, first the PCs have to be calculated with
 create_PCA. The command is:
 
 python3 create_PCA.py <name>
 
-where <name> is the name of the processed models data that should be used. 
-This will create the PCs, save them to a file, and create a figure showing 
-the error between original and approximated data set. With this figure you 
-can determine the number of eigenvectors you want to include in the 
-classification (we suggest to use the lowest number of eigenvectors with an 
+where <name> is the name of the processed models data that should be used.
+This will create the PCs, save them to a file, and create a figure showing
+the error between original and approximated data set. With this figure you
+can determine the number of eigenvectors you want to include in the
+classification (we suggest to use the lowest number of eigenvectors with an
 error below 5%).
 
 To classify with PCA, just run:
 
 python3 classify_wPCA.py <name> <MC_nn> <# of eigenvectors>
 
-where <name> and <MC_nn> have the same meaning as before, and 
+where <name> and <MC_nn> have the same meaning as before, and
 <# of eigenvectors> is the number of eigenvectors that you want to include.
 
 The output will be written to stdout.
@@ -119,9 +121,9 @@ PLOTTING RESULTS
 This script needs the output from the classificators to be written into a
 textfile.
 
-To use just go to the plotter directory and there run
+To use just go to the data_processing_and_plotting directory and there run
 
-python3 main.py <file1> [file2 ...] <directory>
+python3 plot_stars.py <file1> [file2 ...] <directory>
 
 where "file1" is the path to the first file with output to plot and "file2",
 "file3", etc are the optional rest. "directory" is the path to the directory
@@ -135,21 +137,18 @@ The red stars are the elements taken from element_set.dat
 MAKING A LATEX TABLE WITH RESULTS
 ============================================================================
 
-This script needs the output from the classificators to be written into a 
-textfile. 
+This script needs the output from the classificators to be written into a
+textfile.
 
-To use just run:
+To use just go to data_processing_and_plotting and run:
 
 python3 table_maker.py <file1> [file2 ...]
 
 The latex table with be saved as 'Latex_table_results.tex', which includes
-shortened names of the models. The second table, 'names.tex', lists the 
-long and shortened names of all models. If the names of the files contain 
+shortened names of the models. The second table, 'names.tex', lists the
+long and shortened names of all models. If the names of the files contain
 either "fruity" or "monash", then the table will only list the fruity or
-monash results, respectively. 
-
-#TODO:
-automate the name change 
+monash results, respectively.
 
 ============================================================================
 PLOTTING PCA VISUALISATION
@@ -160,7 +159,5 @@ To do this just run:
 
 python3 PCA_plot.py <models> <MC_nn> [highlight a star? like 'BD-142678']
 
-where models and MC_nn have the same meaning as before, and there is an 
-extra option to highlight one star to show the uncertainty range in 2D. 
-
-
+where models and MC_nn have the same meaning as before, and there is an
+extra option to highlight one star to show the uncertainty range in 2D.
