@@ -187,10 +187,13 @@ def main():
         sys.exit(f"Use: python3 {sys.argv[0]} <network_name>")
 
     # Read the data
+    data_directory = "data_processing_and_plotting"
     if "fruity" in mod_dir:
         models_file = "processed_models_fruity.txt"
+        models_file = os.path.join(data_directory, models_file)
     elif "monash" in mod_dir:
         models_file = "processed_models_monash.txt"
+        models_file = os.path.join(data_directory, models_file)
 
     all_models = []
     with open(models_file, "r") as fread:

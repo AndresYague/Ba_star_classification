@@ -172,8 +172,7 @@ def plot_this_data(data, name_z, ax1, ax2, fmt, fmtMk="", label=None, mec=None,
 
                 # Positive residuals only
                 try:
-                    diff = data[name] - data_compare[name]
-                    residual = diff ** 2
+                    residual = data_compare[name] - data[name]
                 except TypeError:
                     continue
                 except:
@@ -289,7 +288,7 @@ def plot_results(predicted_models_dict, fruity_models_dict,
 
         # Adjust axes
         ax1.set_xlim([min(name_z.keys()) - 1, max(name_z.keys()) + 1])
-        ax2.set_ylim([-0.1, 0.72])
+        ax2.set_ylim([-0.72, 0.72])
         ax1.tick_params(which="both", right=True, labelsize=FONTSIZE)
         ax1.minorticks_on()
         ax2.tick_params(which="both", right=True, labelsize=FONTSIZE)
