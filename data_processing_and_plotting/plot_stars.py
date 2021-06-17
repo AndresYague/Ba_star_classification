@@ -317,7 +317,7 @@ def plot_results(predicted_models_dict, fruity_models_dict,
 
         # Put legend outside of plot
         ncol = min(6, n_plots + 1)
-        print(key, ncol)
+        print("Plotting: {key}")
         ax1.legend(loc="upper center", bbox_to_anchor=(0.5, -0.75), ncol=ncol,
                     fontsize=FONTSIZE)
 

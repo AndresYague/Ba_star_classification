@@ -1,4 +1,5 @@
 import numpy as np
+import os
 import error_propagation
 
 def modify_input(inputs):
@@ -48,10 +49,11 @@ def apply_errors(star_name, arr, arr_err, nn):
     """
 
     if nn > 0:
+        dir_path = "data_processing_and_plotting"
         errors = error_propagation.ErrorClass(
                 error_tables = "error_tables_ba.dat",
                 temperature_table = "bastars_temp.dat",
-                element_set = "element_set.dat")
+                element_set = os.path.join(dir_path, "element_set.dat"))
 
         error_diff = errors.calculate_errors(star_name, arr_err, nn)
         new_arr = arr + error_diff
@@ -197,10 +199,6 @@ def find_k(model, data, tol = 1e-3):
             grad1 = get_one_gradient(k_arr, coef, log_x_k, data, k1)
 
             first = False
-        else:
-            # Otherwise we can use the previous calculation
-            grad0 = (sum0 * gradm + dif0 * grad0) * 0.5
-            grad1 = (sum1 * gradm + dif1 * grad1) * 0.5
 
         # Get signs
         sign0 = np.sign(grad0)
@@ -217,11 +215,15 @@ def find_k(model, data, tol = 1e-3):
         k0 = (sum0 * km + dif0 * k0) * 0.5
         k1 = (sum1 * km + dif1 * k1) * 0.5
 
+        # And change gradients too
+        grad0 = (sum0 * gradm + dif0 * grad0) * 0.5
+        grad1 = (sum1 * gradm + dif1 * grad1) * 0.5
+
         # Get the middle point
         new_km = (k0 + k1) * 0.5
 
         # Check if converged
-        dif = np.abs(new_km[0] - km[0])
+        dif = np.max(np.abs(new_km - km))
         if dif < tol:
             return new_km
 

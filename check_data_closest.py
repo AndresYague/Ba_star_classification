@@ -1,5 +1,6 @@
 import sys
 import numpy as np
+import os
 from check_data_lib import *
 
 def get_short_distances(all_data, model, tol = 1e-3):
@@ -130,8 +131,16 @@ def main():
     if len(sys.argv) > 2:
         mode = sys.argv[2]
 
+    dir_path = "data_processing_and_plotting"
+
     file_monash = "processed_models_monash.txt"
+    file_monash = os.path.join(dir_path, file_monash)
+
     file_fruity = "processed_models_fruity.txt"
+    file_fruity = os.path.join(dir_path, file_fruity)
+
+    file_data = "processed_data.txt"
+    file_data = os.path.join(dir_path, file_data)
 
     # Load all these models
     models_monash, labels_monash = load_models(file_monash)
@@ -139,7 +148,7 @@ def main():
 
     # Now load Ba stars data
     all_data = []; all_names = []; all_errors = []
-    with open("processed_data.txt", "r") as fread:
+    with open(file_data, "r") as fread:
         header = fread.readline().split()[1:]
         for line in fread:
             lnlst = line.split()

@@ -151,7 +151,7 @@ def main():
     print(s)
 
     # Load element set
-    with open("element_set.dat") as fread:
+    with open("element_set.dat", "r") as fread:
         for line in fread:
             lnlst = line.split()
 
