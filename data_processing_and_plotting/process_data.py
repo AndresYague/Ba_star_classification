@@ -2,7 +2,7 @@ import os, glob, sys
 import numpy as np
 from process_data_lib import *
 
-DK_STEP = 0.001
+DK_STEP = 0.0005
 
 def process_data(data_file, output_file, names):
     """

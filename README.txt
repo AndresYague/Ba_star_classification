@@ -36,11 +36,15 @@ NEURAL NETWORK CLASSIFICATION
 To use the neural network classificator, first the neural network must be
 created with create_network. The command is:
 
-python3 create_network.py <network_name>
+python3 create_network.py <network_name> [n_tries]
 
 network_name is the name for the directory that will save the network. This
 name must contain either "fruity" or "monash", which will indicate to the
 script what processed models data should be used.
+
+n_tries is the number of networks that will be tried before a best network
+will be chosen. By default n_tries = 1 and will only be used if a new network
+is being created (so not an existing model is passed).
 
 If an existing model is passed, it will just test it by using the available
 data.

@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import struct, os, sys, random
+import struct, os, sys, random, shutil
 from check_data_lib import *
 
 from silence_tensorflow import silence_tensorflow
@@ -71,15 +71,18 @@ def create_model(train_inputs, train_labels, label_dict, layers = [],
 
         # Hidden layers
         for lay in layers[1:]:
-            model.add(tf.keras.layers.Dropout(0.2))
             model.add(tf.keras.layers.Dense(lay, activation = "relu"))
+            model.add(tf.keras.layers.Dropout(0.2))
 
         # output layer
-        model.add(tf.keras.layers.Dropout(0.2))
         model.add(tf.keras.layers.Dense(outpt, activation = "sigmoid"))
 
+        # Choose alpha
+        alpha = 0.0015
+        if mod_dir is not None and "fruity" in mod_dir:
+            alpha = 0.001
+
         # Compile
-        alpha = 0.002
         epochs = 10
         optimizer = tf.keras.optimizers.RMSprop(learning_rate = alpha)
         model.compile(optimizer = optimizer,
@@ -139,16 +142,16 @@ def check_model(model, inputs, labels, label_dict, conf_threshold = 0.75,
         prop = [divide(x, y) for x, y in
                 zip(correct_per_label, total_per_label)]
         avg = np.average(prop, weights = total_per_label) * 100
-        tot = divide(np.sum(correct_per_label), np.sum(total_per_label)) * 100
+        acc = divide(np.sum(correct_per_label), np.sum(total_per_label)) * 100
         s += "The average accuracy is {:.2f}%\n".format(avg)
-        s += "The total accuracy is {:.2f}%\n".format(tot)
+        s += "The total accuracy is {:.2f}%\n".format(acc)
 
         prop = [divide(x, y) for x, y in
                 zip(confident_per_label, total_per_label)]
         avg = np.average(prop, weights = total_per_label) * 100
-        tot = divide(np.sum(confident_per_label), np.sum(total_per_label)) * 100
+        conf = divide(np.sum(confident_per_label), np.sum(total_per_label)) * 100
         s += "Average confident cases {:.2f}%\n".format(avg)
-        s += "Total confident cases {:.2f}%\n".format(tot)
+        s += "Total confident cases {:.2f}%\n".format(conf)
 
 
         prop = [divide(x, y) for x, y in
@@ -165,6 +168,8 @@ def check_model(model, inputs, labels, label_dict, conf_threshold = 0.75,
     # Give tensorflow values
     test_loss, test_acc = model.evaluate(inputs, labels, verbose = 2)
 
+    return acc, conf
+
 def divide(a, b):
     """
     Safe divide a and b
@@ -177,45 +182,7 @@ def divide(a, b):
     except:
         raise
 
-def main():
-    """Create and train neural network"""
-
-    # Create or load model
-    if len(sys.argv) > 1:
-        mod_dir = sys.argv[1]
-    else:
-        sys.exit(f"Use: python3 {sys.argv[0]} <network_name>")
-
-    # Read the data
-    data_directory = "data_processing_and_plotting"
-    if "fruity" in mod_dir:
-        models_file = "processed_models_fruity.txt"
-        models_file = os.path.join(data_directory, models_file)
-    elif "monash" in mod_dir:
-        models_file = "processed_models_monash.txt"
-        models_file = os.path.join(data_directory, models_file)
-
-    all_models = []
-    with open(models_file, "r") as fread:
-        header = fread.readline()
-        for line in fread:
-            all_models.append(line)
-
-    # Now divide in training, CV and test
-    tot_num = len(all_models)
-    train_num = int(tot_num * 0.8)
-    test_num = tot_num - train_num
-
-    # Report back numbers
-    print("Total models: {}".format(tot_num))
-    print("Train models: {}".format(train_num))
-    print("Test models: {}".format(test_num))
-
-    # Transform models into input and labels
-    inputs, labels, label_dict = give_inputs_labels(all_models)
-
-    # Add more features to the inputs
-    inputs = modify_input(inputs)
+def create_a_network(inputs, labels, label_dict, train_num, test_num, mod_dir):
 
     # Shuffle models
     inpt_labs = list(zip(inputs, labels))
@@ -250,10 +217,101 @@ def main():
     print(2 * "\n", "=============================", 2 * "\n")
     if created:
         print("Checking with training set")
-        check_model(model, test_inputs, test_labels, label_dict, verbose = True)
+        acc, conf = check_model(model, test_inputs, test_labels, label_dict,
+                                verbose = True)
     else:
         print("Checking with whole set")
-        check_model(model, inputs, labels, label_dict, verbose = True)
+        acc, conf = check_model(model, inputs, labels, label_dict,
+                                verbose = True)
+
+    # Clear state
+    tf.keras.backend.clear_session()
+
+    return acc, conf
+
+def main():
+    """Create and train neural network"""
+
+    # Create or load model
+    if len(sys.argv) > 1:
+        mod_dir = sys.argv[1]
+    else:
+        sys.exit(f"Use: python3 {sys.argv[0]} <network_name> [n_tries]")
+
+    if len(sys.argv) > 2:
+        n_tries = int(sys.argv[2])
+    else:
+        n_tries = 1
+
+    # Read the data
+    data_directory = "data_processing_and_plotting"
+    if "fruity" in mod_dir:
+        models_file = "processed_models_fruity.txt"
+        models_file = os.path.join(data_directory, models_file)
+    elif "monash" in mod_dir:
+        models_file = "processed_models_monash.txt"
+        models_file = os.path.join(data_directory, models_file)
+
+    all_models = []
+    with open(models_file, "r") as fread:
+        header = fread.readline()
+        for line in fread:
+            all_models.append(line)
+
+    # Now divide in training, CV and test
+    tot_num = len(all_models)
+    train_num = int(tot_num * 0.8)
+    test_num = tot_num - train_num
+
+    # Report back numbers
+    print("Total models: {}".format(tot_num))
+    print("Train models: {}".format(train_num))
+    print("Test models: {}".format(test_num))
+
+    # Transform models into input and labels
+    inputs, labels, label_dict = give_inputs_labels(all_models)
+
+    # Add more features to the inputs
+    inputs = modify_input(inputs)
+
+    # Make sure to not try 5 models if not creating
+    model_exists = os.path.isdir(mod_dir)
+    if model_exists:
+        create_a_network(inputs, labels, label_dict, train_num, test_num,
+                         mod_dir)
+        return 0
+
+    # Make models
+    models_dict = {}
+    for ii in range(n_tries):
+        this_dir = mod_dir + f"_{ii}"
+
+        acc, conf = create_a_network(inputs, labels, label_dict, train_num,
+                                     test_num, this_dir)
+        models_dict[this_dir] = (acc, conf)
+
+    best = None
+    for key in models_dict:
+        if best is None:
+            best = key
+            best_acc = models_dict[key][0]
+            best_conf = models_dict[key][1]
+            continue
+
+        count = models_dict[key][0] + models_dict[key][1]
+        if count > best_acc + best_conf:
+            best = key
+            best_acc = models_dict[key][0]
+            best_conf = models_dict[key][1]
+
+    # Remove all not best
+    for key in models_dict:
+        if key != best:
+            shutil.rmtree(key)
+
+    print(f"Choosing: {best}, acc = {models_dict[best][0]:.2f}%,", end = " ")
+    print(f"conf = {models_dict[best][1]:.2f}%")
+    os.rename(best, mod_dir)
 
 if __name__ == "__main__":
     main()
