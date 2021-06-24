@@ -138,15 +138,22 @@ def main():
     label_dict_file = os.path.join(dirname, label_name)
     label_dict = load_label_dict(label_dict_file)
 
+    # Directory with data
+    dir_data = "data_processing_and_plotting"
+
     # File with models
     if "fruity" in dirname:
         processed_models = "processed_models_fruity.txt"
     elif "monash" in dirname:
         processed_models = "processed_models_monash.txt"
 
+    # Modify path of files to point to dir_data
+    processed_models = os.path.join(dir_data, processed_models)
+    data_file = os.path.join(dir_data, "processed_data.txt")
+
     # Now load Ba stars data
     all_data = []; all_names = []; all_errors = []
-    with open("processed_data.txt", "r") as fread:
+    with open(data_file, "r") as fread:
         header = fread.readline().split()[1:]
         for line in fread:
             lnlst = line.split()

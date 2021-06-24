@@ -72,7 +72,7 @@ def create_model(train_inputs, train_labels, label_dict, layers = [],
         # Hidden layers
         for lay in layers[1:]:
             model.add(tf.keras.layers.Dense(lay, activation = "relu"))
-            model.add(tf.keras.layers.Dropout(0.2))
+            model.add(tf.keras.layers.Dropout(0.3))
 
         # output layer
         model.add(tf.keras.layers.Dense(outpt, activation = "sigmoid"))
@@ -182,7 +182,8 @@ def divide(a, b):
     except:
         raise
 
-def create_a_network(inputs, labels, label_dict, train_num, test_num, mod_dir):
+def create_a_network(inputs, labels, label_dict, train_num, test_num, mod_dir,
+                     final_dir=None):
 
     # Shuffle models
     inpt_labs = list(zip(inputs, labels))
@@ -201,14 +202,19 @@ def create_a_network(inputs, labels, label_dict, train_num, test_num, mod_dir):
     test_inputs, test_labels = inputs[ii0:iif], labels[ii0:iif]
 
     # Hidden layers for model
-    layers = [len(label_dict) * 100]
+    layers = [len(label_dict) * 10, len(label_dict) * 10]
+    if "fruity" in mod_dir:
+        layers = [len(label_dict) * 100]
 
     # Create model
     model, created = create_model(train_inputs, train_labels, label_dict,
-                                  layers = layers, mod_dir = mod_dir)
+                                  layers=layers, mod_dir=mod_dir)
 
     # Save label dictionary in network directory
-    name_dict_file = os.path.join(mod_dir, "label_dict_" + mod_dir + ".txt")
+    if final_dir is not None:
+        name_dict_file = os.path.join(mod_dir, "label_dict_" + final_dir + ".txt")
+    else:
+        name_dict_file = os.path.join(mod_dir, "label_dict_" + mod_dir + ".txt")
     with open(name_dict_file, "w") as fwrite:
         for key in label_dict:
             fwrite.write(f"{key} {label_dict[key]}\n")
@@ -287,7 +293,7 @@ def main():
         this_dir = mod_dir + f"_{ii}"
 
         acc, conf = create_a_network(inputs, labels, label_dict, train_num,
-                                     test_num, this_dir)
+                                     test_num, this_dir, final_dir=mod_dir)
         models_dict[this_dir] = (acc, conf)
 
     best = None
