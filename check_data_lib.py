@@ -1,6 +1,44 @@
 import numpy as np
 import os
 import error_propagation
+import matplotlib.pyplot as plt
+
+def goodness_of_fit(star_name, values_arr, errors_arr, model, n_tries=1e6):
+    '''
+    Goodness of fit test for a given model and observation
+    (values_arr and errors_arr), with a number of n_tries
+    '''
+
+    # Transform n_tries into integer
+    n_tries = int(n_tries)
+
+    # Calculate the PDF for the "chi-2" calculation for the observation
+    values = apply_errors(star_name, values_arr, errors_arr, n_tries)
+    chisq = np.sum((values - values_arr)**2/errors_arr, axis=1)
+
+    # chi-2 value for the model
+    chisq_mod = np.sum((model - values_arr)**2/errors_arr)
+
+    # TODO
+    print(values_arr)
+    print(model)
+    print(f"Chi-2 for the model is = {chisq_mod}")
+
+    # Sort and search index
+    chisq = np.sort(chisq)
+    ii = np.searchsorted(chisq, chisq_mod)
+
+    # Probability of equal or better
+    p = len(chisq[ii:])/n_tries
+
+    # TODO
+    print(f"Probability of equal or better = {p * 100:.2f}%")
+    #plt.hist(chisq, bins=100, density=True)
+    #plt.show()
+    #plt.hist(chisq, bins=100, density=True, cumulative=True)
+    #plt.show()
+
+    return p
 
 def modify_input(inputs):
     """
@@ -64,7 +102,7 @@ def apply_errors(star_name, arr, arr_err, nn):
 
     return new_arr
 
-def apply_dilution(model, kk, ignoreFirst = False):
+def apply_dilution(model, kk, ignoreFirst=False):
     """
     Apply dilution of kk. This formula only works for heavy elements
 
@@ -80,12 +118,12 @@ def apply_dilution(model, kk, ignoreFirst = False):
 
     return new_model
 
-def calculate_dilution(data, model, processed_models = None, lower = 0,
-                       upper = 1):
+def calculate_dilution(data, model, processed_models=None, lower=0,
+                       upper=1):
     """
     Calculate best dilution for this model and data
 
-    if processed_models is None, then model is taken to be a label
+    if processed_models is not None, then model is taken to be a label
     otherwise model is taken as a model
     """
 
@@ -120,7 +158,7 @@ def calculate_dilution(data, model, processed_models = None, lower = 0,
     minDist = None; minDil = None
     for kk in dil_fact:
         # Apply dilution ignoring Fe/H
-        dilut = apply_dilution(model, kk, ignoreFirst = True)
+        dilut = apply_dilution(model, kk, ignoreFirst=True)
 
         # Check distance between data and diluted model
         dist = get_distance(dilut, data)

@@ -241,7 +241,7 @@ class ErrorClass(object):
         should be changed with the physical values
         """
 
-        # Create random errors
+        # Create random errors TODO
         len_ = len(elements_range)
         random_errors = np.random.normal(scale=elements_range, size=(nn, len_))
 

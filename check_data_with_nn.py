@@ -38,6 +38,10 @@ def predict_star(networks, data, label_dict, processed_models, star_name):
     s = f"Label {label} with dilution {dilut:.2f} average residual {resd:.2f}"
     print(s)
 
+    # Check goodness of fit TODO
+    pVal = goodness_of_fit(star_name, data, errors, diluted_model)
+    print(pVal)
+
 def main():
     """
     Load network and pass the Ba stars data
