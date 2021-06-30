@@ -19,119 +19,39 @@ def load_label_dict(label_dict_file):
 
     return label_dict
 
-def do_mc_this_star(network, data, errors, label_dict, nn,
-                    processed_models, star_name, maxSize = None):
+def predict_star(networks, data, label_dict, processed_models, star_name):
     """
-    Calculate the MC runs for this star to the network
+    Calculate the prediction for this star
     """
-
-    # Apply errors
-    use_data = apply_errors(star_name, data, errors, nn)
 
     # Modify input so it fits the network training
+    use_data = np.array([data])
     use_data = modify_input(use_data)
 
-    # In case size is bearable
-    if maxSize is None or maxSize > nn:
-        # Propagate
-        predictions = network.predict(use_data)
+    # Predict
+    prediction = predict_with_networks(networks, use_data)
+    index = np.argmax(prediction)
+    label = label_dict[index]
 
-        # Get vectors and confidences
-        vect_indx = np.argmax(predictions, axis = 1)
-        conf_indx = np.max(predictions, axis = 1)
-        conf_indx /= np.sum(predictions, axis = 1) + 1e-20
-
-    # Otherwise
-    else:
-        # Make sure it is integer
-        maxSize = int(maxSize)
-
-        # Initialize
-        vect_indx = np.array([])
-        conf_indx = np.array([])
-
-        # Divide data
-        ii = 0
-        while True:
-
-            # Get init and end indices
-            init = ii * maxSize
-            end = min(init + maxSize, nn)
-
-            # Predict
-            predictions = network.predict(use_data[init:end])
-
-            # Save
-            vect_indx = np.append(vect_indx, np.argmax(predictions, axis = 1))
-
-            conf = np.max(predictions, axis = 1)
-            conf /= np.sum(predictions, axis = 1) + 1e-20
-            conf_indx = np.append(conf_indx, conf)
-
-            # Check if end
-            if end == nn:
-                break
-
-            # Advance ii
-            ii += 1
-
-    # Now make a dictionary with all the labels and their weight
-    norm_labels = {}; norm_fact = 0
-    for index, conf in zip(vect_indx, conf_indx):
-
-        # Retrieve the label
-        lab = label_dict[index]
-
-        # Add the weight
-        if lab in norm_labels:
-            norm_labels[lab] += conf
-        else:
-            norm_labels[lab] = conf
-
-    # Calculate dilution and adjust weights
-    dil_labels = {}
-    threshold = 0.9
-    for key in norm_labels:
-
-        # Calculate dilution for this case
-        dilut, resd = calculate_dilution(data, key, processed_models,
-                                        upper = threshold)
-
-        # Save dilution and adjust weights
-        dil_labels[key] = (dilut, resd)
-        norm_labels[key] /= abs(resd)
-
-    # Print
-    norm_fact = sum(norm_labels.values())
-    for key in norm_labels:
-
-        # Normalize
-        prob = norm_labels[key] / norm_fact
-        dilut, resd = dil_labels[key]
-
-        # Skip lower probability
-        if prob < 0.1:
-            continue
-
-        # Print
-        s = "Label {} with probability of {:.2f}%".format(key, prob * 100)
-        s += " dilution {:.2f} average residual {:.2f}".format(dilut, resd)
-        print(s)
+    # Calculate dilution for this case
+    dilut, resd = calculate_dilution(data, label, processed_models, upper=0.9)
+    s = f"Label {label} with dilution {dilut:.2f} average residual {resd:.2f}"
+    print(s)
 
 def main():
     """
     Load network and pass the Ba stars data
     """
 
-    if len(sys.argv) < 3:
-        sys.exit(f"Use: python3 {sys.argv[0]} <network> <nn>")
+    if len(sys.argv) < 2:
+        sys.exit(f"Use: python3 {sys.argv[0]} <network_ensemble>")
 
     # Load network
     dirname = sys.argv[1]
-    network = tf.keras.models.load_model(dirname)
-
-    # Get number of MC runs varying the parameters of each star
-    nn = int(float(sys.argv[2]))
+    directories = get_list_networks(dirname)
+    networks = []
+    for sub_dir in directories:
+        networks.append(tf.keras.models.load_model(sub_dir))
 
     # Load label dictionary
     label_name = "label_dict_" + dirname + ".txt"
@@ -188,9 +108,6 @@ def main():
             all_data.append(arr)
             all_errors.append(arr_err)
 
-    # Maximum number of predictions at once
-    maxSize = 5e5
-
     # Start
     for ii in range(len(all_names)):
         data = all_data[ii]
@@ -201,8 +118,7 @@ def main():
         print("For star {}:".format(name))
 
         # Do the MC study here
-        do_mc_this_star(network, data, errors, label_dict, nn,
-                        processed_models, name, maxSize = maxSize)
+        predict_star(networks, data, label_dict, processed_models, name)
 
         # Separate for the next case
         print("------")

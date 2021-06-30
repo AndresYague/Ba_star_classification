@@ -42,24 +42,20 @@ network_name is the name for the directory that will save the network. This
 name must contain either "fruity" or "monash", which will indicate to the
 script what processed models data should be used.
 
-n_tries is the number of networks that will be tried before a best network
-will be chosen. By default n_tries = 1 and will only be used if a new network
-is being created (so not an existing model is passed).
+n_tries is the number of networks that will be trained for the ensemble. By
+default n_tries = 1 and will be used only if a new network is being trained.
 
-If an existing model is passed, it will just test it by using the available
+If an existing directory is passed, it will just test it by using the available
 data.
 
-Feel free to change any variable in the model. Perhaps one of the most
+Feel free to change any variable in the network. Perhaps one of the most
 fundamental is the "layers" variable, which indicates the number of hidden
-layers in the model as well as the number of units. The model itself is
+layers in the network as well as the number of units. The network itself is
 specified in the "create_model" function.
 
 Finally, to classify with the network just run:
 
-python3 check_data_with_nn.py <network_name> <MC_nn>
-
-where <MC_nn> is the number of runs to explore the uncertainty values for the
-classification. If MC_nn == 0, then errors are not applied.
+python3 check_data_with_nn.py <network_name>
 
 The output will be written to stdout.
 

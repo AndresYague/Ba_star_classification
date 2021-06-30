@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import struct, os, sys, random, shutil
+import os, sys, random
 from check_data_lib import *
 
 from silence_tensorflow import silence_tensorflow
@@ -33,7 +33,7 @@ def give_inputs_labels(all_models):
     return np.array(inputs), np.array(labels), label_dict
 
 def create_model(train_inputs, train_labels, label_dict, layers = [],
-                 mod_dir = None):
+                 mod_dir=None):
     """
     Create or load the model, depending on mod_dir
     """
@@ -48,12 +48,13 @@ def create_model(train_inputs, train_labels, label_dict, layers = [],
         created = not model_exists
 
     # Just load model
+    models = []
     if model_exists:
 
-        model = tf.keras.models.load_model(mod_dir)
-
-        # Print architecture
-        model.summary()
+        # Get all models
+        directories = get_list_networks(mod_dir)
+        for sub_dir in directories:
+            models.append(tf.keras.models.load_model(sub_dir))
 
     # Or create and train it
     else:
@@ -92,15 +93,15 @@ def create_model(train_inputs, train_labels, label_dict, layers = [],
         # Train
         model.fit(train_inputs, train_labels, epochs = epochs,
                   validation_split = 0.3)
+        models.append(model)
 
         # Save model
         if mod_dir is not None:
             model.save(mod_dir)
 
-    return model, created
+    return models, created
 
-def check_model(model, inputs, labels, label_dict, conf_threshold = 0.75,
-                verbose = False):
+def check_model(models, inputs, labels, conf_threshold=0.75, verbose=False):
     """
     Do a check with the provided inputs and labels
     """
@@ -111,7 +112,7 @@ def check_model(model, inputs, labels, label_dict, conf_threshold = 0.75,
     confident_correct_per_label = [0] * len(labels)
 
     # Predict
-    predictions = model.predict(inputs)
+    predictions = predict_with_networks(models, inputs)
 
     if verbose:
         for ii in range(len(predictions)):
@@ -134,41 +135,28 @@ def check_model(model, inputs, labels, label_dict, conf_threshold = 0.75,
                     confident_correct_per_label[labels[ii]] += 1
 
         s = "\n" + "=" * 10 + "\n"
-        avg = np.average(total_per_label, weights = total_per_label)
         tot = np.sum(total_per_label)
-        s += "Average cases per label = {:.2f}\n".format(avg)
         s += f"Total cases = {tot}\n"
 
         prop = [divide(x, y) for x, y in
                 zip(correct_per_label, total_per_label)]
-        avg = np.average(prop, weights = total_per_label) * 100
         acc = divide(np.sum(correct_per_label), np.sum(total_per_label)) * 100
-        s += "The average accuracy is {:.2f}%\n".format(avg)
-        s += "The total accuracy is {:.2f}%\n".format(acc)
+        s += f"The total accuracy is {acc:.2f}%\n"
 
         prop = [divide(x, y) for x, y in
                 zip(confident_per_label, total_per_label)]
-        avg = np.average(prop, weights = total_per_label) * 100
         conf = divide(np.sum(confident_per_label), np.sum(total_per_label)) * 100
-        s += "Average confident cases {:.2f}%\n".format(avg)
-        s += "Total confident cases {:.2f}%\n".format(conf)
+        s += f"Total confident cases {conf:.2f}%\n"
 
 
         prop = [divide(x, y) for x, y in
                 zip(confident_correct_per_label, confident_per_label)]
-        avg = np.average(prop, weights = total_per_label) * 100
         tot = divide(np.sum(confident_correct_per_label),
                      np.sum(confident_per_label))
         tot = tot * 100
-        s += "Average confidently correct cases {:.2f}%\n".format(avg)
-        s += "Total confidently correct cases {:.2f}%\n".format(tot)
+        s += f"Total confidently correct cases {tot:.2f}%\n"
 
         print(s)
-
-    # Give tensorflow values
-    test_loss, test_acc = model.evaluate(inputs, labels, verbose = 2)
-
-    return acc, conf
 
 def divide(a, b):
     """
@@ -207,33 +195,33 @@ def create_a_network(inputs, labels, label_dict, train_num, test_num, mod_dir,
         layers = [len(label_dict) * 100]
 
     # Create model
-    model, created = create_model(train_inputs, train_labels, label_dict,
-                                  layers=layers, mod_dir=mod_dir)
+    models, created = create_model(train_inputs, train_labels, label_dict,
+                                   layers=layers, mod_dir=mod_dir)
 
     # Save label dictionary in network directory
     if final_dir is not None:
-        name_dict_file = os.path.join(mod_dir, "label_dict_" + final_dir + ".txt")
+        name_dict_file = os.path.join(final_dir,
+                                        "label_dict_" + final_dir + ".txt")
     else:
         name_dict_file = os.path.join(mod_dir, "label_dict_" + mod_dir + ".txt")
-    with open(name_dict_file, "w") as fwrite:
-        for key in label_dict:
-            fwrite.write(f"{key} {label_dict[key]}\n")
 
-    # Check
-    print(2 * "\n", "=============================", 2 * "\n")
+    # Only save if it did not exist before
+    if not os.path.isfile(name_dict_file):
+        with open(name_dict_file, "w") as fwrite:
+            for key in label_dict:
+                fwrite.write(f"{key} {label_dict[key]}\n")
+
     if created:
-        print("Checking with training set")
-        acc, conf = check_model(model, test_inputs, test_labels, label_dict,
-                                verbose = True)
-    else:
-        print("Checking with whole set")
-        acc, conf = check_model(model, inputs, labels, label_dict,
-                                verbose = True)
+        print(2 * "\n")
+        print("=============================")
+        check_model(models, test_inputs, test_labels, verbose=True)
+        print("=============================")
+        print(2 * "\n")
 
     # Clear state
     tf.keras.backend.clear_session()
 
-    return acc, conf
+    return models
 
 def main():
     """Create and train neural network"""
@@ -270,9 +258,9 @@ def main():
     test_num = tot_num - train_num
 
     # Report back numbers
-    print("Total models: {}".format(tot_num))
-    print("Train models: {}".format(train_num))
-    print("Test models: {}".format(test_num))
+    print(f"Total models: {tot_num}")
+    print(f"Train models: {train_num}")
+    print(f"Test models: {test_num}")
 
     # Transform models into input and labels
     inputs, labels, label_dict = give_inputs_labels(all_models)
@@ -280,44 +268,30 @@ def main():
     # Add more features to the inputs
     inputs = modify_input(inputs)
 
-    # Make sure to not try 5 models if not creating
+    # Make sure to not create new models
     model_exists = os.path.isdir(mod_dir)
     if model_exists:
-        create_a_network(inputs, labels, label_dict, train_num, test_num,
-                         mod_dir)
-        return 0
+        # Read each model and then ensemble
+        models = create_a_network(inputs, labels, label_dict, train_num,
+                                  test_num, mod_dir)
 
-    # Make models
-    models_dict = {}
-    for ii in range(n_tries):
-        this_dir = mod_dir + f"_{ii}"
+    else:
 
-        acc, conf = create_a_network(inputs, labels, label_dict, train_num,
-                                     test_num, this_dir, final_dir=mod_dir)
-        models_dict[this_dir] = (acc, conf)
+        # Make models
+        models = []
+        for ii in range(n_tries):
+            this_dir = mod_dir + f"_{ii}"
+            this_dir = os.path.join(mod_dir, this_dir)
 
-    best = None
-    for key in models_dict:
-        if best is None:
-            best = key
-            best_acc = models_dict[key][0]
-            best_conf = models_dict[key][1]
-            continue
+            models += create_a_network(inputs, labels, label_dict, train_num,
+                                       test_num, this_dir, final_dir=mod_dir)
 
-        count = models_dict[key][0] + models_dict[key][1]
-        if count > best_acc + best_conf:
-            best = key
-            best_acc = models_dict[key][0]
-            best_conf = models_dict[key][1]
-
-    # Remove all not best
-    for key in models_dict:
-        if key != best:
-            shutil.rmtree(key)
-
-    print(f"Choosing: {best}, acc = {models_dict[best][0]:.2f}%,", end = " ")
-    print(f"conf = {models_dict[best][1]:.2f}%")
-    os.rename(best, mod_dir)
+    # Check
+    print(2 * "\n")
+    print("=============================")
+    print("Testing ensemble")
+    print("=============================")
+    check_model(models, inputs, labels, verbose=True)
 
 if __name__ == "__main__":
     main()

@@ -229,3 +229,33 @@ def find_k(model, data, tol = 1e-3):
 
         # Update
         km = new_km
+
+def get_list_networks(mod_dir):
+    """
+    Return list with each network directory
+    """
+
+    ii = 0
+    networks_dir = []
+    while True:
+
+        # Calculate the subdirectory
+        sub_dir = os.path.join(mod_dir, mod_dir + f"_{ii}")
+        if not os.path.isdir(sub_dir):
+            break
+
+        networks_dir.append(sub_dir)
+        ii += 1
+
+    return networks_dir
+
+def predict_with_networks(networks, inputs):
+    """
+    Predict with an ensemble of networks
+    """
+
+    all_predictions = []
+    for network in networks:
+        all_predictions.append(network.predict(inputs))
+
+    return np.median(all_predictions, axis=0)
