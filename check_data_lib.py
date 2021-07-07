@@ -254,8 +254,10 @@ def predict_with_networks(networks, inputs):
     Predict with an ensemble of networks
     """
 
+    # Ensemble predictions
     all_predictions = []
     for network in networks:
-        all_predictions.append(network.predict(inputs))
+        all_predictions.append(network.predict(inputs)[0])
 
+    # Predict with median
     return np.median(all_predictions, axis=0)

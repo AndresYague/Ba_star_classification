@@ -237,6 +237,8 @@ def main():
     else:
         n_tries = 1
 
+    np.random.seed()
+
     # Read the data
     data_directory = "data_processing_and_plotting"
     if "fruity" in mod_dir:
@@ -283,6 +285,7 @@ def main():
             this_dir = mod_dir + f"_{ii}"
             this_dir = os.path.join(mod_dir, this_dir)
 
+            print(f"Creating network {ii + 1}/{n_tries}")
             models += create_a_network(inputs, labels, label_dict, train_num,
                                        test_num, this_dir, final_dir=mod_dir)
 

@@ -26,7 +26,7 @@ def get_clean_lnlst(line):
 
     # Return proper value
     if "Label" in line:
-        return [lnlst[1], lnlst[7]]
+        return [lnlst[1], lnlst[-4]]
     elif "star" in line:
         return lnlst
     else:
