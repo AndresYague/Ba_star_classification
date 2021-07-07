@@ -144,10 +144,10 @@ class ErrorClass(object):
                         if numbers[4] == "-":
                             numbers[4] = 0.1
 
-                        sum_abs = np.sum(np.abs(numbers[:-1]))
+                        norm = np.sqrt(np.sum(np.array(numbers[:-2])**2))
                         name = lnlst[0].split("I")[0]
 
-                        self.groups[-1][name] = (numbers, sum_abs)
+                        self.groups[-1][name] = (numbers, norm)
                         self.element_lines.add(name)
 
                         # Add to average group
@@ -168,10 +168,10 @@ class ErrorClass(object):
             if key == "diff":
                 continue
 
-            # If this key is not "diff", add the absolute sum
+            # If this key is not "diff", add the norm
             numbers = self.average_group[key]
-            sum_abs = np.sum(np.abs(numbers[:-1]))
-            self.average_group[key] = (numbers, sum_abs)
+            norm = np.sqrt(np.sum(np.array(numbers[:-2])**2))
+            self.average_group[key] = (numbers, norm)
 
     def _add_to_average(self, key, new):
         """
@@ -243,9 +243,7 @@ class ErrorClass(object):
 
         # Create random errors
         len_ = len(elements_range)
-        random_errors = np.random.random((nn, len_))
-        random_errors *= 2 * elements_range
-        random_errors -= elements_range
+        random_errors = np.random.normal(scale=elements_range, size=(nn, len_))
 
         # Return if tables not loaded
         if self.groups is None:
@@ -277,11 +275,23 @@ class ErrorClass(object):
 
         # Now specific errors
         diffs = np.array(group["diff"])
-        random_changes = np.random.random((nn, diffs.shape[0]))
-        random_changes *= 2 * diffs
-        random_changes -= diffs
+        random_changes = np.random.normal(scale=diffs,
+                                          size=(nn, diffs.shape[0]))
 
-        # Put the Fe/H
+        # To build a normal random variable x with std = sig from two other
+        # normal random variables x1 and x2 with stds sig1 and sig2 and
+        # derivatives of x with x1 and x2 of deriv1 and deriv2, one can
+        # first calculate the distribution:
+        #
+        # x' = deriv1 * x1 + deriv2 * x2
+        #
+        # and then normalize with
+        #
+        # norm = sqrt((deriv1 * sig1)**2 + (deriv2*sig2)**2)
+        #
+        # such that x = x' * sig / norm
+
+        # Put the Fe/H (this case has only one component and the derivative is 1)
         random_errors[0] = random_changes.T[3] / diffs[3] * elements_range[0]
 
         # For each element, sum the contributions of each error
@@ -294,7 +304,7 @@ class ErrorClass(object):
                 diff_abund = np.array(group[elem][0][:-2])
                 abund_changes = diff_abund / diffs * random_changes
 
-                # Calculate normalized total change
+                # Calculate total change and normalize
                 total_change = np.sum(abund_changes, axis = 1) / group[elem][1]
 
                 # And now multiply by the appropriate range
