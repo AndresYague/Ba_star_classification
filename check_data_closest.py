@@ -31,7 +31,7 @@ def get_short_distances(all_data, model, tol = 1e-3):
 
     return all_dist
 
-def get_closest(data, errors, nn, all_models, all_labels, star_name):
+def get_closest(data, errors, nn, all_models, all_labels, star_name, top_n=5):
     """
     Find closest model
     """
@@ -64,21 +64,31 @@ def get_closest(data, errors, nn, all_models, all_labels, star_name):
     # Normalize
     label_weight /= np.sum(label_weight)
 
-    # And print
+    # Sort by weights
+    weight_and_index = [(y, x) for x, y in enumerate(label_weight)]
+    weight_and_index.sort(reverse=True)
+
+    # And print the top_n results
     threshold = 0.9
-    for ii, lab in enumerate(all_labels):
+    for ii, wt_indx in enumerate(weight_and_index):
 
-        if label_weight[ii] > 0.1:
-            # Get dilution and distance
-            dilution, dist, dil_model = calculate_dilution(data, all_models[ii],
-                                                           upper = threshold)
-            pVal = goodness_of_fit(star_name, data, errors, dil_model,
-                                   mc_values=use_data)
+        # Only give the top_n
+        if ii >= top_n:
+            break
 
-            # Print
-            s = f"Label {lab} with goodness of fit {pVal * 100:.2f}%"
-            s += f" and dilution {dilution:.2f} average residual {dist:.2f}"
-            print(s)
+        # Index and label for this model
+        index = wt_indx[-1]
+        lab = all_labels[index]
+
+        dilution, dist, dil_model = calculate_dilution(data, all_models[index],
+                                                       upper = threshold)
+        pVal = goodness_of_fit(star_name, data, errors, dil_model,
+                               mc_values=use_data)
+
+        # Print
+        s = f"Label {lab} with goodness of fit {pVal * 100:.2f}%"
+        s += f" and dilution {dilution:.2f} average residual {dist:.2f}"
+        print(s)
 
 def load_models(*args):
     """
