@@ -32,7 +32,7 @@ def give_inputs_labels(all_models):
 
     return np.array(inputs), np.array(labels), label_dict
 
-def create_model(train_inputs, train_labels, label_dict, layers = [],
+def create_model(train_inputs, train_labels, label_dict, layers=[],
                  mod_dir=None):
     """
     Create or load the model, depending on mod_dir
@@ -201,7 +201,7 @@ def create_a_network(inputs, labels, label_dict, train_num, test_num, mod_dir,
     # Save label dictionary in network directory
     if final_dir is not None:
         name_dict_file = os.path.join(final_dir,
-                                        "label_dict_" + final_dir + ".txt")
+                                      "label_dict_" + final_dir + ".txt")
     else:
         name_dict_file = os.path.join(mod_dir, "label_dict_" + mod_dir + ".txt")
 

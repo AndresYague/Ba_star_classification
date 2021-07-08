@@ -84,6 +84,9 @@ def process_models(directory, outpt, names, zero=0, with_dilution = True):
         raise Exception("Only implemented for fruity or monash models")
 
     for label in all_models:
+        # Ignore T60 label
+        if "T60" in label:
+            continue
         elems = all_models[label]
 
         # Apply dilutions from kk = 0 to kk = 1 with DK_STEP size
