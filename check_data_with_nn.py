@@ -35,7 +35,7 @@ def predict_star(networks, data, errors, label_dict, processed_models,
     label = label_dict[index]
 
     # Calculate dilution for this case
-    dilut, resd, diluted_model = calculate_dilution(data, label,
+    dilut, resd, diluted_model = calculate_dilution(data, label, errors,
                                                     processed_models, upper=0.9)
 
     # Get goodness of fit

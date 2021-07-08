@@ -3,7 +3,7 @@ import numpy as np
 import os
 from check_data_lib import *
 
-def get_short_distances(all_data, model, tol = 1e-3):
+def get_short_distances(all_data, model, errors, tol=1e-3):
     """
     Get the minimum distance to this model from each data point
     """
@@ -13,7 +13,7 @@ def get_short_distances(all_data, model, tol = 1e-3):
     data_no_metal = all_datat[1:].T
 
     # Calculate dilutions
-    all_dil = find_k(model[1:], data_no_metal, tol = tol)
+    all_dil = find_k(model[1:], data_no_metal, errors[1:], tol=tol)
 
     # Dilute
     dil_model = np.array(
@@ -43,7 +43,7 @@ def get_closest(data, errors, nn, all_models, all_labels, star_name, top_n=5):
     all_distances = []
     all_dilutions = []
     for model in all_models:
-        distances = get_short_distances(use_data, model)
+        distances = get_short_distances(use_data, model, errors)
         all_distances.append(distances)
 
     # Save the numpy arrays
@@ -81,7 +81,7 @@ def get_closest(data, errors, nn, all_models, all_labels, star_name, top_n=5):
         lab = all_labels[index]
 
         dilution, dist, dil_model = calculate_dilution(data, all_models[index],
-                                                       upper = threshold)
+                                                       errors, upper=threshold)
         pVal = goodness_of_fit(star_name, data, errors, dil_model,
                                mc_values=use_data)
 

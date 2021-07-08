@@ -112,7 +112,7 @@ def apply_dilution(model, kk, ignoreFirst=False):
 
     return new_model
 
-def calculate_dilution(data, model, processed_models=None, lower=0,
+def calculate_dilution(data, model, errors, processed_models=None, lower=0,
                        upper=1):
     """
     Calculate best dilution for this model and data
@@ -157,7 +157,7 @@ def calculate_dilution(data, model, processed_models=None, lower=0,
         dilut = apply_dilution(model, kk, ignoreFirst=True)
 
         # Check distance between data and diluted model
-        dist = get_distance(dilut, data)
+        dist = get_distance(dilut, data, errors)
 
         # Save smallest distance
         if minDist is None or dist < minDist:
@@ -167,7 +167,7 @@ def calculate_dilution(data, model, processed_models=None, lower=0,
 
     return minDil, minDist, minDilMod
 
-def get_distance(model, data):
+def get_distance(model, data, errors):
     """
     Calculate a distance between model and data
     """
@@ -175,9 +175,9 @@ def get_distance(model, data):
     # L square
     len_shape = len(data.shape)
     if len_shape == 2:
-        dist = np.mean((model - data) ** 2, axis = 1)
+        dist = np.mean((model - data) ** 2/errors, axis = 1)
     elif len_shape == 1:
-        dist = np.mean((model - data) ** 2)
+        dist = np.mean((model - data) ** 2/errors)
     else:
         raise NotImplementedError
 
@@ -199,7 +199,7 @@ def get_one_gradient(k_arr, coef, log_x_k, data, k):
 
     return grad
 
-def find_k(model, data, tol = 1e-3):
+def find_k(model, data, errors, tol=1e-3):
     """
     Find the minimum dilution and sum of distances for this model
     """
@@ -216,6 +216,7 @@ def find_k(model, data, tol = 1e-3):
 
     # And now the really useful arrays
     coef = (pow_mod - 1)/x_k * 2/np.log(10)
+    coef /= errors
     log_x_k = np.log10(x_k)
 
     # Start with the extremes
