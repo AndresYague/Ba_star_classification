@@ -1,44 +1,38 @@
 import numpy as np
 import os
 import error_propagation
-import matplotlib.pyplot as plt
 
-def goodness_of_fit(star_name, values_arr, errors_arr, model, n_tries=1e6):
+def goodness_of_fit(star_name, values_arr, errors_arr, model, n_tries=1e5,
+                    mc_values=None):
     '''
     Goodness of fit test for a given model and observation
     (values_arr and errors_arr), with a number of n_tries
+
+    If "mc_values" is given, n_tries is not used
     '''
 
-    # Transform n_tries into integer
-    n_tries = int(n_tries)
+    # Get MC values
+    if mc_values is None:
+        # Transform n_tries into integer
+        n_tries = int(n_tries)
 
-    # Calculate the PDF for the "chi-2" calculation for the observation
-    values = apply_errors(star_name, values_arr, errors_arr, n_tries)
-    chisq = np.sum((values - values_arr)**2/errors_arr, axis=1)
+        # Calculate the PDF for the "chi-2" calculation for the observation
+        mc_values = apply_errors(star_name, values_arr, errors_arr, n_tries)
 
-    # chi-2 value for the model
+    # Get modified chi-2
+    chisq = np.sum((mc_values - values_arr)**2/errors_arr, axis=1)
+
+    # Modified chi-2 value for the model
     chisq_mod = np.sum((model - values_arr)**2/errors_arr)
-
-    # TODO
-    print(values_arr)
-    print(model)
-    print(f"Chi-2 for the model is = {chisq_mod}")
 
     # Sort and search index
     chisq = np.sort(chisq)
     ii = np.searchsorted(chisq, chisq_mod)
 
     # Probability of equal or better
-    p = len(chisq[ii:])/n_tries
+    pVal = len(chisq[ii:])/n_tries
 
-    # TODO
-    print(f"Probability of equal or better = {p * 100:.2f}%")
-    #plt.hist(chisq, bins=100, density=True)
-    #plt.show()
-    #plt.hist(chisq, bins=100, density=True, cumulative=True)
-    #plt.show()
-
-    return p
+    return pVal
 
 def modify_input(inputs):
     """
@@ -155,7 +149,9 @@ def calculate_dilution(data, model, processed_models=None, lower=0,
     # Dilute
     dk = 0.001
     dil_fact = np.arange(lower, upper + dk, dk)
-    minDist = None; minDil = None
+    minDist = None
+    minDil = None
+    minDilMod = None
     for kk in dil_fact:
         # Apply dilution ignoring Fe/H
         dilut = apply_dilution(model, kk, ignoreFirst=True)
@@ -167,8 +163,9 @@ def calculate_dilution(data, model, processed_models=None, lower=0,
         if minDist is None or dist < minDist:
             minDist = dist
             minDil = kk
+            minDilMod = dilut
 
-    return minDil, minDist
+    return minDil, minDist, minDilMod
 
 def get_distance(model, data):
     """

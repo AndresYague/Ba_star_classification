@@ -70,14 +70,14 @@ def get_closest(data, errors, nn, all_models, all_labels, star_name):
 
         if label_weight[ii] > 0.1:
             # Get dilution and distance
-            dilution, dist = calculate_dilution(data, all_models[ii],
-                                                upper = threshold)
+            dilution, dist, dil_model = calculate_dilution(data, all_models[ii],
+                                                           upper = threshold)
+            pVal = goodness_of_fit(star_name, data, errors, dil_model,
+                                   mc_values=use_data)
 
             # Print
-            s = f"Label {lab} with probability of"
-            s += " {:.2f}%".format(label_weight[ii] * 100)
-            s += " dilution {:.2f}".format(dilution)
-            s += " average residual {:.2f}".format(dist)
+            s = f"Label {lab} with goodness of fit {pVal * 100:.2f}%"
+            s += f" and dilution {dilution:.2f} average residual {dist:.2f}"
             print(s)
 
 def load_models(*args):

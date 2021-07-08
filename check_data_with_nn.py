@@ -19,7 +19,8 @@ def load_label_dict(label_dict_file):
 
     return label_dict
 
-def predict_star(networks, data, label_dict, processed_models, star_name):
+def predict_star(networks, data, errors, label_dict, processed_models,
+                 star_name):
     """
     Calculate the prediction for this star
     """
@@ -34,13 +35,15 @@ def predict_star(networks, data, label_dict, processed_models, star_name):
     label = label_dict[index]
 
     # Calculate dilution for this case
-    dilut, resd = calculate_dilution(data, label, processed_models, upper=0.9)
-    s = f"Label {label} with dilution {dilut:.2f} average residual {resd:.2f}"
-    print(s)
+    dilut, resd, diluted_model = calculate_dilution(data, label,
+                                                    processed_models, upper=0.9)
 
-    # Check goodness of fit TODO
-    pVal = goodness_of_fit(star_name, data, errors, diluted_model)
-    print(pVal)
+    # Get goodness of fit
+    pVal = goodness_of_fit(star_name, data, errors, diluted_model, n_tries=1e5)
+
+    s = f"Label {label} with goodness of fit {pVal * 100:.2f}%"
+    s += f" and dilution {dilut:.2f} average residual {resd:.2f}"
+    print(s)
 
 def main():
     """
@@ -122,7 +125,7 @@ def main():
         print("For star {}:".format(name))
 
         # Do the MC study here
-        predict_star(networks, data, label_dict, processed_models, name)
+        predict_star(networks, data, errors, label_dict, processed_models, name)
 
         # Separate for the next case
         print("------")
