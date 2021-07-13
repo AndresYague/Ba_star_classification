@@ -112,14 +112,14 @@ def check_model(models, inputs, labels, conf_threshold=0.75, verbose=False):
     confident_correct_per_label = [0] * len(labels)
 
     # Predict
-    predictions = predict_with_networks(models, inputs)
+    best_prediction, all_predictions = predict_with_networks(models, inputs)
 
     if verbose:
-        for ii in range(len(predictions)):
+        for ii in range(len(best_prediction)):
 
             # Confidence
-            conf = np.max(predictions[ii]) + 1e-40
-            conf /= np.sum(predictions[ii]) + 1e-20
+            conf = np.max(best_prediction[ii]) + 1e-40
+            conf /= np.sum(best_prediction[ii]) + 1e-20
 
             # Check threshold
             if conf > conf_threshold:
@@ -129,7 +129,7 @@ def check_model(models, inputs, labels, conf_threshold=0.75, verbose=False):
             total_per_label[labels[ii]] += 1
 
             # And the correct
-            if labels[ii] == np.argmax(predictions[ii]):
+            if labels[ii] == np.argmax(best_prediction[ii]):
                 correct_per_label[labels[ii]] += 1
                 if conf > conf_threshold:
                     confident_correct_per_label[labels[ii]] += 1

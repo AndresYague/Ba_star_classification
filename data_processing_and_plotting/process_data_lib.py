@@ -163,10 +163,15 @@ def get_data_values(data_file, names=None):
                 try:
                     all_vals[star_name][name] = float(lnlst[indx])
 
-                    # If error is zero, just put ZERO_ERROR
-                    val_err = float(lnlst[indx_err])
-                    if val_err < MIN_VAL_ERR:
+                    # If error is zero or "-", just put ZERO_ERROR
+                    try:
+                        val_err = float(lnlst[indx_err])
+                        if val_err < MIN_VAL_ERR:
+                            val_err = ZERO_ERROR
+                    except ValueError:
                         val_err = ZERO_ERROR
+                    except:
+                        raise
 
                     all_vals[star_name][name + "_err"] = val_err
                 except ValueError:

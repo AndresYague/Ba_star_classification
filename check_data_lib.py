@@ -32,7 +32,7 @@ def goodness_of_fit(star_name, values_arr, errors_arr, model, n_tries=1e5,
     # Probability of equal or better
     pVal = len(chisq[ii:])/n_tries
 
-    return pVal
+    return pVal, mc_values
 
 def modify_input(inputs):
     """
@@ -293,7 +293,7 @@ def predict_with_networks(networks, inputs):
     # Ensemble predictions
     all_predictions = []
     for network in networks:
-        all_predictions.append(network.predict(inputs)[0])
+        all_predictions.append(network.predict(inputs))
 
-    # Predict with median
-    return np.median(all_predictions, axis=0)
+    # Predict with median, also return all predictions
+    return np.median(all_predictions, axis=0), all_predictions

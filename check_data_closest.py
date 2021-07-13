@@ -82,8 +82,8 @@ def get_closest(data, errors, nn, all_models, all_labels, star_name, top_n=5):
 
         dilution, dist, dil_model = calculate_dilution(data, all_models[index],
                                                        errors, upper=threshold)
-        pVal = goodness_of_fit(star_name, data, errors, dil_model,
-                               mc_values=use_data)
+        pVal, _ = goodness_of_fit(star_name, data, errors, dil_model,
+                                  mc_values=use_data)
 
         # Print
         s = f"Label {lab} with goodness of fit {pVal * 100:.2f}%"

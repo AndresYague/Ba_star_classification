@@ -20,7 +20,7 @@ def load_label_dict(label_dict_file):
     return label_dict
 
 def predict_star(networks, data, errors, label_dict, processed_models,
-                 star_name):
+                 star_name, top_n=5):
     """
     Calculate the prediction for this star
     """
@@ -30,20 +30,50 @@ def predict_star(networks, data, errors, label_dict, processed_models,
     use_data = modify_input(use_data)
 
     # Predict
-    prediction = predict_with_networks(networks, use_data)
-    index = np.argmax(prediction)
-    label = label_dict[index]
+    best_prediction, all_predictions = predict_with_networks(networks, use_data)
+    index_best = np.argmax(best_prediction, axis=1)[0]
 
-    # Calculate dilution for this case
-    dilut, resd, diluted_model = calculate_dilution(data, label, errors,
+    # Unroll al indices
+    indices = [x[0] for x in np.argmax(all_predictions, axis=2)]
+
+    # Add best index to indices
+    indices.append(index_best)
+
+    # Get fits for all predictions
+    pVal_label = []
+    mc_values = None
+    for index in indices:
+
+        label = label_dict[index]
+
+        # Calculate dilution for this case
+        dilut, resd, diluted_model = calculate_dilution(data, label, errors,
                                                     processed_models, upper=0.9)
 
-    # Get goodness of fit
-    pVal = goodness_of_fit(star_name, data, errors, diluted_model, n_tries=1e5)
+        # Get goodness of fit
+        pVal, mc_values = goodness_of_fit(star_name, data, errors,
+                                          diluted_model, n_tries=1e5,
+                                          mc_values=mc_values)
 
-    s = f"Label {label} with goodness of fit {pVal * 100:.2f}%"
-    s += f" and dilution {dilut:.2f} average residual {resd:.2f}"
-    print(s)
+        pVal_label.append((pVal, label, dilut, resd))
+
+    # Remove repeating
+    pVal_label = list(set(pVal_label))
+
+    # Sort
+    pVal_label.sort(reverse=True)
+    for ii in range(len(pVal_label)):
+
+        # Only give the top_n
+        if ii >= top_n:
+            break
+
+        # Get information
+        pVal, label, dilut, resd = pVal_label[ii]
+
+        s = f"Label {label} with goodness of fit {pVal * 100:.2f}%"
+        s += f" and dilution {dilut:.2f} average residual {resd:.2f}"
+        print(s)
 
 def main():
     """
