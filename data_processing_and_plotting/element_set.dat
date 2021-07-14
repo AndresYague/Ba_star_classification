@@ -5,10 +5,22 @@
 #Fe/H Rb/Fe Sr/Fe Zr/Fe Mo/Fe Ru/Fe La/Fe Ce/Fe Nd/Fe Eu/Fe
 
 # Set 2
-Fe/H Rb/Fe Sr/Fe Zr/Fe Y/Fe La/Fe Ce/Fe Nd/Fe Eu/Fe
+#Fe/H Rb/Fe Sr/Fe Zr/Fe Y/Fe La/Fe Ce/Fe Nd/Fe Eu/Fe
 
 # Set 3
-Fe/H Rb/Fe Sr/Fe Zr/Fe Y/Fe La/Fe Ce/Fe Nd/Fe Eu/Fe Sm/Fe Ru/Fe
+#Fe/H Rb/Fe Sr/Fe Zr/Fe Y/Fe La/Fe Ce/Fe Nd/Fe Eu/Fe Sm/Fe Ru/Fe
 
 # Set 4 (set 2 without La)
-Fe/H Rb/Fe Sr/Fe Zr/Fe Y/Fe Ce/Fe Nd/Fe Eu/Fe
+#Fe/H Rb/Fe Sr/Fe Zr/Fe Y/Fe Ce/Fe Nd/Fe Eu/Fe
+
+# Set A
+#Fe/H Rb/Fe Sr/Fe Y/Fe Zr/Fe Mo/Fe Ru/Fe La/Fe Ce/Fe Nd/Fe Sm/Fe Eu/Fe
+
+# Set B
+#Fe/H Rb/Fe Sr/Fe Mo/Fe Ru/Fe La/Fe Sm/Fe Eu/Fe
+
+# Set C
+#Fe/H Rb/Fe Sr/Fe Zr/Fe Mo/Fe Ru/Fe La/Fe Ce/Fe Sm/Fe Eu/Fe
+
+# Set D (set 2 without Nd)
+Fe/H Rb/Fe Sr/Fe Zr/Fe Y/Fe La/Fe Ce/Fe Eu/Fe
