@@ -4,7 +4,7 @@ import numpy as np
 from process_data_lib import *
 
 def name_check(name):
-    '''This function rrenames the models with a short name'''
+    '''This function renames the models with a short name'''
 
     #Load all the names
     fulln,shortn=new_names()
@@ -18,6 +18,22 @@ def name_check(name):
            name = shortn[i]
 
     return(name)
+
+def name_check_reverse(name):
+    '''This function renames the models with the full name'''
+
+    #Load all the names
+    fulln,shortn=new_names()
+
+    #Check if name is included in full list, if it is,
+    #replace it with the short name and return the replacement
+    for i in range(len(fulln)):
+
+        if name == shortn[i]:
+
+           name = fulln[i]
+
+    return(name)    
 
 def create_names_table(filename):
     '''Creates latex table with full and shortnames'''
@@ -67,9 +83,12 @@ def get_clean_lnlst(line):
     lnlst=line.split()
     if 'star ' in line:
        return(lnlst)
-    elif 'Label' in line:
+    elif 'fit' in line:       
        name=name_check(lnlst[1])
-       return [ name,lnlst[5],lnlst[7],lnlst[10]]
+       return [name,lnlst[6],lnlst[9],lnlst[12]]      
+    elif 'probability' in line:
+       name=name_check(lnlst[1])
+       return [name,lnlst[5],lnlst[7],lnlst[10]]
     else:
        return(None)
 
@@ -159,14 +178,65 @@ def clean_match(match):
     match=match.replace('%','\%')
 
     return(str(match))
+    
+def clean_dupli(match):
+    """ Turn duplicate into latex format
+    """
+    match = match.replace('(','').replace(')','').replace('\'','').replace(',','')
+    val_split = match.split()
+    val_split[0] = val_split[0].replace(',','')
+    #print(val_split[1],val_split[1][:-2])
+    pval = float(val_split[1][:-2])
+    val_split[1] = f"{pval:.0f}\%"
+    
+    match = "  & ".join(val_split)
 
-def write_into_latex_table(star_di,tab_name,tab_label,tab_caption):
+    return(str(match))
+        
+def write_matches_into_latex_table(star_di,tab_name,tab_label,tab_caption,GoF=False):
+    '''All results turned into a compilable latex tables'''
+
+    #Creation of latex table
+    #Step 1: Open file and write header:
+    g=open(tab_name,'w')
+
+    #Step 2: Define caption and label
+    tab_cap = 'This table lists the stars and their matched models.'
+    tab_lab = 'tab:names'
+
+    #Step 3: Write headings etc to table
+    table_def = '\\begin{longtable}{lllll}\n\\caption{'
+    table_def += tab_cap + '}\\label{' + tab_lab + '}\\\ \n'
+    g.write(table_def)
+
+    tab_headings='Star & Label & GoF & dil & res\\\ \n'
+    g.write(tab_headings)
+    g.write('\\hline\n')
+
+    #Step 4: Write the two sets of names
+    for key,val in star_di.items():
+        L_val = len(val)
+        g.write(key)
+        if L_val == 0:
+           g.write(' & - & -\\\ \n')                   
+        else:
+           for j in range(L_val):
+               g.write(' & '+clean_dupli(str(val[j]))+'\\\ \n') #clean match needed?
+        g.write('\\hline\n')
+
+    #Step 5: Write the final latex commands
+    table_end=('\\end{longtable}')
+    g.write(table_end)
+    g.close()
+    
+    
+
+def write_into_latex_table(star_di,tab_name,tab_label,tab_caption,GoF=False):
     '''All results turned into a compilable
     latex tables'''
 
     #Filter the matches, so that we only print either fruity or monash matches
     #Step 1: define what to remove
-
     for starname in star_di.keys():
 
         for filename in star_di[starname].keys():
@@ -225,7 +295,7 @@ def write_into_latex_table(star_di,tab_name,tab_label,tab_caption):
     #Open file and write header:
     g=open(tab_name,'w')
 
-    num_columns=len(star_di[starname].keys())
+    num_columns=len(list_files)
     cols=4 #labels, prob, dil, res
 
     table_def='\\begin{longtable}{c'
@@ -241,8 +311,11 @@ def write_into_latex_table(star_di,tab_name,tab_label,tab_caption):
         table_labels += ' & \\multicolumn{'+str(cols)+'}{|l}{'+clean_match(list_files[i])+'}'
     table_labels += '\\\ \n'
     g.write(table_labels)
-
-    table_headings=' & Label & Prob & Dil & Res'*len(list_files)+'\\\ \n'
+    
+    if GoF==True:
+       table_headings=' & Label & GoF & Dil & Res'*len(list_files)+'\\\ \n'    
+    else:
+       table_headings=' & Label & Prob & Dil & Res'*len(list_files)+'\\\ \n'
 
     g.write(table_headings)
     g.write('\\hline\n')
@@ -253,8 +326,11 @@ def write_into_latex_table(star_di,tab_name,tab_label,tab_caption):
         g.write(starname)
         an_array=[]
         for i in list_files:
-            an_array.append(star_di[starname][i])
-
+            try:
+               an_array.append(star_di[starname][i])
+            except:
+               empty=[(' ', ' ', ' ', ' '), (' ', ' ', ' ', ' '), (' ', ' ', ' ', ' '), (' ', ' ', ' ', ' '), (' ', ' ', ' ', ' ')]
+               an_array.append(empty)
         for i in range(len(an_array[0])):
 
             for j in range(len(an_array)):
@@ -294,7 +370,7 @@ def main():
     table_caption='caption check'
 
     #Write table with results
-    write_into_latex_table(dict_stars,table_name,table_label,table_caption)
+    write_into_latex_table(dict_stars,table_name,table_label,table_caption,GoF=False)
 
 
 if __name__ == "__main__":
