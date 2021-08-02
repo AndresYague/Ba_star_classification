@@ -2,7 +2,8 @@ import os, glob, sys
 import numpy as np
 from process_data_lib import *
 
-DK_STEP = 0.0005
+DK_STEP = 0.002
+ZERO = 0.2
 
 def process_data(data_file, output_file, names):
     """
@@ -63,7 +64,7 @@ def get_string_names(elems, names, label):
             ss += " -"
         else:
             # Add to the string
-            ss += f" {val:5.2f}"
+            ss += f" {val:8.5f}"
 
     # Add newline
     ss += " " + label + "\n"
@@ -194,15 +195,15 @@ def main():
     print("Processing fruity...")
     with open(processed_models_fruity, "w") as fwrite:
         fwrite.write(header)
-    process_models(fruity_dir, processed_models_fruity, names, zero = 0.2,
-                    with_dilution = with_dilution)
+    process_models(fruity_dir, processed_models_fruity, names, zero=ZERO,
+                    with_dilution=with_dilution)
 
     # Process monash
     print("Processing monash...")
     with open(processed_models_monash, "w") as fwrite:
         fwrite.write(header)
-    process_models(monash_dir, processed_models_monash, names, zero = 0.2,
-                    with_dilution = with_dilution)
+    process_models(monash_dir, processed_models_monash, names, zero=ZERO,
+                    with_dilution=with_dilution)
 
     # Check that all models are different enough
     if with_dilution:
