@@ -2,37 +2,97 @@ import numpy as np
 import os
 import error_propagation
 
-def goodness_of_fit(star_name, values_arr, errors_arr, model, n_tries=1e5,
-                    mc_values=None):
-    '''
-    Goodness of fit test for a given model and observation
-    (values_arr and errors_arr), with a number of n_tries
+class StarStat(object):
+    """
+    Class for all the stellar statistics
+    """
 
-    If "mc_values" is given, n_tries is not used
-    '''
+    def __init__(self, star_name, values_arr, errors_arr, nn=1e5):
+        """
+        Initialize the StarStat instance
+        """
 
-    # Get MC values
-    if mc_values is None:
-        # Transform n_tries into integer
-        n_tries = int(n_tries)
+        self.star_name = star_name
+        self.values_arr = values_arr
+        self.errors_arr = errors_arr
+        self.nn = int(nn)
+        self.chisq = None
 
-        # Calculate the PDF for the "chi-2" calculation for the observation
-        mc_values = apply_errors(star_name, values_arr, errors_arr, n_tries)
+    def _apply_errors(self):
+        """
+        Apply random errors using ErrorClass.calculate_errors
+        """
 
-    # Get modified chi-2
-    chisq = np.sum((mc_values - values_arr)**2/errors_arr, axis=1)
+        if self.nn > 0:
+            dir_path = "data_processing_and_plotting"
+            errors = error_propagation.ErrorClass(
+                    error_tables = "error_tables_ba.dat",
+                    temperature_table = "bastars_temp.dat",
+                    element_set = os.path.join(dir_path, "element_set.dat"))
 
-    # Modified chi-2 value for the model
-    chisq_mod = np.sum((model - values_arr)**2/errors_arr)
+            error_diff = errors.calculate_errors(self.star_name,
+                                                 self.errors_arr, self.nn)
+            new_arr = self.values_arr + error_diff
 
-    # Sort and search index
-    chisq = np.sort(chisq)
-    ii = np.searchsorted(chisq, chisq_mod)
+        # If not applying errors
+        else:
+            new_arr = self.values_arr + np.random.random((1, len(arr))) * 0
 
-    # Probability of equal or better
-    pVal = len(chisq[ii:])/n_tries
+        return new_arr
 
-    return pVal, mc_values
+    def goodness_of_fit(self, model):
+        """
+        Calculate the goodness of fit for this model
+        """
+
+        # Get modified chi-2
+        if self.chisq is None:
+            mc_values = self._apply_errors()
+            chisq = (mc_values - self.values_arr)**2/self.errors_arr
+
+            # Sort it
+            self.chisq = np.sort(np.sum(chisq, axis=1))
+
+        # Modified chi-2 value for the model
+        if len(model.shape) == 2:
+            chisq_mod = np.sum((model - self.values_arr)**2/self.errors_arr, axis=1)
+        else:
+            chisq_mod = np.sum((model - self.values_arr)**2/self.errors_arr)
+
+        # Search index
+        indices = np.searchsorted(self.chisq, chisq_mod)
+
+        # Probability of equal or better
+        pVal = 1 - indices/self.nn
+
+        return pVal
+
+    def calculate_dilution(self, model, k_step=1e-3, max_dil=1.0):
+        """
+        Calculate the best dilution according to goodness of fit for this model
+        """
+
+        kk = 0
+        pVal_and_k = []
+
+        # Dilute from 0 to max_dil
+        while kk < max_dil:
+            # Diluted model
+            dil_model = apply_dilution(model, kk, ignoreFirst=True)
+
+            # Goodness of fit
+            pVal = self.goodness_of_fit(dil_model)
+
+            # Add this goodness of fit and dilution
+            pVal_and_k.append((pVal, kk))
+
+            kk += k_step
+
+        # Sort by pVal
+        pVal_and_k.sort(reverse=True)
+
+        # Return best
+        return pVal_and_k[0]
 
 def modify_input(inputs):
     """
@@ -74,27 +134,6 @@ def modify_input(inputs):
     new_inputs = new_inputs.T
 
     return new_inputs
-
-def apply_errors(star_name, arr, arr_err, nn):
-    """
-    Apply random errors using ErrorClass.calculate_errors
-    """
-
-    if nn > 0:
-        dir_path = "data_processing_and_plotting"
-        errors = error_propagation.ErrorClass(
-                error_tables = "error_tables_ba.dat",
-                temperature_table = "bastars_temp.dat",
-                element_set = os.path.join(dir_path, "element_set.dat"))
-
-        error_diff = errors.calculate_errors(star_name, arr_err, nn)
-        new_arr = arr + error_diff
-
-    # If not applying errors
-    else:
-        new_arr = arr + np.random.random((1, len(arr))) * 0
-
-    return new_arr
 
 def apply_dilution(model, kk, ignoreFirst=False):
     """
@@ -182,89 +221,6 @@ def get_distance(model, data, errors):
         raise NotImplementedError
 
     return dist
-
-def get_one_gradient(k_arr, coef, log_x_k, data, k):
-    """
-    Get gradients
-    """
-
-    # First find the appropriate index
-    indx = np.searchsorted(k_arr, k)
-
-    # Now the whole gradient
-    diff = (log_x_k[indx] - data) * coef[indx]
-
-    # And the mean
-    grad = np.mean(diff, axis = 1)
-
-    return grad
-
-def find_k(model, data, errors, tol=1e-3):
-    """
-    Find the minimum dilution and sum of distances for this model
-    """
-
-    # Store the quantities that never change
-    pow_mod = 10 ** model
-
-    # Make the array x_k 10 times finer than the tolerance
-    step = tol * 0.1
-    k_arr = np.arange(0, 1 + step, step)
-
-    # Get the x_k array
-    x_k = np.array([(1 - k_arr) + k_arr * p for p in pow_mod]).T
-
-    # And now the really useful arrays
-    coef = (pow_mod - 1)/x_k * 2/np.log(10)
-    coef /= errors
-    log_x_k = np.log10(x_k)
-
-    # Start with the extremes
-    k0 = k_arr[0:1]
-    k1 = k_arr[-1:]
-    km = (k0 + k1) * 0.5
-
-    first = True
-    while True:
-
-        # Each of the gradients
-        gradm = get_one_gradient(k_arr, coef, log_x_k, data, km)
-        if first:
-            # If first time, we have to calculate everything
-            grad0 = get_one_gradient(k_arr, coef, log_x_k, data, k0)
-            grad1 = get_one_gradient(k_arr, coef, log_x_k, data, k1)
-
-            first = False
-
-        # Get signs
-        sign0 = np.sign(grad0)
-        signm = np.sign(gradm)
-        sign1 = np.sign(grad1)
-
-        # Get differences
-        sum0 = np.abs(signm + sign0)
-        dif0 = np.abs(signm - sign0)
-        sum1 = np.abs(signm + sign1)
-        dif1 = np.abs(signm - sign1)
-
-        # Vectorized change
-        k0 = (sum0 * km + dif0 * k0) * 0.5
-        k1 = (sum1 * km + dif1 * k1) * 0.5
-
-        # And change gradients too
-        grad0 = (sum0 * gradm + dif0 * grad0) * 0.5
-        grad1 = (sum1 * gradm + dif1 * grad1) * 0.5
-
-        # Get the middle point
-        new_km = (k0 + k1) * 0.5
-
-        # Check if converged
-        dif = np.max(np.abs(new_km - km))
-        if dif < tol:
-            return new_km
-
-        # Update
-        km = new_km
 
 def get_list_networks(mod_dir):
     """

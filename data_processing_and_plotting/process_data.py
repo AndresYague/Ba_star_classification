@@ -71,7 +71,7 @@ def get_string_names(elems, names, label):
 
     return ss
 
-def process_models(directory, outpt, names, zero=0, with_dilution = True):
+def process_models(directory, outpt, names, zero=0, with_dilution=True):
     """
     Process fruity and monash data to extract the elements we want
     """
@@ -86,8 +86,8 @@ def process_models(directory, outpt, names, zero=0, with_dilution = True):
 
     for label in all_models:
         # Ignore T60 label
-        if "T60" in label:
-            continue
+        #if "T60" in label:
+            #continue
         elems = all_models[label]
 
         # Apply dilutions from kk = 0 to kk = 1 with DK_STEP size

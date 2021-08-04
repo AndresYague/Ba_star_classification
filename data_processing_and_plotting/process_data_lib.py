@@ -5,7 +5,7 @@ import numpy as np
 ZERO_ERROR = 0.5
 MIN_VAL_ERR = 1e-2
 
-def short_name_generator(name, shortnames):
+def short_name_generator(name, shortnames=None):
     '''
     Generate a short name from a long name
     '''
@@ -45,6 +45,10 @@ def short_name_generator(name, shortnames):
 
     else:
         raise Exception("Cannot transform this name")
+
+    # Do not give letter if there's no list
+    if shortnames is None:
+        return short
 
     # Put the letter at the end
     for letter in string.ascii_lowercase:
