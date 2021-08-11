@@ -26,7 +26,7 @@ def get_clean_lnlst(line):
 
     # Return proper value
     if "Label" in line:
-        return [lnlst[1], lnlst[-4]]
+        return [lnlst[1], lnlst[-1]]
     elif "star" in line:
         return lnlst
     else:
@@ -36,6 +36,13 @@ def get_dict_predicted(files):
     """
     Make input dictionary to combine all files
     """
+    
+    # Get the short names
+    fullnames, shortnames = new_names()
+    short_names_dict = {full: short for full, short in
+                                        zip(fullnames, shortnames)}
+    full_names_dict = {short: full for short, full in
+                                        zip(shortnames, fullnames)}  
 
     # Initialize dictionary
     dict_ = {}
@@ -74,6 +81,8 @@ def get_dict_predicted(files):
 
                 # Add this line in fruity or monash
                 else:
+
+                    lnlst[0] = full_names_dict[lnlst[0]]
                     if "fruity" in lnlst[0]:
                         type_ = "fruity"
                     elif "monash" in lnlst[0]:
@@ -87,7 +96,7 @@ def get_dict_predicted(files):
                     repeated[type_][star_name].append(lnlst[0])
 
                     # Add to the set
-                    lnlst[1] = float(lnlst[1])
+                    lnlst[1] = lnlst[1]
                     dict_[type_][star_name].add(tuple(lnlst))
 
     return dict_
@@ -192,6 +201,8 @@ def plot_results(predicted_models_dict, fruity_models_dict,
     fullnames, shortnames = new_names()
     short_names_dict = {full: short for full, short in
                                         zip(fullnames, shortnames)}
+    full_names_dict = {short: full for short, full in
+                                        zip(shortnames, fullnames)}                                        
 
     # Grab the data
     name_z = np.loadtxt(os.path.join("data_for_plot", "atomic_nums.dat"),
@@ -349,7 +360,7 @@ def main():
     pathn = sys.argv[-1]
 
     # Define all the directories
-    dir_data = "Ba_star_classification_data"
+    dir_data = "../Ba_star_classification_data"
     fruity_mods = "models_fruity"
     monash_mods = "models_monash"
     data_file = "all_abund_and_masses.dat"
