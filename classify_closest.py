@@ -1,7 +1,9 @@
 import sys
 import numpy as np
 import os
-from check_data_lib import *
+from classify_lib import *
+from data_processing_and_plotting.process_data_lib import short_name_generator
+from data_processing_and_plotting.process_data_lib import new_names
 
 def get_closest(star_instance, all_models, all_labels, top_n=5):
     """
@@ -20,11 +22,19 @@ def get_closest(star_instance, all_models, all_labels, top_n=5):
     # Sort
     best_dilutions.sort(reverse=True)
 
+    full_names, short_names = new_names(dir_="data_processing_and_plotting")
+
     # And print the top_n results
     for result in best_dilutions[:min(top_n, len(best_dilutions))]:
 
         # Index and label for this model
         pVal, dilution, label = result
+        if pVal < 0.5:
+            break
+
+        # Search for index
+        index = full_names.index(label)
+        label = short_names[index]
 
         # Print
         s = f"Label {label} with goodness of fit {pVal * 100:.2f}%"

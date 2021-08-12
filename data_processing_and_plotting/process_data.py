@@ -36,7 +36,7 @@ def process_data(data_file, output_file, names):
                 for name in names:
                     try:
                         name_err = name + "_err"
-                        s += f" {dic[name]:5.2f} {dic[name_err]:5.2f}    "
+                        s += f" {dic[name]:6.3f} {dic[name_err]:6.3f}    "
                     except ValueError:
                         s += "   -     -      "
 
@@ -64,7 +64,7 @@ def get_string_names(elems, names, label):
             ss += " -"
         else:
             # Add to the string
-            ss += f" {val:8.5f}"
+            ss += f" {val:6.3f}"
 
     # Add newline
     ss += " " + label + "\n"
@@ -86,9 +86,13 @@ def process_models(directory, outpt, names, zero=0, with_dilution=True):
 
     for label in all_models:
         # Ignore T60 label
-        #if "T60" in label:
-            #continue
+        if "T60" in label:
+            continue
         elems = all_models[label]
+
+        # If calculating for the NN, then shorten the label
+        if with_dilution:
+            label = short_name_generator(label)
 
         # Apply dilutions from kk = 0 to kk = 1 with DK_STEP size
         kk_arr = np.arange(0, 1 + DK_STEP, DK_STEP)
@@ -116,19 +120,35 @@ def eliminate_same_models(processed_models):
     Read all models and eliminate repeated ones
     """
 
+    # Organize the models by label first
+    label_models = dict()
     with open(processed_models, "r") as fread:
-        with open("temp.txt", "w") as fwrite:
-            prev_Mod = None
-            for line in fread:
-                if prev_Mod is None:
-                    prev_Mod = line
-                    fwrite.write(line)
-                    continue
+        header = fread.readline()
 
-                if line != prev_Mod:
-                    fwrite.write(line)
+        # For each line separate label and model
+        for line in fread:
+            lnlst = line.split()
 
-                prev_Mod = line
+
+            # Extract label and model
+            label = lnlst[-1]
+            model = " ".join(lnlst[:-1])
+
+            # Add to dictionary
+            label_models[label] = label_models.get(label, []) + [model]
+
+    # Now write them
+    with open("temp.txt", "w") as fwrite:
+        fwrite.write(header)
+
+        for label in label_models:
+            # Eliminate repeated
+            set_of_models = set(label_models[label])
+
+            # And write
+            for model in set_of_models:
+                s = f"{model} {label}\n"
+                fwrite.write(s)
 
     os.rename("temp.txt", processed_models)
 

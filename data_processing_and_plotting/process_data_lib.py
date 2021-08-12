@@ -55,16 +55,21 @@ def short_name_generator(name, shortnames=None):
         if short + letter not in shortnames:
             return short + letter
 
-def new_names():
+def new_names(dir_=None):
     '''Fills the name-lists'''
 
     fullnames = []
     shortnames = []
 
-    if os.path.isfile("all_names.txt"):
+    if dir_ is not None:
+        path_file = os.path.join(dir_, "all_names.txt")
+    else:
+        path_file = "all_names.txt"
+
+    if os.path.isfile(path_file):
 
         # Load names from all_names.txt file
-        with open("all_names.txt", "r") as fread:
+        with open(path_file, "r") as fread:
             for line in fread:
                 name, short = line.split()
 
@@ -93,7 +98,7 @@ def new_names():
                         shortnames.append(short)
 
         # Save names in all_names.txt file
-        with open("all_names.txt", "w") as fwrite:
+        with open(path_file, "w") as fwrite:
             for name, short in zip(fullnames, shortnames):
                 fwrite.write(f"{name} {short}\n")
 
