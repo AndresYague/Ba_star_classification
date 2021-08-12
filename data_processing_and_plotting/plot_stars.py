@@ -360,7 +360,7 @@ def main():
     pathn = sys.argv[-1]
 
     # Define all the directories
-    dir_data = "../Ba_star_classification_data"
+    dir_data = "Ba_star_classification_data"
     fruity_mods = "models_fruity"
     monash_mods = "models_monash"
     data_file = "all_abund_and_masses.dat"

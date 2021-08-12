@@ -38,7 +38,7 @@ class ErrorClass(object):
         if self.temperature_table is not None:
             self.load_temperature_table()
 
-    def _transfom_numbers(self, char):
+    def _transform_numbers(self, char):
         """
         Transform numbers consistently
         """
@@ -129,7 +129,7 @@ class ErrorClass(object):
 
                     # Store differences in the measurements
                     elif "Diff" in line:
-                        numbers = list(map(self._transfom_numbers, lnlst[2:]))
+                        numbers = list(map(self._transform_numbers, lnlst[2:]))
                         self.groups[-1]["diff"] = numbers
 
                         # Add to average group
@@ -138,7 +138,7 @@ class ErrorClass(object):
                     # Store the line name and the differences
                     # Store element names
                     else:
-                        numbers = list(map(self._transfom_numbers, lnlst[1:]))
+                        numbers = list(map(self._transform_numbers, lnlst[1:]))
 
                         # Give value of 0.1 to w when not defined
                         if numbers[4] == "-":

@@ -193,42 +193,6 @@ def clean_dupli(match):
 
     return(str(match))
 
-def write_matches_into_latex_table(star_di,tab_name,tab_label,tab_caption,GoF=False):
-    '''All results turned into a compilable latex tables'''
-
-    #Creation of latex table
-    #Step 1: Open file and write header:
-    g=open(tab_name,'w')
-
-    #Step 2: Define caption and label
-    tab_cap = 'This table lists the stars and their matched models.'
-    tab_lab = 'tab:names'
-
-    #Step 3: Write headings etc to table
-    table_def = '\\begin{longtable}{lllll}\n\\caption{'
-    table_def += tab_cap + '}\\label{' + tab_lab + '}\\\ \n'
-    g.write(table_def)
-
-    tab_headings='Star & Label & GoF & dil & res\\\ \n'
-    g.write(tab_headings)
-    g.write('\\hline\n')
-
-    #Step 4: Write the two sets of names
-    for key,val in star_di.items():
-        L_val = len(val)
-        g.write(key)
-        if L_val == 0:
-           g.write(' & - & -\\\ \n')
-        else:
-           for j in range(L_val):
-               g.write(' & '+clean_dupli(str(val[j]))+'\\\ \n') #clean match needed?
-        g.write('\\hline\n')
-
-    #Step 5: Write the final latex commands
-    table_end=('\\end{longtable}')
-    g.write(table_end)
-    g.close()
-
 
 
 def write_into_latex_table(star_di,tab_name,tab_label,tab_caption,GoF=False):
