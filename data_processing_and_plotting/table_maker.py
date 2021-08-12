@@ -33,7 +33,7 @@ def name_check_reverse(name):
 
            name = fulln[i]
 
-    return(name)    
+    return(name)
 
 def create_names_table(filename):
     '''Creates latex table with full and shortnames'''
@@ -83,9 +83,9 @@ def get_clean_lnlst(line):
     lnlst=line.split()
     if 'star ' in line:
        return(lnlst)
-    elif 'fit' in line:       
+    elif 'fit' in line:
        name=name_check(lnlst[1])
-       return [name,lnlst[6],lnlst[9],lnlst[12]]      
+       return [name,lnlst[6],lnlst[9],lnlst[12]]
     elif 'probability' in line:
        name=name_check(lnlst[1])
        return [name,lnlst[5],lnlst[7],lnlst[10]]
@@ -178,7 +178,7 @@ def clean_match(match):
     match=match.replace('%','\%')
 
     return(str(match))
-    
+
 def clean_dupli(match):
     """ Turn duplicate into latex format
     """
@@ -188,11 +188,11 @@ def clean_dupli(match):
     #print(val_split[1],val_split[1][:-2])
     pval = float(val_split[1][:-2])
     val_split[1] = f"{pval:.0f}\%"
-    
+
     match = "  & ".join(val_split)
 
     return(str(match))
-        
+
 def write_matches_into_latex_table(star_di,tab_name,tab_label,tab_caption,GoF=False):
     '''All results turned into a compilable latex tables'''
 
@@ -218,7 +218,7 @@ def write_matches_into_latex_table(star_di,tab_name,tab_label,tab_caption,GoF=Fa
         L_val = len(val)
         g.write(key)
         if L_val == 0:
-           g.write(' & - & -\\\ \n')                   
+           g.write(' & - & -\\\ \n')
         else:
            for j in range(L_val):
                g.write(' & '+clean_dupli(str(val[j]))+'\\\ \n') #clean match needed?
@@ -228,8 +228,8 @@ def write_matches_into_latex_table(star_di,tab_name,tab_label,tab_caption,GoF=Fa
     table_end=('\\end{longtable}')
     g.write(table_end)
     g.close()
-    
-    
+
+
 
 def write_into_latex_table(star_di,tab_name,tab_label,tab_caption,GoF=False):
     '''All results turned into a compilable
@@ -311,9 +311,9 @@ def write_into_latex_table(star_di,tab_name,tab_label,tab_caption,GoF=False):
         table_labels += ' & \\multicolumn{'+str(cols)+'}{|l}{'+clean_match(list_files[i])+'}'
     table_labels += '\\\ \n'
     g.write(table_labels)
-    
+
     if GoF==True:
-       table_headings=' & Label & GoF & Dil & Res'*len(list_files)+'\\\ \n'    
+       table_headings=' & Label & GoF & Dil & Res'*len(list_files)+'\\\ \n'
     else:
        table_headings=' & Label & Prob & Dil & Res'*len(list_files)+'\\\ \n'
 

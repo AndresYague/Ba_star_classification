@@ -36,13 +36,13 @@ def get_dict_predicted(files):
     """
     Make input dictionary to combine all files
     """
-    
+
     # Get the short names
     fullnames, shortnames = new_names()
     short_names_dict = {full: short for full, short in
                                         zip(fullnames, shortnames)}
     full_names_dict = {short: full for short, full in
-                                        zip(shortnames, fullnames)}  
+                                        zip(shortnames, fullnames)}
 
     # Initialize dictionary
     dict_ = {}
@@ -202,7 +202,7 @@ def plot_results(predicted_models_dict, fruity_models_dict,
     short_names_dict = {full: short for full, short in
                                         zip(fullnames, shortnames)}
     full_names_dict = {short: full for short, full in
-                                        zip(shortnames, fullnames)}                                        
+                                        zip(shortnames, fullnames)}
 
     # Grab the data
     name_z = np.loadtxt(os.path.join("data_for_plot", "atomic_nums.dat"),
