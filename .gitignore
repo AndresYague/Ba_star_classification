@@ -4,6 +4,7 @@
 label_dict*
 *.png
 *.tex
+tags
 
 # Directories
 __pycache__

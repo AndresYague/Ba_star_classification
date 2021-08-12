@@ -5,7 +5,7 @@ import numpy as np
 ZERO_ERROR = 0.5
 MIN_VAL_ERR = 1e-2
 
-def short_name_generator(name, shortnames):
+def short_name_generator(name, shortnames=None):
     '''
     Generate a short name from a long name
     '''
@@ -46,21 +46,30 @@ def short_name_generator(name, shortnames):
     else:
         raise Exception("Cannot transform this name")
 
+    # Do not give letter if there's no list
+    if shortnames is None:
+        return short
+
     # Put the letter at the end
     for letter in string.ascii_lowercase:
         if short + letter not in shortnames:
             return short + letter
 
-def new_names():
+def new_names(dir_=None):
     '''Fills the name-lists'''
 
     fullnames = []
     shortnames = []
 
-    if os.path.isfile("all_names.txt"):
+    if dir_ is not None:
+        path_file = os.path.join(dir_, "all_names.txt")
+    else:
+        path_file = "all_names.txt"
+
+    if os.path.isfile(path_file):
 
         # Load names from all_names.txt file
-        with open("all_names.txt", "r") as fread:
+        with open(path_file, "r") as fread:
             for line in fread:
                 name, short = line.split()
 
@@ -89,7 +98,7 @@ def new_names():
                         shortnames.append(short)
 
         # Save names in all_names.txt file
-        with open("all_names.txt", "w") as fwrite:
+        with open(path_file, "w") as fwrite:
             for name, short in zip(fullnames, shortnames):
                 fwrite.write(f"{name} {short}\n")
 
@@ -163,10 +172,15 @@ def get_data_values(data_file, names=None):
                 try:
                     all_vals[star_name][name] = float(lnlst[indx])
 
-                    # If error is zero, just put ZERO_ERROR
-                    val_err = float(lnlst[indx_err])
-                    if val_err < MIN_VAL_ERR:
+                    # If error is zero or "-", just put ZERO_ERROR
+                    try:
+                        val_err = float(lnlst[indx_err])
+                        if val_err < MIN_VAL_ERR:
+                            val_err = ZERO_ERROR
+                    except ValueError:
                         val_err = ZERO_ERROR
+                    except:
+                        raise
 
                     all_vals[star_name][name + "_err"] = val_err
                 except ValueError:

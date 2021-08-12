@@ -1,6 +1,6 @@
 import numpy as np
 import sys, os
-from check_data_lib import *
+from classify_lib import *
 
 from silence_tensorflow import silence_tensorflow
 silence_tensorflow()
@@ -19,7 +19,7 @@ def load_label_dict(label_dict_file):
 
     return label_dict
 
-def predict_star(networks, data, label_dict, processed_models, star_name):
+def predict_star(networks, data, label_dict):
     """
     Calculate the prediction for this star
     """
@@ -29,14 +29,20 @@ def predict_star(networks, data, label_dict, processed_models, star_name):
     use_data = modify_input(use_data)
 
     # Predict
-    prediction = predict_with_networks(networks, use_data)
-    index = np.argmax(prediction)
-    label = label_dict[index]
+    best_prediction, all_predictions = predict_with_networks(networks, use_data)
+    index_best = np.argmax(best_prediction, axis=1)[0]
 
-    # Calculate dilution for this case
-    dilut, resd = calculate_dilution(data, label, processed_models, upper=0.9)
-    s = f"Label {label} with dilution {dilut:.2f} average residual {resd:.2f}"
-    print(s)
+    # Unroll al indices
+    indices = [x[0] for x in np.argmax(all_predictions, axis=2)]
+
+    # Add best index to indices
+
+    # Return labels
+    labels = [label_dict[index] for index in indices]
+    labels_set = set(labels)
+    for label in labels_set:
+        s = f"{label} {labels.count(label)}"
+        print(s)
 
 def main():
     """
@@ -118,7 +124,7 @@ def main():
         print("For star {}:".format(name))
 
         # Do the MC study here
-        predict_star(networks, data, label_dict, processed_models, name)
+        predict_star(networks, data, label_dict)
 
         # Separate for the next case
         print("------")

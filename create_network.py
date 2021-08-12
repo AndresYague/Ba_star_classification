@@ -1,10 +1,16 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import os, sys, random
-from check_data_lib import *
+from classify_lib import *
 
-from silence_tensorflow import silence_tensorflow
-silence_tensorflow()
+try:
+    from silence_tensorflow import silence_tensorflow
+    silence_tensorflow()
+except ImportError:
+    pass
+except:
+    raise
+
 import tensorflow as tf
 
 def give_inputs_labels(all_models):
@@ -20,7 +26,7 @@ def give_inputs_labels(all_models):
         lnlst = model.split()
 
         # Add the inputs
-        inputs.append(np.array(list(map(lambda x: float(x), lnlst[0:-1]))))
+        inputs.append(np.array([float(x) for x in lnlst[0:-1]]))
         label = lnlst[-1]
 
         # Number the label
@@ -32,7 +38,7 @@ def give_inputs_labels(all_models):
 
     return np.array(inputs), np.array(labels), label_dict
 
-def create_model(train_inputs, train_labels, label_dict, layers = [],
+def create_model(train_inputs, train_labels, label_dict, layers=[],
                  mod_dir=None):
     """
     Create or load the model, depending on mod_dir
@@ -80,11 +86,12 @@ def create_model(train_inputs, train_labels, label_dict, layers = [],
 
         # Choose alpha
         alpha = 0.0015
+        epochs = 5
         if mod_dir is not None and "fruity" in mod_dir:
+            epochs = 4
             alpha = 0.001
 
         # Compile
-        epochs = 10
         optimizer = tf.keras.optimizers.RMSprop(learning_rate = alpha)
         model.compile(optimizer = optimizer,
                 metrics = ["sparse_categorical_accuracy"],
@@ -112,14 +119,14 @@ def check_model(models, inputs, labels, conf_threshold=0.75, verbose=False):
     confident_correct_per_label = [0] * len(labels)
 
     # Predict
-    predictions = predict_with_networks(models, inputs)
+    best_prediction, all_predictions = predict_with_networks(models, inputs)
 
     if verbose:
-        for ii in range(len(predictions)):
+        for ii in range(len(best_prediction)):
 
             # Confidence
-            conf = np.max(predictions[ii]) + 1e-40
-            conf /= np.sum(predictions[ii]) + 1e-20
+            conf = np.max(best_prediction[ii]) + 1e-40
+            conf /= np.sum(best_prediction[ii]) + 1e-20
 
             # Check threshold
             if conf > conf_threshold:
@@ -129,7 +136,7 @@ def check_model(models, inputs, labels, conf_threshold=0.75, verbose=False):
             total_per_label[labels[ii]] += 1
 
             # And the correct
-            if labels[ii] == np.argmax(predictions[ii]):
+            if labels[ii] == np.argmax(best_prediction[ii]):
                 correct_per_label[labels[ii]] += 1
                 if conf > conf_threshold:
                     confident_correct_per_label[labels[ii]] += 1
@@ -201,7 +208,7 @@ def create_a_network(inputs, labels, label_dict, train_num, test_num, mod_dir,
     # Save label dictionary in network directory
     if final_dir is not None:
         name_dict_file = os.path.join(final_dir,
-                                        "label_dict_" + final_dir + ".txt")
+                                      "label_dict_" + final_dir + ".txt")
     else:
         name_dict_file = os.path.join(mod_dir, "label_dict_" + mod_dir + ".txt")
 
@@ -254,8 +261,37 @@ def main():
         for line in fread:
             all_models.append(line)
 
+    # Transform models into input and labels
+    inputs, labels, label_dict = give_inputs_labels(all_models)
+
+    # Balance labels
+
+    # First get the number of the highest repeating label
+    list_labels = list(labels)
+    max_count = max((list_labels.count(x) for x in set(labels)))
+
+    # Make a label/model dictionary so we can easily replicate them
+    label_model_dict = {}
+    for mod, lab in zip(inputs, labels):
+        if lab not in label_model_dict:
+            label_model_dict[lab] = []
+        label_model_dict[lab].append(mod)
+
+    # Now replicate them
+    inputs = []
+    labels = []
+    for lab in label_model_dict:
+        num_models = len(label_model_dict[lab])
+        ratio = round(max_count/num_models)
+
+        inputs += label_model_dict[lab] * ratio
+        labels += [lab] * num_models * ratio
+
+    inputs = np.array(inputs)
+    labels = np.array(labels)
+
     # Now divide in training, CV and test
-    tot_num = len(all_models)
+    tot_num = len(labels)
     train_num = int(tot_num * 0.8)
     test_num = tot_num - train_num
 
@@ -263,9 +299,6 @@ def main():
     print(f"Total models: {tot_num}")
     print(f"Train models: {train_num}")
     print(f"Test models: {test_num}")
-
-    # Transform models into input and labels
-    inputs, labels, label_dict = give_inputs_labels(all_models)
 
     # Add more features to the inputs
     inputs = modify_input(inputs)

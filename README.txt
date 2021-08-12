@@ -1,6 +1,6 @@
 Software for the Ba-stars classification project
 
-Use of the software:
+Use of this software:
 
 ============================================================================
 PROCESS DATA
@@ -51,11 +51,11 @@ data.
 Feel free to change any variable in the network. Perhaps one of the most
 fundamental is the "layers" variable, which indicates the number of hidden
 layers in the network as well as the number of units. The network itself is
-specified in the "create_model" function.
+specified in the "create_a_network" and "create_model" functions.
 
 Finally, to classify with the network just run:
 
-python3 check_data_with_nn.py <network_name>
+python3 classify_with_nn.py <network_name>
 
 The output will be written to stdout.
 
@@ -65,47 +65,7 @@ CLOSEST ELEMENT CLASSIFICATION
 
 To use the closest element classificator, just run
 
-python3 check_data_closest.py <MC_nn> [models]
-
-where <MC_nn> has the same meaning as before, and [models] is an optional
-argument that can be either "fruity" or "monash". If [models] is not given,
-the classification for all the models will be done. Otherwise, it will done
-only for the chosen model set.
-
-The output will be written to stdout.
-
-============================================================================
-PCA CLASSIFICATION
-============================================================================
-
-To use the PCA classificator, first the PCs have to be calculated with
-create_PCA. The command is:
-
-python3 create_PCA.py <name>
-
-where <name> is the name of the processed models data that should be used.
-This will create the PCs, save them to a file, and create a figure showing
-the error between original and approximated data set. With this figure you
-can determine the number of eigenvectors you want to include in the
-classification (we suggest to use the lowest number of eigenvectors with an
-error below 5%).
-
-To classify with PCA, just run:
-
-python3 classify_wPCA.py <name> <MC_nn> <# of eigenvectors>
-
-where <name> and <MC_nn> have the same meaning as before, and
-<# of eigenvectors> is the number of eigenvectors that you want to include.
-
-The output will be written to stdout.
-
-============================================================================
-CLOSEST ELEMENT CLASSIFICATION WITH K-MEANS
-============================================================================
-
-To use the closest element classificator with k-means, just run
-
-python3 classify_wClosestElementKmeans.py <MC_nn> [models]
+python3 classify_closest.py <MC_nn> [models]
 
 where <MC_nn> has the same meaning as before, and [models] is an optional
 argument that can be either "fruity" or "monash". If [models] is not given,
@@ -149,15 +109,3 @@ shortened names of the models. The second table, 'names.tex', lists the
 long and shortened names of all models. If the names of the files contain
 either "fruity" or "monash", then the table will only list the fruity or
 monash results, respectively.
-
-============================================================================
-PLOTTING PCA VISUALISATION
-============================================================================
-
-PCA can also be used to visualise data-sets by reducing the dimensions to 2.
-To do this just run:
-
-python3 PCA_plot.py <models> <MC_nn> [highlight a star? like 'BD-142678']
-
-where models and MC_nn have the same meaning as before, and there is an
-extra option to highlight one star to show the uncertainty range in 2D.
