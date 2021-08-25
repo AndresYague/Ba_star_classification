@@ -169,7 +169,12 @@ def get_data_values(data_file, names=None):
                     indx_err = indx + 1
                 elif spltName in header:
                     indx = header.index(spltName)
-                    indx_err = header.index("err_" + spltName)
+
+                    # Accept both inputs: err_Name or Name_err
+                    try:
+                        indx_err = header.index("err_" + spltName)
+                    except ValueError:
+                        indx_err = header.index(spltName + "_err")
 
                 # Introduce values
                 try:

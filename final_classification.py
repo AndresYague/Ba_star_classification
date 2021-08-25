@@ -170,15 +170,21 @@ def clean_for_table(match, round_n=4):
 
     # If we are dealing with a range
     if "-" in match:
-        splitted = match.split("-")
+        splitted = match.split(" - ")
 
         # Round to round_n digits maximum
         for ii in range(len(splitted)):
             if len(splitted[ii]) > round_n + 2:
                 num = float(splitted[ii])
-                splitted[ii] = f"{num:.{round_n}f} "
+                splitted[ii] = f"{num:.{round_n}f}"
 
-        match = "-".join(splitted)
+                # Remove the trailing zeroes
+                jj = 1
+                while splitted[ii][-1] == "0":
+                    splitted[ii] = f"{num:.{round_n - jj}f}"
+                    jj += 1
+
+        match = " - ".join(splitted)
 
     return match
 
