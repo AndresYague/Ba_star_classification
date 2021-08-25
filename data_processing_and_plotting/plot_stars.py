@@ -16,22 +16,6 @@ ZMIN = 6
 IRONZ = 26
 LIMIT_DIL = False
 
-def get_clean_lnlst(line):
-    """
-    Clean the input data so it's easier to handle
-    """
-
-    # Split line
-    lnlst = line.split()
-
-    # Return proper value
-    if "Label" in line:
-        return [lnlst[1], lnlst[-1]]
-    elif "star" in line:
-        return lnlst
-    else:
-        return None
-
 def get_dict_predicted(files):
     """
     Make input dictionary to combine all files

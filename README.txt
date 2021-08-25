@@ -93,19 +93,4 @@ The output files can have any combination of models.
 
 The red stars are the elements taken from element_set.dat
 
-============================================================================
-MAKING A LATEX TABLE WITH RESULTS
-============================================================================
-
-This script needs the output from the classificators to be written into a
-textfile.
-
-To use just go to data_processing_and_plotting and run:
-
-python3 table_maker.py <file1> [file2 ...]
-
-The latex table with be saved as 'Latex_table_results.tex', which includes
-shortened names of the models. The second table, 'names.tex', lists the
-long and shortened names of all models. If the names of the files contain
-either "fruity" or "monash", then the table will only list the fruity or
-monash results, respectively.
+TODO: The plotting routine is broken right now

@@ -82,6 +82,9 @@ def new_names(dir_=None):
                  "processed_models_monash.txt"]
 
         for file_ in files:
+            if dir_ is not None:
+                file_ = os.path.join(dir_, file_)
+
             with open(file_, "r") as fread:
                 # Skip header
                 next(fread)
@@ -340,3 +343,139 @@ def apply_dilution(elems, kk, names, zero=0):
         new_elements = None
 
     return new_elements
+
+def get_clean_filename(filen):
+    '''Clean the filename by removing unneeded words'''
+
+    filen = filen.replace('_correlated','').replace('tensorflow_','NN-')
+    filen = filen.replace('.txt','').replace('_','-').replace('clo','Clo')
+    filen = filen.replace('diluted','Dil')
+
+    return filen
+
+def get_clean_lnlst(line):
+    """
+    Clean the input data so it's easier to handle
+    """
+
+    # Split line
+    lnlst = line.split()
+
+    # Return proper value
+    if "Label" in line:
+        return [lnlst[1], lnlst[-1]]
+    elif "star" in line:
+        return lnlst
+    else:
+        return None
+
+def get_clean_lnlst_final(line):
+    """
+    Clean the input by removed unneeded words
+    -This is for the final classification
+    """
+
+    lnlst = line.split()
+    if 'star ' in line:
+        return lnlst
+
+    # Label, GoF, dilution
+    elif 'fit' in line:
+        name = name_check(lnlst[1])
+        return [name, lnlst[6], lnlst[9]]
+
+    # Label, probability, dilution
+    elif 'probability' in line:
+        name = name_check(lnlst[1])
+        return [name, lnlst[5], lnlst[7]]
+
+    # Group label and number of matches
+    elif len(lnlst) == 2:
+        return [lnlst[0], lnlst[1]]
+
+    else:
+        return None
+
+def read_files_into_dicts(model_file):
+    '''Find all result files and load them'''
+
+    # Initialize dictionary
+    dict_files = {}
+    # Keep an inventory of repeated models
+    repeated = {}
+
+
+    # First extract the filename
+    fname = os.path.split(model_file)[-1]
+    file_name = get_clean_filename(fname)
+    type_ = file_name
+
+    # Initialize the 2D dictionaries
+    dict_files[type_] = {}
+    repeated[type_] = {}
+
+    # For each star in the file, save the matched model
+    with open(model_file, "r") as fread:
+        for line in fread:
+            lnlst = get_clean_lnlst_final(line)
+            if lnlst is None:
+                continue
+
+            # Read line, which has either star name or matched model
+            if 'star' in lnlst:
+                star_name = lnlst[-1][:-1]
+                if star_name not in dict_files:
+
+                    # The starname set
+                    dict_files[type_][star_name] = []
+
+                    # Add the list to the repeated models
+                    repeated[type_][star_name] = []
+
+            # Add this line to the dictionary
+            else:
+                # Check if repeated to skip
+                if lnlst[0] in repeated[type_][star_name]:
+                    continue
+
+                # Add this model here to avoid repeating it
+                repeated[type_][star_name].append(lnlst[0])
+
+                # Add to the set
+                dict_files[type_][star_name].append(tuple(lnlst))
+
+    # Make another dictionary, sorted per star instead of file
+    star_dict = {}
+
+    # Loop over dictionary to create dictionary framework
+    for type_ in dict_files.keys():
+
+        for star_name in dict_files[type_].keys():
+
+            # Initiate new dictionary with layers
+            star_dict[star_name] = {}
+            star_dict[star_name][type_] = {}
+
+    # Fill new dictionary
+    for type_ in dict_files.keys():
+        for star_name in dict_files[type_].keys():
+
+            star_dict[star_name][type_] = dict_files[type_][star_name]
+
+    return dict_files, star_dict
+
+def name_check(name, dir_=None):
+    '''This function renames the models with a short name'''
+
+    # Load all the names
+    fulln, shortn = new_names(dir_=dir_)
+
+    # Check if name is included in full list, if it is,
+    # replace it with the short name and return the replacement
+    try:
+        index = fulln.index(name)
+        name = shortn[index]
+    except ValueError:
+        pass
+
+    return name
