@@ -63,21 +63,21 @@ def find_matches(D_nn, D_clos, mass_R=0.25, met_R=5.0):
 
             # Is the highest low higher than the lowest high?
             # If yes, then check metalicity:
-            if m_lowlim < m_toplim:
+            if m_lowlim <= m_toplim:
                 z_lowlim = max(float(nn_min_met)/met_R, float(z_min_C)/met_R)
                 z_toplim = min(float(nn_max_met)*met_R, float(z_max_C)*met_R)
 
                 # Is the highest low higher than the lowest high?
                 # if yes, then add to overlap dictionary
-                if z_lowlim < z_toplim:
+                if z_lowlim <= z_toplim:
+
                     overlap[starname]['mass'] = (m_lowlim, m_toplim)
                     overlap[starname]['metallicity'] = (z_lowlim, z_toplim)
                     overlap[starname]['GoFs'] = D_clos[starname]['GoFs']
 
         # If there are no classifications in the closest algo,
         # then just flag star as bad
-        # TODO what exception are we catching here? see sentence above!
-        except:
+        except KeyError:
             flagged_bad[starname]['nn'] = values[starname]
             flagged_bad[starname]['closest'] = D_clos[starname]['all_cla']
 
@@ -248,13 +248,13 @@ def main():
 
     files = sys.argv[1:-1]
     stars_28 = sys.argv[-1]
-    
+
     # Gather all the info of the 28 stars
     names = []
     with open(stars_28, "r") as fread:
         for line in fread:
             name = line.split("\n")
-            names.append(name[0])        
+            names.append(name[0])
 
     # Define all the directories
     dir_data = os.path.join(DIR, "Ba_star_classification_data")
@@ -292,8 +292,8 @@ def main():
         s += "neural network classification."
         sys.exit(s)
 
-    overlap, flagged_bad = find_matches(D_stars, D_range_classies, mass_R,
-                                        met_R)
+    overlap, flagged_bad = find_matches(D_stars, D_range_classies, mass_R=massR,
+                                        met_R=met_R)
 
     print(len(flagged_bad))
     for star in flagged_bad.keys():
@@ -311,11 +311,10 @@ def main():
             D_28[starname] = overlap[starname]
         else:
             D_rest[starname] = overlap[starname]
-       
-       
+
     # Set name, label, caption of table
     table_name = 'Latex_table_28matchedstars.tex'
-    table_name2 = 'Latex_table_restmatchedstars.tex'    
+    table_name2 = 'Latex_table_restmatchedstars.tex'
     table_label = 'tab:one'
     table_caption = 'caption check'
 
@@ -324,7 +323,7 @@ def main():
                                    table_caption, GoF=True)
 
     write_matches_into_latex_table(D_rest, table_name2, table_label,
-                                   table_caption, GoF=True)                                   
+                                   table_caption, GoF=True)
 
 if __name__ == "__main__":
     main()
