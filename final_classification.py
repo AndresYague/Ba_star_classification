@@ -76,7 +76,7 @@ def find_matches(D_nn, D_clos, mass_R=0.25, met_R=5.0):
 
         # If there are no classifications in the closest algo,
         # then just flag star as bad
-        # TODO what exception are we catching here?
+        # TODO what exception are we catching here? see sentence above!
         except:
             flagged_bad[starname]['nn'] = values[starname]
             flagged_bad[starname]['closest'] = D_clos[starname]['all_cla']
@@ -91,8 +91,8 @@ def find_matches(D_nn, D_clos, mass_R=0.25, met_R=5.0):
     for starname in D_clos.keys():
         if len(flagged_bad[starname]) == 0:
             flagged_bad.pop(starname)
-        if len(overlap[starname]) == 0:
-            overlap.pop(starname)
+        '''if len(overlap[starname]) == 0:
+            overlap.pop(starname)'''
 
     return overlap, flagged_bad
 
@@ -217,7 +217,7 @@ def write_matches_into_latex_table(star_di, tab_name, tab_label, tab_caption,
         L_val = len(val)
         g.write(key)
         if L_val == 0:
-            g.write(' & - & -\\\ \n')
+            g.write(' & - & - & - & -\\\ \n')
         else:
             for key in val.keys():
                 # Clean match needed?
@@ -241,12 +241,20 @@ def main():
     """
 
     # Get file names from input
-    if len(sys.argv) < 3:
+    if len(sys.argv) < 4:
         s = "Incorrect number of arguments.\n"
-        s += f"Use: python3 {sys.argv[0]} <output_1.txt> ... <output_n.txt>"
+        s += f"Use: python3 {sys.argv[0]} <output_1.txt> ... <output_n.txt> <28stars.txt>"
         sys.exit(s)
 
-    files = sys.argv[1:]
+    files = sys.argv[1:-1]
+    stars_28 = sys.argv[-1]
+    
+    # Gather all the info of the 28 stars
+    names = []
+    with open(stars_28, "r") as fread:
+        for line in fread:
+            name = line.split("\n")
+            names.append(name[0])        
 
     # Define all the directories
     dir_data = os.path.join(DIR, "Ba_star_classification_data")
@@ -264,7 +272,7 @@ def main():
 
     # Uncertainty ranges in matching:
     mass_R = 0.25
-    met_R = 5.0
+    met_R = 1.7
 
     D_range_classies = None
     D_stars = None
@@ -295,14 +303,28 @@ def main():
             print(flagged_bad[star][key])
         print('---')
 
+    D_28 = {}
+    D_rest = {}
+    # divide star names into two tables: 28 and the rest
+    for starname in overlap.keys():
+        if starname in names:
+            D_28[starname] = overlap[starname]
+        else:
+            D_rest[starname] = overlap[starname]
+       
+       
     # Set name, label, caption of table
-    table_name = 'Latex_table_matchedstars.tex'
+    table_name = 'Latex_table_28matchedstars.tex'
+    table_name2 = 'Latex_table_restmatchedstars.tex'    
     table_label = 'tab:one'
     table_caption = 'caption check'
 
     # Write table with results
-    write_matches_into_latex_table(overlap, table_name, table_label,
+    write_matches_into_latex_table(D_28, table_name, table_label,
                                    table_caption, GoF=True)
+
+    write_matches_into_latex_table(D_rest, table_name2, table_label,
+                                   table_caption, GoF=True)                                   
 
 if __name__ == "__main__":
     main()
