@@ -347,7 +347,8 @@ def main():
     dir_data = "Ba_star_classification_data"
     fruity_mods = "models_fruity"
     monash_mods = "models_monash"
-    data_file = "all_abund_and_masses.dat"
+    #data_file = "all_abund_and_masses.dat"
+    data_file = "all_data_w_err.dat"
 
     fruity_dir = os.path.join(dir_data, fruity_mods)
     monash_dir = os.path.join(dir_data, monash_mods)

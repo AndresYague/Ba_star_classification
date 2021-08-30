@@ -98,6 +98,3 @@ where the figures will be plotted.
 The output files can have any combination of models.
 
 The red stars are the elements taken from element_set.dat
-
-TODO: The plotting routine is broken right now (is it really? I believe 
-Jacqueline's latest version works)

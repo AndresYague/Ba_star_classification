@@ -77,7 +77,7 @@ def find_matches(D_nn, D_clos, mass_R=0.25, met_R=5.0):
 
         # If there are no classifications in the closest algo,
         # then just flag star as bad
-        except KeyError:
+        except IndexError:
             flagged_bad[starname]['nn'] = values[starname]
             flagged_bad[starname]['closest'] = D_clos[starname]['all_cla']
 
@@ -241,13 +241,13 @@ def main():
     """
 
     # Get file names from input
-    if len(sys.argv) < 4:
+    if len(sys.argv) < 3:
         s = "Incorrect number of arguments.\n"
-        s += f"Use: python3 {sys.argv[0]} <output_1.txt> ... <output_n.txt> <28stars.txt>"
+        s += f"Use: python3 {sys.argv[0]} <output_1.txt> ... <output_n.txt>"
         sys.exit(s)
 
-    files = sys.argv[1:-1]
-    stars_28 = sys.argv[-1]
+    files = sys.argv[1:]
+    stars_28 = "28stars.txt"
 
     # Gather all the info of the 28 stars
     names = []
@@ -258,9 +258,6 @@ def main():
 
     # Define all the directories
     dir_data = os.path.join(DIR, "Ba_star_classification_data")
-    data_file = "all_abund_and_masses.dat"
-    data_file = os.path.join(dir_data, data_file)
-    star_vals = get_data_values(data_file)
 
     fruity_mods = "models_fruity"
     fruity_dir = os.path.join(dir_data, fruity_mods)
@@ -292,8 +289,8 @@ def main():
         s += "neural network classification."
         sys.exit(s)
 
-    overlap, flagged_bad = find_matches(D_stars, D_range_classies, mass_R=massR,
-                                        met_R=met_R)
+    overlap, flagged_bad = find_matches(D_stars, D_range_classies,
+                                        mass_R=mass_R, met_R=met_R)
 
     print(len(flagged_bad))
     for star in flagged_bad.keys():
