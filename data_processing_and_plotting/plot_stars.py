@@ -80,7 +80,7 @@ def get_dict_predicted(files):
                     repeated[type_][star_name].append(lnlst[0])
 
                     # Add to the set
-                    lnlst[1] = lnlst[1]
+                    lnlst[1] = float(lnlst[1])
                     dict_[type_][star_name].add(tuple(lnlst))
 
     return dict_

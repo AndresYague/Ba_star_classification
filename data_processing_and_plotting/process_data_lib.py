@@ -317,6 +317,9 @@ def apply_dilution(elems, kk, names, zero=0):
     kk is the fraction of the Ba-star envelope that comes from the AGB
     """
 
+    # Make sure that the dilution is a float
+    kk = float(kk)
+
     # Just apply the formula to each element in name
     new_elements = {}
     for name in elems:
