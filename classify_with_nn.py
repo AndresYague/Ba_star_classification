@@ -30,12 +30,21 @@ def predict_star(networks, data, label_dict):
 
     # Predict
     best_prediction, all_predictions = predict_with_networks(networks, use_data)
-    index_best = np.argmax(best_prediction, axis=1)[0]
+    #index_best = np.argmax(best_prediction, axis=1)[0]
 
     # Unroll al indices
     indices = [x[0] for x in np.argmax(all_predictions, axis=2)]
+    max_vals = [x[0] for x in np.max(all_predictions, axis=2)]
 
-    # Add best index to indices
+    # Add fake label to dictionary
+    new_dict = {key:label_dict[key] for key in label_dict}
+    fail_key = len(label_dict.keys())
+    label_dict[fail_key] = "Fail"
+
+    # Change indices
+    for ii in range(len(indices)):
+        if max_vals[ii] < 1e-40:
+            indices[ii] = fail_key
 
     # Return labels
     labels = [label_dict[index] for index in indices]
@@ -123,7 +132,7 @@ def main():
         # Print output for this star
         print("For star {}:".format(name))
 
-        # Do the MC study here
+        # Predict the model
         predict_star(networks, data, label_dict)
 
         # Separate for the next case

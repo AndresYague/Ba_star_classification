@@ -73,33 +73,33 @@ def create_model(train_inputs, train_labels, label_dict, layers=[],
         model = tf.keras.Sequential()
 
         # Input layer
-        model.add(tf.keras.layers.Dense(layers[0], input_shape = (nn, ),
-                  activation = "relu"))
+        model.add(tf.keras.layers.Dense(layers[0], input_shape=(nn, ),
+                  activation="relu"))
 
         # Hidden layers
         for lay in layers[1:]:
-            model.add(tf.keras.layers.Dense(lay, activation = "relu"))
+            model.add(tf.keras.layers.Dense(lay, activation="relu"))
             model.add(tf.keras.layers.Dropout(0.3))
 
         # output layer
-        model.add(tf.keras.layers.Dense(outpt, activation = "sigmoid"))
+        model.add(tf.keras.layers.Dense(outpt, activation="sigmoid"))
 
         # Choose alpha
         alpha = 0.0015
-        epochs = 5
+        epochs = 2
         if mod_dir is not None and "fruity" in mod_dir:
             epochs = 4
             alpha = 0.001
 
         # Compile
-        optimizer = tf.keras.optimizers.RMSprop(learning_rate = alpha)
-        model.compile(optimizer = optimizer,
+        optimizer = tf.keras.optimizers.RMSprop(learning_rate=alpha)
+        model.compile(optimizer=optimizer,
                 metrics = ["sparse_categorical_accuracy"],
                 loss = tf.keras.losses.SparseCategoricalCrossentropy())
 
         # Train
-        model.fit(train_inputs, train_labels, epochs = epochs,
-                  validation_split = 0.3)
+        model.fit(train_inputs, train_labels, epochs=epochs,
+                  validation_split=0.3)
         models.append(model)
 
         # Save model
@@ -121,11 +121,14 @@ def check_model(models, inputs, labels, conf_threshold=0.75, verbose=False):
     # Predict
     best_prediction, all_predictions = predict_with_networks(models, inputs)
 
+    add = 0
     if verbose:
         for ii in range(len(best_prediction)):
+            if sum(best_prediction[ii]) < 1e-40:
+                add += 1
 
             # Confidence
-            conf = np.max(best_prediction[ii]) + 1e-40
+            conf = np.max(best_prediction[ii]) + 1e-30
             conf /= np.sum(best_prediction[ii]) + 1e-20
 
             # Check threshold
@@ -164,6 +167,7 @@ def check_model(models, inputs, labels, conf_threshold=0.75, verbose=False):
         s += f"Total confidently correct cases {tot:.2f}%\n"
 
         print(s)
+    print(f"Number of all zeroes: {add}")
 
 def divide(a, b):
     """

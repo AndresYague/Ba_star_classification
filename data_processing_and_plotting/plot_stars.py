@@ -203,6 +203,9 @@ def plot_results(predicted_models_dict, fruity_models_dict,
     for z in name_z:
         name = name_z[z]
 
+        if name == "Fe":
+            continue
+
         # To limit to anything above Fe
         if LIMIT_DIL and z > IRONZ:
             names_dil.append(name + "/Fe")

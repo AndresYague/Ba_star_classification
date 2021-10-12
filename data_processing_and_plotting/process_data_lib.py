@@ -143,7 +143,7 @@ def get_data_values(data_file, names=None):
         # Construct a names list if not provided
         if names is None:
             names = []
-            for elem in header[1:-4]:
+            for elem in header[1:-1]:
                 if "err" not in elem:
                     if "/" in elem:
                         names.append(elem)

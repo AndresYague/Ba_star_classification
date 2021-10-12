@@ -26,4 +26,7 @@
 #Fe/H Rb/Fe Sr/Fe Zr/Fe Y/Fe La/Fe Ce/Fe Eu/Fe
 
 # Set E
-Fe/H Rb/Fe Sr/Fe Zr/Fe Ru/Fe La/Fe Ce/Fe Sm/Fe Eu/Fe
+#Fe/H Rb/Fe Sr/Fe Zr/Fe Ru/Fe La/Fe Ce/Fe Sm/Fe Eu/Fe
+
+# Set F
+Fe/H Rb/Fe Sr/Fe Zr/Fe Ru/Fe Ce/Fe Nd/Fe Sm/Fe Eu/Fe
