@@ -6,6 +6,8 @@ from silence_tensorflow import silence_tensorflow
 silence_tensorflow()
 import tensorflow as tf
 
+from data_processing_and_plotting.process_data_lib import load_ba_stars
+
 def load_label_dict(label_dict_file):
     """
     Just load the label dictionary
@@ -85,43 +87,7 @@ def main():
     # Modify path of files to point to dir_data
     processed_models = os.path.join(dir_data, processed_models)
     data_file = os.path.join(dir_data, "processed_data.txt")
-
-    # Now load Ba stars data
-    all_data = []; all_names = []; all_errors = []
-    with open(data_file, "r") as fread:
-        header = fread.readline().split()[1:]
-        for line in fread:
-            lnlst = line.split()
-            all_names.append(lnlst[-1])
-
-            # Put values in an array
-            arr = []; arr_err = []
-            for ii in range(len(header)):
-                # Skip name
-                if "Name" in header[ii]:
-                    continue
-
-                # Transform to float
-                try:
-                    val = float(lnlst[ii])
-                except ValueError:
-                    val = 1
-                except:
-                    raise
-
-                # Put errors and values in different arrays
-                if "_err" in header[ii]:
-                    arr_err.append(val)
-                else:
-                    arr.append(val)
-
-            # Convert to numpy arrays
-            arr = np.array(arr)
-            arr_err = np.array(arr_err)
-
-            # Save data
-            all_data.append(arr)
-            all_errors.append(arr_err)
+    all_data, all_errors, all_names, missing_values = load_ba_stars(data_file)
 
     # Start
     for ii in range(len(all_names)):
