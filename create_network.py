@@ -86,7 +86,7 @@ def create_model(train_inputs, train_labels, label_dict, layers=[],
 
         # Choose alpha
         alpha = 0.0015
-        epochs = 2
+        epochs = 3
         if mod_dir is not None and "fruity" in mod_dir:
             epochs = 4
             alpha = 0.001
