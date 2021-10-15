@@ -38,13 +38,17 @@ def find_matches(D_nn, D_clos, mass_R=0.25, met_R=5.0):
                         values[starname].add(tup_[ii])
 
         # Then compare with overlap ranges of closest:
-        for value in values[starname]:
-            v_label = value[0].split("-")
-            v_label2 = v_label[1].split("z")
-            v_mass = v_label2[0][1:]
-            v_met = '0.'+v_label2[1]
-            nn_minmax_mass.append(v_mass)
-            nn_minmax_met.append(v_met)
+        if len(values[starname])<1:
+            nn_minmax_mass.append(0)
+            nn_minmax_met.append(-10)
+        else:
+            for value in values[starname]:
+                v_label = value[0].split("-")
+                v_label2 = v_label[1].split("z")
+                v_mass = v_label2[0][1:]
+                v_met = '0.'+v_label2[1]
+                nn_minmax_mass.append(v_mass)
+                nn_minmax_met.append(v_met)
 
         nn_min_mass, nn_max_mass = min(nn_minmax_mass), max(nn_minmax_mass)
         nn_min_met, nn_max_met = min(nn_minmax_met), max(nn_minmax_met)
@@ -230,15 +234,99 @@ def write_matches_into_latex_table(star_di, tab_name, tab_label, tab_caption,
     g.write(table_end)
     g.close()
 
+def convert_met(zzraw):
+    """
+    Convert metallicity to feH, zz is a string
+    """
+
+    # Define several quantities to use
+    zz_sun = 0.014
+    hyd = 0.75
+    hyd_sun = 0.7381
+    feH_sun = zz_sun/hyd_sun
+
+    zz=zzraw.split('e-0')
+    # Here is the transformation
+    zz = float(zz[0]) * 10 ** -int(zz[1])
+    hh = (1 - zz) * hyd
+    feH = zz/hh
+    feH = np.log10(feH/feH_sun)
+
+    return feH    
+    
+def calc_fe_spreads(overlap, all_data, all_names, all_errors):
+    """ 
+    calculate how much [Fe/H] of obs match the [Fe/H] of classifications 
+    """    
+    feh_comp = np.zeros(len(all_names))
+    
+    for ii in range(len(all_names)):
+        name = all_names[ii]
+        ba_data = all_data[ii]
+        try:
+            ba_class_zs = overlap[name]['metallicity']
+        except:
+            continue
+
+        zs0="{:.2e}".format(ba_class_zs[0])
+        zs1="{:.2e}".format(ba_class_zs[1])       
+        ba_class_fehmin = convert_met(zs0)
+        ba_class_fehmax = convert_met(zs1)
+
+        if ba_class_fehmin <= ba_data[0] <= ba_class_fehmax:
+            feh_comp[ii]=0
+        elif ba_data[0] < ba_class_fehmin:
+            feh_comp[ii]=ba_data[0]-ba_class_fehmin
+        elif ba_data[0] > ba_class_fehmax:
+            feh_comp[ii]=ba_data[0]-ba_class_fehmax       
+
+    return feh_comp  
+
+def make_sta_bar(lab_sta_bar, overlap, option,colf):
+    """
+    make stacked bar figure to show distribution of masses in classifications
+    """          
+
+    stacked_data = []
+
+    if option=='M':
+        use_key = 'mass'
+        lab = use_key
+        num_fig = 20
+        c=1
+        width = 0.20
+    elif option == 'Z':
+        use_key = 'metallicity'
+        lab = use_key+r'(Z*10$^3$)'
+        num_fig = 30
+        c=0.001
+        width = 0.8
+
+    #for each star, get data and change format
+    for name in overlap.keys():
+        try:
+            raw_range = overlap[name][use_key]
+            #print(raw_range)
+        except:
+            continue
+        cleaned_range = [1 if x*c >= raw_range[0] and x*c <= raw_range[1] else 0 for x in lab_sta_bar]
+  
+        stacked_data.append(cleaned_range)
+
+    plt.figure(num=num_fig)
+    plt.bar(lab_sta_bar,stacked_data[0],color=colf, width=width)
+    bot=np.zeros(len(lab_sta_bar))
+
+    for ii in range(1,len(stacked_data),1):
+        bot += stacked_data[ii-1]
+        plt.bar(lab_sta_bar,stacked_data[ii],bottom=bot,color=colf, width=width)
+
+    if option=='Z':
+        plt.xlim(min(lab_sta_bar),max(lab_sta_bar)+1)
+    plt.xlabel(lab)
+    plt.ylabel('count')   
+        
 def main():
-    """
-    Load .txt files with output of classification algorithms, including
-    goodness of fit. Compare the outputs per star:
-    1) do the algorithms agree?
-    2) is GoF above the threshold?
-    3) make histogram with GoF values
-    4) make .tex table with all outcomes?
-    """
 
     # Get file names from input
     if len(sys.argv) < 3:
@@ -266,7 +354,11 @@ def main():
     monash_mods = "models_monash"
     monash_dir = os.path.join(dir_data, monash_mods)
     models_M = get_data_monash(monash_dir)
-
+    
+    file_data = "processed_data.txt"
+    file_data = os.path.join(DIR, file_data)
+    all_data, all_errors, all_names, missing_values = load_ba_stars(file_data)
+    
     # Uncertainty ranges in matching:
     mass_R = 0.25
     met_R = 1.7
@@ -301,16 +393,20 @@ def main():
         print('---')
 
     D_28 = {}
+    D_missing =  {}
     D_rest = {}
     # divide star names into two tables: 28 and the rest
     for starname in overlap.keys():
         if starname in names:
             D_28[starname] = overlap[starname]
-        else:
+        if starname in missing_values.keys() or starname in flagged_bad.keys():
+            D_missing[starname] = overlap[starname]
+        if starname not in names and starname not in missing_values.keys() and starname not in flagged_bad.keys():
             D_rest[starname] = overlap[starname]
 
     # Set name, label, caption of table
     table_name = 'Latex_table_28matchedstars.tex'
+    table_name1 = 'Latex_table_missing_matchedstars.tex'    
     table_name2 = 'Latex_table_restmatchedstars.tex'
     table_label = 'tab:one'
     table_caption = 'caption check'
@@ -319,8 +415,35 @@ def main():
     write_matches_into_latex_table(D_28, table_name, table_label,
                                    table_caption, GoF=True)
 
+    write_matches_into_latex_table(D_missing, table_name1, table_label,
+                                   table_caption, GoF=True)   
+
     write_matches_into_latex_table(D_rest, table_name2, table_label,
                                    table_caption, GoF=True)
+                                
+    #now let's make some figures
+    if 'fruity' in files[0]:
+        col_figs = 'y'
+        title = 'FRUITY'
+    else:
+        col_figs = 'b'
+        title = 'MONASH'
+    #histogram comparing obs and class [Fe/H]
+    feh_comp = calc_fe_spreads(overlap, all_data, all_names, all_errors) 
+    plt.figure(num=1)
+    plt.hist(feh_comp, bins=25,color=col_figs)
+    plt.title(title)
+    plt.xlabel(r'[Fe/H]$_{\rm{obs}}$-[Fe/H]$_{\rm{classifications}}$')
+    plt.ylabel('count')
+
+    #make stacked bar plot with certain labels and thus alter data to fit format
+    lab_sta_bar_M = [x*0.25 for x in range(4,18,1)]
+    make_sta_bar(lab_sta_bar_M, overlap, 'M',col_figs)
+    #plt.show()
+    
+    lab_sta_bar_Z = [x for x in range(1,25,1)]
+    make_sta_bar(lab_sta_bar_Z, overlap, 'Z',col_figs)
+    plt.show()
 
 if __name__ == "__main__":
     main()
