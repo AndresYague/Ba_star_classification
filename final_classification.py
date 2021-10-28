@@ -259,12 +259,19 @@ def calc_fe_spreads(overlap, all_data, all_names, all_errors):
     calculate how much [Fe/H] of obs match the [Fe/H] of classifications 
     """    
     feh_comp = np.zeros(len(all_names))
+    gofs = np.zeros(len(all_names))
     
+    spread_m = []
+    spread_z = []
     for ii in range(len(all_names)):
+
         name = all_names[ii]
         ba_data = all_data[ii]
         try:
             ba_class_zs = overlap[name]['metallicity']
+            ba_class_ms = overlap[name]['mass']            
+            gofs[ii] = overlap[name]['GoFs'][0]
+            
         except:
             continue
 
@@ -272,17 +279,75 @@ def calc_fe_spreads(overlap, all_data, all_names, all_errors):
         zs1="{:.2e}".format(ba_class_zs[1])       
         ba_class_fehmin = convert_met(zs0)
         ba_class_fehmax = convert_met(zs1)
+        spread_z.append(ba_class_fehmax - ba_class_fehmin)
+        spread_m.append(ba_class_ms[1] - ba_class_ms[0])
 
         if ba_class_fehmin <= ba_data[0] <= ba_class_fehmax:
             feh_comp[ii]=0
         elif ba_data[0] < ba_class_fehmin:
             feh_comp[ii]=ba_data[0]-ba_class_fehmin
         elif ba_data[0] > ba_class_fehmax:
-            feh_comp[ii]=ba_data[0]-ba_class_fehmax       
+            feh_comp[ii]=ba_data[0]-ba_class_fehmax
 
-    return feh_comp  
+    print('mass ',np.mean(spread_m),np.std(spread_m))
+    print('metallicity ',np.mean(spread_z),np.std(spread_z))
 
-def make_sta_bar(lab_sta_bar, overlap, option,colf):
+    return feh_comp, gofs  
+
+def calc_spreads28(D_28, all_data, all_names, all_errors, names28, masses28):
+    feh_comp = np.zeros(len(names28))
+    gofs = np.zeros(len(names28))
+    mass_comp = np.zeros(len(names28))
+
+    spread_m = []
+    spread_z = []
+
+    for ii in range(len(names28)):
+
+        name = names28[ii]
+        mba_data = float(masses28[ii])
+        for jj in range(len(all_names)):
+            if all_names[jj] == name:
+                ba_data = all_data[ii]
+        try:
+            ba_class_zs = D_28[name]['metallicity']
+            ba_class_ms = D_28[name]['mass']
+            gofs[ii] = D_28[name]['GoFs'][0]
+            
+        except:
+            continue
+
+        zs0 = "{:.2e}".format(ba_class_zs[0])
+        zs1 = "{:.2e}".format(ba_class_zs[1])       
+        ba_class_fehmin = convert_met(zs0)
+        ba_class_fehmax = convert_met(zs1)
+
+        spread_z.append(ba_class_fehmax - ba_class_fehmin)
+        spread_m.append(ba_class_ms[1] - ba_class_ms[0])
+
+        if ba_class_fehmin <= ba_data[0] <= ba_class_fehmax:
+            feh_comp[ii] = 0
+        elif ba_data[0] < ba_class_fehmin:
+            feh_comp[ii] = ba_data[0] - ba_class_fehmin
+        elif ba_data[0] > ba_class_fehmax:
+            feh_comp[ii] = ba_data[0] - ba_class_fehmax  
+
+        ba_class_m_min=float("{:.2f}".format(ba_class_ms[0]))
+        ba_class_m_max=float("{:.2f}".format(ba_class_ms[1]))      
+
+        if ba_class_m_min <= mba_data <= ba_class_m_max:
+            mass_comp[ii] = 0
+        elif mba_data < ba_class_m_min:
+            mass_comp[ii] = mba_data - ba_class_m_min
+        elif mba_data > ba_class_m_max:
+            mass_comp[ii] = mba_data - ba_class_m_max 
+
+    print('mass 28 ',np.mean(spread_m),np.std(spread_m))
+    print('metallicity 28 ',np.mean(spread_z),np.std(spread_z))                        
+
+    return feh_comp, gofs, mass_comp
+
+def make_sta_bar(lab_sta_bar, overlap, option,colf,title):
     """
     make stacked bar figure to show distribution of masses in classifications
     """          
@@ -291,7 +356,7 @@ def make_sta_bar(lab_sta_bar, overlap, option,colf):
 
     if option=='M':
         use_key = 'mass'
-        lab = use_key
+        lab = use_key +r'(M$_{\odot}$)'
         num_fig = 20
         c=1
         width = 0.20
@@ -300,15 +365,15 @@ def make_sta_bar(lab_sta_bar, overlap, option,colf):
         lab = use_key+r'(Z*10$^3$)'
         num_fig = 30
         c=0.001
-        width = 0.8
+        width = 0.8    
 
     #for each star, get data and change format
     for name in overlap.keys():
         try:
             raw_range = overlap[name][use_key]
-            #print(raw_range)
         except:
             continue
+
         cleaned_range = [1 if x*c >= raw_range[0] and x*c <= raw_range[1] else 0 for x in lab_sta_bar]
   
         stacked_data.append(cleaned_range)
@@ -323,6 +388,7 @@ def make_sta_bar(lab_sta_bar, overlap, option,colf):
 
     if option=='Z':
         plt.xlim(min(lab_sta_bar),max(lab_sta_bar)+1)
+        plt.title(title)
     plt.xlabel(lab)
     plt.ylabel('count')   
         
@@ -338,11 +404,13 @@ def main():
     stars_28 = "28stars.txt"
 
     # Gather all the info of the 28 stars
-    names = []
+    names28 = []
+    masses28 = []
     with open(stars_28, "r") as fread:
         for line in fread:
-            name = line.split("\n")
-            names.append(name[0])
+            name = line.split()
+            names28.append(name[0])
+            masses28.append(name[1])
 
     # Define all the directories
     dir_data = os.path.join(DIR, "Ba_star_classification_data")
@@ -397,11 +465,11 @@ def main():
     D_rest = {}
     # divide star names into two tables: 28 and the rest
     for starname in overlap.keys():
-        if starname in names:
+        if starname in names28:
             D_28[starname] = overlap[starname]
         if starname in missing_values.keys() or starname in flagged_bad.keys():
             D_missing[starname] = overlap[starname]
-        if starname not in names and starname not in missing_values.keys() and starname not in flagged_bad.keys():
+        if starname not in names28 and starname not in missing_values.keys() and starname not in flagged_bad.keys():
             D_rest[starname] = overlap[starname]
 
     # Set name, label, caption of table
@@ -428,21 +496,46 @@ def main():
     else:
         col_figs = 'b'
         title = 'MONASH'
+
     #histogram comparing obs and class [Fe/H]
-    feh_comp = calc_fe_spreads(overlap, all_data, all_names, all_errors) 
+    feh_comp28, gofs28, mass_comp28 = calc_spreads28(D_28, all_data, all_names, all_errors, names28, masses28) 
+    feh_comp, gofs = calc_fe_spreads(overlap, all_data, all_names, all_errors)
+
     plt.figure(num=1)
+    plt.hist(feh_comp28, bins=25,color=col_figs)
+    plt.title(title)
+    plt.xlabel(r'[Fe/H]$_{\rm{obs}}$-[Fe/H]$_{\rm{classifications}}$')
+    plt.ylabel('count')
+
+    plt.figure(num=2)
+    plt.hist(mass_comp28, bins=15,color=col_figs)
+    #plt.title(title)
+    plt.xlabel(r'M$_{\rm{obs}}$-M$_{\rm{classifications}}$')
+    plt.ylabel('count')
+
+    plt.figure(num=3)
+    plt.hist(gofs28, bins=20,color=col_figs)
+    #plt.title(title)
+    plt.xlabel('GoFs')
+    plt.ylabel('count')
+
+    plt.figure(num=11)
     plt.hist(feh_comp, bins=25,color=col_figs)
     plt.title(title)
     plt.xlabel(r'[Fe/H]$_{\rm{obs}}$-[Fe/H]$_{\rm{classifications}}$')
     plt.ylabel('count')
 
-    #make stacked bar plot with certain labels and thus alter data to fit format
+    plt.figure(num=12)
+    plt.hist(gofs, bins=20,color=col_figs)
+    #plt.title(title)
+    plt.xlabel('GoFs')
+    plt.ylabel('count')
+
+    #make stacked bar plots with certain labels and thus alter data to fit format
     lab_sta_bar_M = [x*0.25 for x in range(4,18,1)]
-    make_sta_bar(lab_sta_bar_M, overlap, 'M',col_figs)
-    #plt.show()
-    
+    make_sta_bar(lab_sta_bar_M, overlap, 'M',col_figs,title)
     lab_sta_bar_Z = [x for x in range(1,25,1)]
-    make_sta_bar(lab_sta_bar_Z, overlap, 'Z',col_figs)
+    make_sta_bar(lab_sta_bar_Z, overlap, 'Z',col_figs,title)   
     plt.show()
 
 if __name__ == "__main__":
