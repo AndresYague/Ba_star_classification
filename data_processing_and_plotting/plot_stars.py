@@ -215,13 +215,18 @@ def plot_results(predicted_models_dict, fruity_models_dict,
     # Each key in dict_data is a star
     for key in dict_data:
 
+        # Calculate metallicity for plots
+        FeH = dict_data[key]["Fe/H"]
+        zz = 0.014 * 10**FeH
+        title = f"{key}; [Fe/H] = {FeH:.2f}; z = {zz:.2e}"
+
         # Figure specification
         fig = plt.figure(figsize=FIGSIZE)
         spec = gridspec.GridSpec(8, 1)
 
         # Axes for abundances
         ax1 = plt.subplot(spec[:4, :])
-        ax1.set_title(key, size=FONTSIZE * 1.5)
+        ax1.set_title(title, size=FONTSIZE * 1.5)
         ax1.set_ylabel("[X/Fe]", size=FONTSIZE)
 
         # Axes for residual
