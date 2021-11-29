@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import os
+import sys
 
 class ErrorClass(object):
     """
@@ -61,8 +62,8 @@ class ErrorClass(object):
             raise Exception(s)
 
         if not os.path.isfile(self.element_set):
-            print(f"File {self.element_set} does not exist")
-            print(f"Element set not loaded")
+            print(f"File {self.element_set} does not exist", file=sys.stderr)
+            print(f"Element set not loaded", file=sys.stderr)
             return
 
         with open(self.element_set) as fread:
@@ -101,8 +102,8 @@ class ErrorClass(object):
             raise Exception(s)
 
         if not os.path.isfile(self.error_tables):
-            print(f"File {self.error_tables} does not exist")
-            print(f"Error tables not loaded")
+            print(f"File {self.error_tables} does not exist", file=sys.stderr)
+            print(f"Error tables not loaded", file=sys.stderr)
             return
 
         self.groups = []
@@ -217,8 +218,9 @@ class ErrorClass(object):
             raise Exception(s)
 
         if not os.path.isfile(self.temperature_table):
-            print(f"File {self.temperature_table} does not exist")
-            print(f"Temperature table not loaded")
+            print(f"File {self.temperature_table} does not exist",
+                  file=sys.stderr)
+            print(f"Temperature table not loaded", file=sys.stderr)
             return
 
         self.temperatures = {}
@@ -255,9 +257,9 @@ class ErrorClass(object):
 
         # Return if the star is not on the table
         if star_name not in self.temperatures and not use_average:
-            print("==============================")
-            print(f"{star_name} not in temperature table, skipping")
-            print("==============================")
+            print("==============================", file=sys.stderr)
+            print(f"{star_name} not in temperature table, skipping", file=sys.stderr)
+            print("==============================", file=sys.stderr)
             self.plot_correlations(random_errors.T)
             return random_errors
 
@@ -366,8 +368,8 @@ class ErrorClass(object):
         try:
             index = self.header.index(measure)
         except ValueError:
-            print("Accepted measures: ")
-            print(self.header)
+            print("Accepted measures: ", file=sys.stderr)
+            print(self.header, file=sys.stderr)
             raise
         except:
             raise
@@ -404,8 +406,8 @@ class ErrorClass(object):
         try:
             all_x = [x[measure] for x in self.groups]
         except KeyError:
-            print("Accepted measures: ")
-            print(self.header[:-1])
+            print("Accepted measures: ", file=sys.stderr)
+            print(self.header[:-1], file=sys.stderr)
             raise
         except:
             raise

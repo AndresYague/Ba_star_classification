@@ -17,7 +17,8 @@ def get_closest(star_instance, all_models, all_labels, top_n=5):
         model = all_models[ii]
         label = all_labels[ii]
 
-        pVal, dilution = star_instance.calculate_dilution(model, max_dil=0.9)
+        pVal, dilution = star_instance.calculate_dilution(model, max_dil=0.9,
+                                                          min_dil=0.1)
         best_dilutions.append((pVal, dilution, label))
 
     # Sort
@@ -34,7 +35,21 @@ def get_closest(star_instance, all_models, all_labels, top_n=5):
             break
 
         # Search for index
-        index = full_names.index(label)
+        try:
+            index = full_names.index(label)
+        except ValueError:
+            s = "\n======================================================\n"
+            s += "The code just found an error in the model label.\n"
+            s += "\nPlease make sure to have run the process_data.py script\n"
+            s += "without dilution:\n"
+            s += "python3 process_data.py n"
+            s += "\n======================================================\n"
+
+            print(s)
+            raise
+        except:
+            raise
+
         label = short_names[index]
 
         # Print

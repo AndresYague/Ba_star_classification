@@ -67,12 +67,12 @@ class StarStat(object):
 
         return pVal
 
-    def calculate_dilution(self, model, k_step=1e-3, max_dil=1.0):
+    def calculate_dilution(self, model, k_step=1e-3, max_dil=1.0, min_dil=0):
         """
         Calculate the best dilution according to goodness of fit for this model
         """
 
-        kk = 0
+        kk = min_dil
         pVal_and_k = []
 
         # Dilute from 0 to max_dil
