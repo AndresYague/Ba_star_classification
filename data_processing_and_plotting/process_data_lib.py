@@ -149,7 +149,7 @@ def get_data_values(data_file, names=None):
                         names.append(elem)
                     else:
                         names.append(elem + "/Fe")
-                        
+
         # Rest
         all_vals = {}
         for line in fread:
@@ -342,7 +342,7 @@ def apply_dilution(elems, kk, names, zero=0):
     for name in names:
 
         # Skip metallicity
-        if name == "Fe/H": 
+        if name == "Fe/H":
             continue
 
         if abs(new_elements[name]) > zero:
@@ -531,7 +531,7 @@ def load_ba_stars(file_data):
 
             # Save data
             all_data.append(arr)
-            all_errors.append(arr_err)    
+            all_errors.append(arr_err)
             if len(missing) > 0:
                 missing_values[lnlst[-1]]=missing
 

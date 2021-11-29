@@ -252,15 +252,15 @@ def convert_met(zzraw):
     feH = zz/hh
     feH = np.log10(feH/feH_sun)
 
-    return feH    
-    
+    return feH
+
 def calc_fe_spreads(overlap, all_data, all_names, all_errors):
-    """ 
-    calculate how much [Fe/H] of obs match the [Fe/H] of classifications 
-    """    
+    """
+    calculate how much [Fe/H] of obs match the [Fe/H] of classifications
+    """
     feh_comp = np.zeros(len(all_names))
     gofs = np.zeros(len(all_names))
-    
+
     spread_m = []
     spread_z = []
     for ii in range(len(all_names)):
@@ -269,14 +269,14 @@ def calc_fe_spreads(overlap, all_data, all_names, all_errors):
         ba_data = all_data[ii]
         try:
             ba_class_zs = overlap[name]['metallicity']
-            ba_class_ms = overlap[name]['mass']            
+            ba_class_ms = overlap[name]['mass']
             gofs[ii] = overlap[name]['GoFs'][0]
-            
+
         except:
             continue
 
         zs0="{:.2e}".format(ba_class_zs[0])
-        zs1="{:.2e}".format(ba_class_zs[1])       
+        zs1="{:.2e}".format(ba_class_zs[1])
         ba_class_fehmin = convert_met(zs0)
         ba_class_fehmax = convert_met(zs1)
         spread_z.append(ba_class_fehmax - ba_class_fehmin)
@@ -292,7 +292,7 @@ def calc_fe_spreads(overlap, all_data, all_names, all_errors):
     print('mass ',np.mean(spread_m),np.std(spread_m))
     print('metallicity ',np.mean(spread_z),np.std(spread_z))
 
-    return feh_comp, gofs  
+    return feh_comp, gofs
 
 def calc_spreads28(D_28, all_data, all_names, all_errors, names28, masses28):
     feh_comp = np.zeros(len(names28))
@@ -313,12 +313,12 @@ def calc_spreads28(D_28, all_data, all_names, all_errors, names28, masses28):
             ba_class_zs = D_28[name]['metallicity']
             ba_class_ms = D_28[name]['mass']
             gofs[ii] = D_28[name]['GoFs'][0]
-            
+
         except:
             continue
 
         zs0 = "{:.2e}".format(ba_class_zs[0])
-        zs1 = "{:.2e}".format(ba_class_zs[1])       
+        zs1 = "{:.2e}".format(ba_class_zs[1])
         ba_class_fehmin = convert_met(zs0)
         ba_class_fehmax = convert_met(zs1)
 
@@ -330,27 +330,27 @@ def calc_spreads28(D_28, all_data, all_names, all_errors, names28, masses28):
         elif ba_data[0] < ba_class_fehmin:
             feh_comp[ii] = ba_data[0] - ba_class_fehmin
         elif ba_data[0] > ba_class_fehmax:
-            feh_comp[ii] = ba_data[0] - ba_class_fehmax  
+            feh_comp[ii] = ba_data[0] - ba_class_fehmax
 
         ba_class_m_min=float("{:.2f}".format(ba_class_ms[0]))
-        ba_class_m_max=float("{:.2f}".format(ba_class_ms[1]))      
+        ba_class_m_max=float("{:.2f}".format(ba_class_ms[1]))
 
         if ba_class_m_min <= mba_data <= ba_class_m_max:
             mass_comp[ii] = 0
         elif mba_data < ba_class_m_min:
             mass_comp[ii] = mba_data - ba_class_m_min
         elif mba_data > ba_class_m_max:
-            mass_comp[ii] = mba_data - ba_class_m_max 
+            mass_comp[ii] = mba_data - ba_class_m_max
 
     print('mass 28 ',np.mean(spread_m),np.std(spread_m))
-    print('metallicity 28 ',np.mean(spread_z),np.std(spread_z))                        
+    print('metallicity 28 ',np.mean(spread_z),np.std(spread_z))
 
     return feh_comp, gofs, mass_comp
 
 def make_sta_bar(lab_sta_bar, overlap, option,colf,title):
     """
     make stacked bar figure to show distribution of masses in classifications
-    """          
+    """
 
     stacked_data = []
 
@@ -365,7 +365,7 @@ def make_sta_bar(lab_sta_bar, overlap, option,colf,title):
         lab = use_key+r'(Z*10$^3$)'
         num_fig = 30
         c=0.001
-        width = 0.8    
+        width = 0.8
 
     #for each star, get data and change format
     for name in overlap.keys():
@@ -375,7 +375,7 @@ def make_sta_bar(lab_sta_bar, overlap, option,colf,title):
             continue
 
         cleaned_range = [1 if x*c >= raw_range[0] and x*c <= raw_range[1] else 0 for x in lab_sta_bar]
-  
+
         stacked_data.append(cleaned_range)
 
     plt.figure(num=num_fig)
@@ -390,8 +390,8 @@ def make_sta_bar(lab_sta_bar, overlap, option,colf,title):
         plt.xlim(min(lab_sta_bar),max(lab_sta_bar)+1)
         plt.title(title)
     plt.xlabel(lab)
-    plt.ylabel('count')   
-        
+    plt.ylabel('count')
+
 def main():
 
     # Get file names from input
@@ -422,11 +422,11 @@ def main():
     monash_mods = "models_monash"
     monash_dir = os.path.join(dir_data, monash_mods)
     models_M = get_data_monash(monash_dir)
-    
+
     file_data = "processed_data.txt"
     file_data = os.path.join(DIR, file_data)
     all_data, all_errors, all_names, missing_values = load_ba_stars(file_data)
-    
+
     # Uncertainty ranges in matching:
     mass_R = 0.25
     met_R = 1.7
@@ -474,7 +474,7 @@ def main():
 
     # Set name, label, caption of table
     table_name = 'Latex_table_28matchedstars.tex'
-    table_name1 = 'Latex_table_missing_matchedstars.tex'    
+    table_name1 = 'Latex_table_missing_matchedstars.tex'
     table_name2 = 'Latex_table_restmatchedstars.tex'
     table_label = 'tab:one'
     table_caption = 'caption check'
@@ -484,11 +484,11 @@ def main():
                                    table_caption, GoF=True)
 
     write_matches_into_latex_table(D_missing, table_name1, table_label,
-                                   table_caption, GoF=True)   
+                                   table_caption, GoF=True)
 
     write_matches_into_latex_table(D_rest, table_name2, table_label,
                                    table_caption, GoF=True)
-                                
+
     #now let's make some figures
     if 'fruity' in files[0]:
         col_figs = 'y'
@@ -498,7 +498,7 @@ def main():
         title = 'MONASH'
 
     #histogram comparing obs and class [Fe/H]
-    feh_comp28, gofs28, mass_comp28 = calc_spreads28(D_28, all_data, all_names, all_errors, names28, masses28) 
+    feh_comp28, gofs28, mass_comp28 = calc_spreads28(D_28, all_data, all_names, all_errors, names28, masses28)
     feh_comp, gofs = calc_fe_spreads(overlap, all_data, all_names, all_errors)
 
     plt.figure(num=1)
@@ -535,7 +535,7 @@ def main():
     lab_sta_bar_M = [x*0.25 for x in range(4,18,1)]
     make_sta_bar(lab_sta_bar_M, overlap, 'M',col_figs,title)
     lab_sta_bar_Z = [x for x in range(1,25,1)]
-    make_sta_bar(lab_sta_bar_Z, overlap, 'Z',col_figs,title)   
+    make_sta_bar(lab_sta_bar_Z, overlap, 'Z',col_figs,title)
     plt.show()
 
 if __name__ == "__main__":

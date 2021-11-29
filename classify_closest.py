@@ -123,7 +123,7 @@ def main():
     models_monash, labels_monash = load_models(file_monash)
     models_fruity, labels_fruity = load_models(file_fruity)
     all_data, all_errors, all_names, missing_values = load_ba_stars(file_data)
- 
+
     # Start
     for ii in range(len(all_names)):
         data = all_data[ii]
