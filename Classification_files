@@ -1,0 +1,5 @@
+There are four sets, from:
+1 neural network ensemble and monash agb final surface abundances (nn_*_monash_*)
+2 nearest neighbour and monash agb final surface abundances (closest_*_monash_*)
+3 neural network ensemble and fruity agb final surface abundances (nn_*_fruity_*)
+4 nearest neighbour and fruity agb final surface abundances (closest_*_fruity_*)
