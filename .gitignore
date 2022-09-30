@@ -6,6 +6,8 @@ label_dict*
 *.tex
 tags
 
+!paper_output_files/*.txt
+
 # Directories
 __pycache__
 best_so_far*
