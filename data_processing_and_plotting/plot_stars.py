@@ -12,8 +12,8 @@ FONTSIZE = 18
 MARKERSIZE = 16
 LINESIZE = 2
 
-ZMIN = 6
 IRONZ = 26
+ZMIN = IRONZ
 LIMIT_DIL = False
 
 def get_dict_predicted(files):
@@ -284,25 +284,21 @@ def plot_results(predicted_models_dict, fruity_models_dict,
         # Set horizontal lines
         ax1.axhline(ls="--", color="silver", zorder=0)
         ax2.axhline(ls="-", color="k", zorder=0)
-        ax2.axhline(0.2, ls="--", color="k", zorder=0)
-        ax2.axhline(-0.2, ls="--", color="k", zorder=0)
-        ax2.axhline(0.4, ls=":", color="k", zorder=0)
-        ax2.axhline(-0.4, ls=":", color="k", zorder=0)
 
         # Adjust axes
         ax1.set_xlim([min(name_z.keys()) - 1, max(name_z.keys()) + 1])
         ax2.set_ylim([-0.72, 0.72])
         ax1.tick_params(which="both", right=True, labelsize=FONTSIZE)
+        ax1.tick_params(which="both", top=True)
         ax1.minorticks_on()
         ax2.tick_params(which="both", right=True, labelsize=FONTSIZE)
         ax2.minorticks_on()
 
-        # Change x-axis. Use only odd numbers. 6, 10, ... for major
-        # 8, 12... for minor
-        x_axis_maj = [z for z in name_z.keys() if (z - 2) % 4 == 0]
-        x_axis_maj_labs = [name_z[z] for z in name_z.keys() if (z - 2) % 4 == 0]
-        x_axis_min = [z for z in name_z.keys() if z % 4 == 0]
-        x_axis_min_labs = [name_z[z] for z in name_z.keys() if z % 4 == 0]
+        # Change x-axis. Use odd numbers down (major) and even up (minor)
+        x_axis_maj = [z for z in name_z.keys() if z % 2 == 1]
+        x_axis_maj_labs = [name_z[z] for z in name_z.keys() if z % 2 == 1]
+        x_axis_min = [z for z in name_z.keys() if z % 2 == 0]
+        x_axis_min_labs = [name_z[z] for z in name_z.keys() if z % 2 == 0]
 
         # Major ticks
         ax2.set_xticks(x_axis_maj)
