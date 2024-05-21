@@ -1,0 +1,1078 @@
+Now fitting the classifier
+Accuracy:  0.9995125517913722
+
+Now fitting the classifier
+Accuracy:  0.9991469656349012
+
+Now fitting the classifier
+Accuracy:  0.9993906897392152
+
+Now fitting the classifier
+Accuracy:  0.9995125517913722
+
+Now fitting the classifier
+Accuracy:  0.9990251035827443
+
+For star BD-083194:
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 18.93% and dilution 0.10 , probability 0.18
+Label monash_m2.00_mix_2.00E-03_z01 with goodness of fit 76.33% and dilution 0.88 , probability 0.10
+Label monash_m2.00_mix_6.00E-03_z0028 with goodness of fit 24.00% and dilution 0.11 , probability 0.09
+------
+
+For star BD-094337:
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 13.07% and dilution 0.53 , probability 0.10
+Label monash_m3.00_mix_2.00E-03_z007 with goodness of fit 64.79% and dilution 0.64 , probability 0.08
+------
+
+For star BD-142678:
+------
+
+For star CD-272233:
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 20.32% and dilution 0.10 , probability 0.10
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 57.17% and dilution 0.21 , probability 0.08
+Label monash_m2.75_mix_2.00E-03_z007 with goodness of fit 70.20% and dilution 0.12 , probability 0.08
+------
+
+For star CD-298822:
+Label monash_m2.00_mix_2.00E-03_z014 with goodness of fit 89.64% and dilution 0.58 , probability 0.08
+------
+
+For star CD-308774:
+Label monash_m2.00_mix_4.00E-03_z014 with goodness of fit 66.94% and dilution 0.07 , probability 0.09
+Label monash_m2.50_mix_2.00E-03_N_ov_2.5_z03 with goodness of fit 40.94% and dilution 0.17 , probability 0.07
+------
+
+For star CD-38585:
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 61.99% and dilution 0.21 , probability 0.18
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 55.70% and dilution 0.10 , probability 0.13
+Label monash_m2.50_mix_2.00E-03_z0028 with goodness of fit 55.88% and dilution 0.15 , probability 0.11
+Label monash_m1.75_mix_2.00E-03_z0028 with goodness of fit 56.07% and dilution 0.41 , probability 0.09
+------
+
+For star CD-422048:
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 14.49% and dilution 0.16 , probability 0.14
+Label monash_m1.75_mix_2.00E-03_z0028 with goodness of fit 12.52% and dilution 0.32 , probability 0.10
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 15.19% and dilution 0.08 , probability 0.07
+------
+
+For star CD-538144:
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 17.85% and dilution 0.09 , probability 0.11
+Label monash_m3.50_mix_1.00E-03_z007 with goodness of fit 47.75% and dilution 0.18 , probability 0.08
+Label monash_m4.00_mix_1.00E-03_z007 with goodness of fit 35.63% and dilution 0.17 , probability 0.08
+------
+
+For star CD-611941:
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 29.46% and dilution 0.09 , probability 0.16
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 25.45% and dilution 0.04 , probability 0.16
+Label monash_m1.75_mix_2.00E-03_z0028 with goodness of fit 28.20% and dilution 0.18 , probability 0.16
+Label monash_m2.50_mix_2.00E-03_z0028 with goodness of fit 26.77% and dilution 0.07 , probability 0.11
+------
+
+For star CPD-621013:
+Label monash_m4.00_mix_1.00E-03_z007 with goodness of fit 28.88% and dilution 0.12 , probability 0.08
+------
+
+For star CPD-643333:
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 15.97% and dilution 0.26 , probability 0.14
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 16.55% and dilution 0.13 , probability 0.12
+------
+
+For star HD4084:
+Label monash_m4.00_mix_1.00E-03_z007 with goodness of fit 32.32% and dilution 0.20 , probability 0.12
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 35.73% and dilution 0.22 , probability 0.09
+------
+
+For star HD5424:
+Label monash_m1.75_mix_2.00E-03_z0028 with goodness of fit 63.05% and dilution 0.57 , probability 0.20
+Label monash_m2.50_mix_2.00E-03_z0028 with goodness of fit 53.76% and dilution 0.21 , probability 0.16
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 61.66% and dilution 0.28 , probability 0.16
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 44.71% and dilution 0.13 , probability 0.16
+Label monash_m2.00_mix_2.00E-03_z0028 with goodness of fit 59.63% and dilution 0.37 , probability 0.08
+------
+
+For star HD5825:
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 52.89% and dilution 0.04 , probability 0.13
+Label monash_m3.50_mix_1.00E-03_z007 with goodness of fit 55.02% and dilution 0.16 , probability 0.09
+Label monash_m3.75_mix_1.00E-03_z007 with goodness of fit 46.01% and dilution 0.18 , probability 0.08
+Label monash_m4.00_mix_1.00E-03_z007 with goodness of fit 39.81% and dilution 0.16 , probability 0.07
+------
+
+For star HD15589:
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 36.12% and dilution 0.11 , probability 0.16
+Label monash_m2.50_mix_2.00E-03_z0028 with goodness of fit 35.68% and dilution 0.17 , probability 0.08
+------
+
+For star HD20394:
+Label monash_m4.00_mix_1.00E-03_z007 with goodness of fit 19.50% and dilution 0.35 , probability 0.14
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 18.94% and dilution 0.10 , probability 0.11
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 58.25% and dilution 0.39 , probability 0.10
+------
+
+For star HD21989:
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 24.91% and dilution 0.01 , probability 0.11
+Label monash_m3.50_mix_1.00E-03_z007 with goodness of fit 60.11% and dilution 0.06 , probability 0.10
+------
+
+For star HD22285:
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 79.77% and dilution 0.09 , probability 0.18
+Label monash_m2.00_mix_6.00E-03_z0028 with goodness of fit 86.18% and dilution 0.10 , probability 0.13
+Label monash_m2.50_mix_2.00E-03_z0028 with goodness of fit 68.53% and dilution 0.14 , probability 0.08
+------
+
+For star HD22772:
+Label monash_m3.50_mix_1.00E-03_z007 with goodness of fit 51.32% and dilution 0.14 , probability 0.13
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 67.59% and dilution 0.15 , probability 0.08
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 15.94% and dilution 0.03 , probability 0.08
+------
+
+For star HD24035:
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 16.57% and dilution 0.17 , probability 0.13
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 20.56% and dilution 0.36 , probability 0.13
+Label monash_m1.75_mix_2.00E-03_z0028 with goodness of fit 19.59% and dilution 0.72 , probability 0.12
+Label monash_m2.50_mix_2.00E-03_z0028 with goodness of fit 17.75% and dilution 0.27 , probability 0.09
+------
+
+For star HD29370:
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 58.90% and dilution 0.19 , probability 0.11
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 18.74% and dilution 0.09 , probability 0.09
+------
+
+For star HD29685:
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 65.01% and dilution 0.06 , probability 0.12
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 17.84% and dilution 0.03 , probability 0.09
+Label monash_m3.00_mix_2.00E-03_z007 with goodness of fit 70.96% and dilution 0.04 , probability 0.08
+------
+
+For star HD30240:
+Label monash_m2.00_mix_2.00E-03_z014 with goodness of fit 91.06% and dilution 0.24 , probability 0.09
+Label monash_m2.00_mix_4.00E-03_z014 with goodness of fit 90.28% and dilution 0.15 , probability 0.08
+------
+
+For star HD30554:
+Label monash_m3.50_mix_1.00E-03_z007 with goodness of fit 50.74% and dilution 0.11 , probability 0.14
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 61.18% and dilution 0.12 , probability 0.10
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 14.20% and dilution 0.05 , probability 0.10
+------
+
+For star HD32712:
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 47.14% and dilution 0.04 , probability 0.19
+Label monash_m2.50_mix_2.00E-03_z0028 with goodness of fit 52.40% and dilution 0.06 , probability 0.16
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 55.18% and dilution 0.08 , probability 0.16
+Label monash_m1.75_mix_2.00E-03_z0028 with goodness of fit 54.75% and dilution 0.16 , probability 0.15
+------
+
+For star HD32901:
+Label monash_m1.75_mix_2.00E-03_z0028 with goodness of fit 81.15% and dilution 0.08 , probability 0.24
+Label monash_m2.50_mix_2.00E-03_z0028 with goodness of fit 78.50% and dilution 0.03 , probability 0.13
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 80.63% and dilution 0.04 , probability 0.12
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 72.59% and dilution 0.02 , probability 0.10
+Label monash_m3.25_mix_1.00E-03_z0028 with goodness of fit 55.42% and dilution 0.06 , probability 0.08
+------
+
+For star HD35993:
+Label monash_m3.50_mix_1.00E-03_z007 with goodness of fit 38.95% and dilution 0.24 , probability 0.14
+Label monash_m4.00_mix_1.00E-03_z007 with goodness of fit 24.81% and dilution 0.23 , probability 0.11
+Label monash_m3.75_mix_1.00E-03_z007 with goodness of fit 29.41% and dilution 0.26 , probability 0.10
+Label monash_m3.00_mix_1.00E-03_z007 with goodness of fit 71.86% and dilution 0.25 , probability 0.09
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 60.98% and dilution 0.26 , probability 0.08
+Label monash_m2.00_mix_2.00E-03_z01 with goodness of fit 93.90% and dilution 0.56 , probability 0.07
+------
+
+For star HD36650:
+Label monash_m2.00_mix_1.00E-03_z014 with goodness of fit 62.69% and dilution 0.40 , probability 0.08
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 64.71% and dilution 0.08 , probability 0.08
+Label monash_m4.00_mix_1.00E-03_z007 with goodness of fit 48.71% and dilution 0.07 , probability 0.08
+------
+
+For star HD38488:
+Label monash_m3.50_mix_1.00E-03_z007 with goodness of fit 18.71% and dilution 0.12 , probability 0.07
+------
+
+For star HD40430:
+Label monash_m2.00_mix_4.00E-03_z014 with goodness of fit 83.32% and dilution 0.18 , probability 0.10
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 27.39% and dilution 0.05 , probability 0.09
+Label monash_m2.75_mix_2.00E-03_z007 with goodness of fit 89.04% and dilution 0.07 , probability 0.09
+Label monash_m2.00_mix_2.00E-03_z014 with goodness of fit 82.65% and dilution 0.30 , probability 0.07
+------
+
+For star HD43389:
+Label monash_m4.00_mix_1.00E-03_z007 with goodness of fit 37.31% and dilution 0.52 , probability 0.15
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 64.37% and dilution 0.57 , probability 0.11
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 37.10% and dilution 0.29 , probability 0.11
+------
+
+For star HD49641:
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 93.82% and dilution 0.09 , probability 0.14
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 93.92% and dilution 0.04 , probability 0.10
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 99.23% and dilution 0.19 , probability 0.08
+------
+
+For star HD51959:
+Label monash_m4.00_mix_1.00E-03_z007 with goodness of fit 43.88% and dilution 0.14 , probability 0.12
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 71.62% and dilution 0.15 , probability 0.09
+------
+
+For star HD58368:
+Label monash_m3.50_mix_1.00E-03_z007 with goodness of fit 47.36% and dilution 0.13 , probability 0.22
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 50.23% and dilution 0.14 , probability 0.12
+------
+
+For star HD59852:
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 30.72% and dilution 0.01 , probability 0.10
+------
+
+For star HD61332:
+------
+
+For star HD64425:
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 52.58% and dilution 0.18 , probability 0.08
+------
+
+For star HD66291:
+Label monash_m3.50_mix_1.00E-03_z007 with goodness of fit 82.60% and dilution 0.10 , probability 0.16
+Label monash_m3.00_mix_1.00E-03_z0028 with goodness of fit 51.09% and dilution 0.08 , probability 0.13
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 84.41% and dilution 0.11 , probability 0.12
+------
+
+For star HD67036:
+Label monash_m3.50_mix_1.00E-03_z007 with goodness of fit 51.47% and dilution 0.17 , probability 0.12
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 33.96% and dilution 0.09 , probability 0.11
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 67.71% and dilution 0.18 , probability 0.08
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 35.08% and dilution 0.04 , probability 0.07
+------
+
+For star HD71458:
+Label monash_m3.00_mix_1.00E-03_z007 with goodness of fit 58.04% and dilution 0.08 , probability 0.08
+------
+
+For star HD74950:
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 29.35% and dilution 0.04 , probability 0.17
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 29.18% and dilution 0.02 , probability 0.16
+Label monash_m1.75_mix_2.00E-03_z0028 with goodness of fit 27.09% and dilution 0.07 , probability 0.10
+Label monash_m2.50_mix_2.00E-03_z0028 with goodness of fit 27.69% and dilution 0.03 , probability 0.08
+------
+
+For star HD82221:
+Label monash_m2.00_mix_4.00E-03_z014 with goodness of fit 92.07% and dilution 0.21 , probability 0.15
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 23.33% and dilution 0.06 , probability 0.08
+------
+
+For star HD83548:
+Label monash_m2.00_mix_2.00E-03_z014 with goodness of fit 93.30% and dilution 0.21 , probability 0.10
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 53.76% and dilution 0.08 , probability 0.08
+------
+
+For star HD84610:
+Label monash_m2.00_mix_2.00E-03_z014 with goodness of fit 87.98% and dilution 0.19 , probability 0.14
+Label monash_m2.50_mix_2.00E-03_N_ov_2.5_z03 with goodness of fit 52.35% and dilution 0.27 , probability 0.10
+Label monash_m3.25_mix_1.00E-03_z03 with goodness of fit 36.62% and dilution 0.45 , probability 0.08
+------
+
+For star HD84678:
+Label monash_m1.75_mix_2.00E-03_z0028 with goodness of fit 17.40% and dilution 0.54 , probability 0.14
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 18.19% and dilution 0.27 , probability 0.13
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 14.97% and dilution 0.13 , probability 0.12
+Label monash_m2.50_mix_2.00E-03_z0028 with goodness of fit 16.24% and dilution 0.20 , probability 0.12
+------
+
+For star HD88035:
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 16.63% and dilution 0.12 , probability 0.14
+Label monash_m1.75_mix_2.00E-03_z0028 with goodness of fit 14.59% and dilution 0.24 , probability 0.08
+------
+
+For star HD88562:
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 44.61% and dilution 0.04 , probability 0.20
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 46.96% and dilution 0.09 , probability 0.16
+Label monash_m1.75_mix_2.00E-03_z0028 with goodness of fit 44.43% and dilution 0.17 , probability 0.14
+Label monash_m2.50_mix_2.00E-03_z0028 with goodness of fit 43.79% and dilution 0.06 , probability 0.11
+------
+
+For star HD89175:
+Label monash_m2.00_mix_2.00E-03_z0028 with goodness of fit 78.40% and dilution 0.40 , probability 0.23
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 81.13% and dilution 0.30 , probability 0.20
+Label monash_m1.75_mix_2.00E-03_z0028 with goodness of fit 80.89% and dilution 0.61 , probability 0.12
+------
+
+For star HD91208:
+Label monash_m2.00_mix_4.00E-03_z014 with goodness of fit 77.84% and dilution 0.21 , probability 0.09
+Label monash_m2.00_mix_2.00E-03_z014 with goodness of fit 79.01% and dilution 0.35 , probability 0.08
+------
+
+For star HD91979:
+Label monash_m4.00_mix_1.00E-03_z007 with goodness of fit 31.40% and dilution 0.13 , probability 0.08
+------
+
+For star HD92626:
+Label monash_m1.75_mix_2.00E-03_z0028 with goodness of fit 63.30% and dilution 0.73 , probability 0.18
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 63.47% and dilution 0.36 , probability 0.12
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 51.12% and dilution 0.17 , probability 0.11
+Label monash_m2.50_mix_2.00E-03_z0028 with goodness of fit 58.67% and dilution 0.27 , probability 0.11
+------
+
+For star HD105902:
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 18.08% and dilution 0.22 , probability 0.09
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 71.17% and dilution 0.44 , probability 0.09
+------
+
+For star HD107264:
+Label monash_m4.00_mix_1.00E-03_z007 with goodness of fit 57.95% and dilution 0.18 , probability 0.12
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 24.39% and dilution 0.10 , probability 0.09
+------
+
+For star HD107541:
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 67.38% and dilution 0.60 , probability 0.15
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 64.75% and dilution 0.28 , probability 0.15
+Label monash_m2.50_mix_2.00E-03_z0028 with goodness of fit 62.12% and dilution 0.45 , probability 0.11
+------
+
+For star HD110483:
+Label monash_m3.50_mix_1.00E-03_z007 with goodness of fit 63.12% and dilution 0.17 , probability 0.21
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 80.60% and dilution 0.18 , probability 0.14
+Label monash_m3.00_mix_1.00E-03_z007 with goodness of fit 85.42% and dilution 0.17 , probability 0.09
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 18.57% and dilution 0.04 , probability 0.09
+------
+
+For star HD110591:
+Label monash_m2.00_mix_2.00E-03_z0028 with goodness of fit 80.66% and dilution 0.05 , probability 0.20
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 82.35% and dilution 0.04 , probability 0.19
+Label monash_m1.75_mix_2.00E-03_z0028 with goodness of fit 79.12% and dilution 0.08 , probability 0.10
+------
+
+For star HD111315:
+------
+
+For star HD113291:
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 12.79% and dilution 0.06 , probability 0.16
+Label monash_m2.00_mix_2.00E-03_z01 with goodness of fit 74.80% and dilution 0.50 , probability 0.09
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 53.34% and dilution 0.23 , probability 0.08
+Label monash_m3.00_mix_1.00E-03_z007 with goodness of fit 57.98% and dilution 0.22 , probability 0.08
+------
+
+For star HD116869:
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 58.43% and dilution 0.07 , probability 0.21
+Label monash_m2.00_mix_2.00E-03_z0028 with goodness of fit 56.02% and dilution 0.09 , probability 0.20
+Label monash_m1.75_mix_2.00E-03_z0028 with goodness of fit 54.82% and dilution 0.13 , probability 0.12
+Label monash_m2.50_mix_2.00E-03_z007 with goodness of fit 94.34% and dilution 0.09 , probability 0.08
+------
+
+For star HD119185:
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 50.68% and dilution 0.02 , probability 0.23
+Label monash_m1.75_mix_2.00E-03_z0028 with goodness of fit 48.75% and dilution 0.04 , probability 0.20
+------
+
+For star HD120571:
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 65.20% and dilution 0.03 , probability 0.18
+Label monash_m2.00_mix_2.00E-03_z0028 with goodness of fit 63.39% and dilution 0.04 , probability 0.17
+Label monash_m1.75_mix_2.00E-03_z0028 with goodness of fit 61.65% and dilution 0.06 , probability 0.12
+Label monash_m3.00_mix_1.00E-03_z007 with goodness of fit 93.77% and dilution 0.07 , probability 0.11
+------
+
+For star HD120620:
+Label monash_m3.50_mix_1.00E-03_z007 with goodness of fit 94.17% and dilution 0.64 , probability 0.26
+Label monash_m3.00_mix_2.00E-03_z007 with goodness of fit 85.48% and dilution 0.41 , probability 0.15
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 88.24% and dilution 0.67 , probability 0.12
+Label monash_m3.75_mix_1.00E-03_z007 with goodness of fit 95.47% and dilution 0.71 , probability 0.08
+------
+
+For star HD122687:
+Label monash_m2.75_mix_2.00E-03_z007 with goodness of fit 70.28% and dilution 0.10 , probability 0.16
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 12.92% and dilution 0.09 , probability 0.12
+Label monash_m2.00_mix_4.00E-03_z014 with goodness of fit 83.30% and dilution 0.27 , probability 0.10
+Label monash_m2.00_mix_2.00E-03_z0028 with goodness of fit 12.04% and dilution 0.12 , probability 0.09
+------
+
+For star HD123396:
+Label monash_m1.25_mix_6.00E-03_z0028 with goodness of fit 45.03% and dilution 0.45 , probability 0.19
+Label monash_m3.25_mix_1.00E-03_z0028 with goodness of fit 20.53% and dilution 0.20 , probability 0.18
+Label monash_m1.75_mix_2.00E-03_z0028 with goodness of fit 44.08% and dilution 0.26 , probability 0.14
+Label monash_m1.50_mix_2.00E-03_z0028 with goodness of fit 42.56% and dilution 0.54 , probability 0.12
+------
+
+For star HD123701:
+Label monash_m4.00_mix_1.00E-03_z007 with goodness of fit 24.95% and dilution 0.29 , probability 0.13
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 51.26% and dilution 0.32 , probability 0.10
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 28.13% and dilution 0.08 , probability 0.08
+------
+
+For star HD123949:
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 30.25% and dilution 0.19 , probability 0.14
+Label monash_m3.50_mix_1.00E-03_z007 with goodness of fit 46.32% and dilution 0.35 , probability 0.13
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 64.53% and dilution 0.37 , probability 0.10
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 27.91% and dilution 0.09 , probability 0.09
+Label monash_m3.00_mix_1.00E-03_z007 with goodness of fit 76.75% and dilution 0.36 , probability 0.08
+------
+
+For star HD126313:
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 16.91% and dilution 0.10 , probability 0.14
+Label monash_m2.75_mix_2.00E-03_z007 with goodness of fit 76.71% and dilution 0.12 , probability 0.08
+------
+
+For star HD130255:
+Label monash_m3.25_mix_1.00E-03_z0028 with goodness of fit 37.71% and dilution 0.03 , probability 0.19
+------
+
+For star HD131670:
+Label monash_m4.00_mix_1.00E-03_z014 with goodness of fit 62.59% and dilution 0.19 , probability 0.13
+Label monash_m3.00_mix_2.00E-03_z014 with goodness of fit 92.39% and dilution 0.12 , probability 0.08
+------
+
+For star HD136636:
+Label monash_m2.75_mix_2.00E-03_z007 with goodness of fit 83.83% and dilution 0.12 , probability 0.12
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 19.82% and dilution 0.10 , probability 0.12
+Label monash_m3.00_mix_2.00E-03_z007 with goodness of fit 78.94% and dilution 0.13 , probability 0.09
+------
+
+For star HD142571:
+Label monash_m2.00_mix_4.00E-03_z014 with goodness of fit 86.73% and dilution 0.16 , probability 0.11
+Label monash_m2.00_mix_2.00E-03_z014 with goodness of fit 86.11% and dilution 0.27 , probability 0.08
+------
+
+For star HD143899:
+Label monash_m2.00_mix_4.00E-03_z014 with goodness of fit 66.97% and dilution 0.17 , probability 0.16
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 24.37% and dilution 0.05 , probability 0.09
+Label monash_m2.75_mix_2.00E-03_z007 with goodness of fit 77.35% and dilution 0.06 , probability 0.09
+------
+
+For star HD147884:
+Label monash_m2.00_mix_4.00E-03_z014 with goodness of fit 91.12% and dilution 0.25 , probability 0.14
+Label monash_m2.00_mix_2.00E-03_z014 with goodness of fit 92.82% and dilution 0.42 , probability 0.11
+Label monash_m4.00_mix_1.00E-03_z014 with goodness of fit 35.83% and dilution 0.35 , probability 0.10
+------
+
+For star HD148177:
+Label monash_m4.00_mix_1.00E-03_z014 with goodness of fit 58.70% and dilution 0.18 , probability 0.09
+Label monash_m4.00_mix_1.00E-03_z007 with goodness of fit 41.33% and dilution 0.07 , probability 0.08
+------
+
+For star HD154430:
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 50.98% and dilution 0.14 , probability 0.12
+Label monash_m4.00_mix_1.00E-03_z007 with goodness of fit 49.31% and dilution 0.25 , probability 0.10
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 82.39% and dilution 0.28 , probability 0.10
+Label monash_m3.75_mix_1.00E-03_z007 with goodness of fit 57.58% and dilution 0.29 , probability 0.09
+Label monash_m2.75_mix_2.00E-03_z007 with goodness of fit 89.70% and dilution 0.16 , probability 0.08
+------
+
+For star HD162806:
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 34.78% and dilution 0.06 , probability 0.11
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 88.81% and dilution 0.13 , probability 0.08
+Label monash_m3.75_mix_1.00E-03_z007 with goodness of fit 69.94% and dilution 0.14 , probability 0.08
+------
+
+For star HD168214:
+Label monash_m2.50_mix_2.00E-03_N_ov_2.5_z03 with goodness of fit 32.37% and dilution 0.85 , probability 0.16
+Label monash_m4.00_mix_1.00E-03_z014 with goodness of fit 32.27% and dilution 0.48 , probability 0.12
+Label monash_m4.00_mix_1.00E-03_z007 with goodness of fit 11.07% and dilution 0.19 , probability 0.08
+Label monash_m3.00_mix_2.00E-03_z014 with goodness of fit 78.71% and dilution 0.30 , probability 0.07
+------
+
+For star HD168560:
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 24.90% and dilution 0.02 , probability 0.12
+Label monash_m3.50_mix_1.00E-03_z007 with goodness of fit 66.18% and dilution 0.04 , probability 0.10
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 25.01% and dilution 0.01 , probability 0.07
+------
+
+For star HD168791:
+Label monash_m3.00_mix_2.00E-03_z007 with goodness of fit 96.59% and dilution 0.09 , probability 0.17
+Label monash_m2.50_mix_2.00E-03_z014 with goodness of fit 93.74% and dilution 0.27 , probability 0.12
+Label monash_m3.00_mix_2.00E-03_z01 with goodness of fit 99.11% and dilution 0.14 , probability 0.08
+Label monash_m2.00_mix_4.00E-03_z014 with goodness of fit 92.01% and dilution 0.24 , probability 0.07
+------
+
+For star HD176105:
+------
+
+For star HD177192:
+Label monash_m2.50_mix_2.00E-03_N_ov_2.5_z03 with goodness of fit 71.93% and dilution 0.26 , probability 0.14
+Label monash_m2.00_mix_2.00E-03_z014 with goodness of fit 78.22% and dilution 0.16 , probability 0.10
+------
+
+For star HD180996:
+Label monash_m2.50_mix_2.00E-03_N_ov_2.5_z03 with goodness of fit 82.18% and dilution 0.25 , probability 0.20
+Label monash_m3.25_mix_1.00E-03_z03 with goodness of fit 72.03% and dilution 0.42 , probability 0.13
+Label monash_m4.00_mix_1.00E-03_z014 with goodness of fit 75.08% and dilution 0.13 , probability 0.08
+------
+
+For star HD182300:
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 53.63% and dilution 0.17 , probability 0.09
+------
+
+For star HD183915:
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 63.42% and dilution 0.12 , probability 0.15
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 57.07% and dilution 0.06 , probability 0.12
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 67.54% and dilution 0.23 , probability 0.11
+Label monash_m2.75_mix_2.00E-03_z007 with goodness of fit 79.04% and dilution 0.14 , probability 0.09
+Label monash_m2.50_mix_2.00E-03_z0028 with goodness of fit 59.48% and dilution 0.09 , probability 0.08
+------
+
+For star HD187308:
+------
+
+For star HD193530:
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 16.20% and dilution 0.04 , probability 0.09
+Label monash_m4.00_mix_1.00E-03_z007 with goodness of fit 42.36% and dilution 0.07 , probability 0.08
+------
+
+For star HD196445:
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 71.55% and dilution 0.27 , probability 0.11
+Label monash_m3.00_mix_2.00E-03_z007 with goodness of fit 83.00% and dilution 0.17 , probability 0.10
+Label monash_m4.00_mix_1.00E-03_z007 with goodness of fit 38.28% and dilution 0.24 , probability 0.09
+Label monash_m3.50_mix_1.00E-03_z007 with goodness of fit 54.73% and dilution 0.25 , probability 0.08
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 18.93% and dilution 0.13 , probability 0.08
+Label monash_m3.75_mix_1.00E-03_z007 with goodness of fit 45.41% and dilution 0.28 , probability 0.08
+------
+
+For star HD199435:
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 41.89% and dilution 0.16 , probability 0.17
+Label monash_m1.75_mix_2.00E-03_z0028 with goodness of fit 37.82% and dilution 0.32 , probability 0.10
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 37.85% and dilution 0.08 , probability 0.09
+Label monash_m4.00_mix_1.00E-03_z007 with goodness of fit 24.27% and dilution 0.28 , probability 0.08
+------
+
+For star HD200995:
+Label monash_m2.00_mix_4.00E-03_z014 with goodness of fit 97.33% and dilution 0.13 , probability 0.18
+Label monash_m4.25_mix_1.00E-03_z014 with goodness of fit 61.39% and dilution 0.11 , probability 0.13
+------
+
+For star HD201657:
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 51.67% and dilution 0.19 , probability 0.18
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 50.02% and dilution 0.09 , probability 0.12
+Label monash_m2.50_mix_2.00E-03_z0028 with goodness of fit 47.39% and dilution 0.15 , probability 0.12
+------
+
+For star HD201824:
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 70.08% and dilution 0.17 , probability 0.26
+Label monash_m2.00_mix_2.00E-03_z0028 with goodness of fit 67.42% and dilution 0.22 , probability 0.20
+------
+
+For star HD204075:
+Label monash_m3.25_mix_2.00E-03_z014 with goodness of fit 93.91% and dilution 0.22 , probability 0.13
+Label monash_m4.00_mix_1.00E-03_z014 with goodness of fit 73.88% and dilution 0.37 , probability 0.13
+Label monash_m3.00_mix_2.00E-03_z014 with goodness of fit 93.70% and dilution 0.23 , probability 0.10
+Label monash_m3.75_mix_1.00E-03_z014 with goodness of fit 89.49% and dilution 0.40 , probability 0.08
+------
+
+For star HD207277:
+Label monash_m2.50_mix_2.00E-03_z007 with goodness of fit 72.37% and dilution 0.08 , probability 0.14
+Label monash_m2.50_mix_2.00E-03_z0028 with goodness of fit 22.24% and dilution 0.04 , probability 0.14
+Label monash_m2.00_mix_6.00E-03_z0028 with goodness of fit 24.97% and dilution 0.03 , probability 0.09
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 22.19% and dilution 0.03 , probability 0.08
+Label monash_m2.25_mix_2.00E-03_z007 with goodness of fit 69.83% and dilution 0.10 , probability 0.08
+------
+
+For star HD210709:
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 30.39% and dilution 0.04 , probability 0.15
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 29.46% and dilution 0.02 , probability 0.13
+Label monash_m2.50_mix_2.00E-03_z0028 with goodness of fit 29.52% and dilution 0.03 , probability 0.09
+Label monash_m1.75_mix_2.00E-03_z0028 with goodness of fit 28.80% and dilution 0.08 , probability 0.09
+------
+
+For star HD210946:
+Label monash_m4.00_mix_1.00E-03_z014 with goodness of fit 37.05% and dilution 0.18 , probability 0.07
+------
+
+For star HD211173:
+Label monash_m4.00_mix_1.00E-03_z014 with goodness of fit 33.67% and dilution 0.10 , probability 0.11
+Label monash_m4.50_mix_1.00E-03_z014 with goodness of fit 29.43% and dilution 0.06 , probability 0.08
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 75.45% and dilution 0.04 , probability 0.08
+------
+
+For star HD211594:
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 43.45% and dilution 0.30 , probability 0.11
+Label monash_m4.00_mix_1.00E-03_z007 with goodness of fit 37.24% and dilution 0.52 , probability 0.10
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 83.64% and dilution 0.58 , probability 0.09
+Label monash_m3.75_mix_1.00E-03_z007 with goodness of fit 45.01% and dilution 0.60 , probability 0.08
+------
+
+For star HD211954:
+Label monash_m2.50_mix_2.00E-03_z0028 with goodness of fit 60.78% and dilution 0.19 , probability 0.19
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 52.46% and dilution 0.12 , probability 0.16
+Label monash_m1.75_mix_2.00E-03_z0028 with goodness of fit 68.72% and dilution 0.50 , probability 0.15
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 68.22% and dilution 0.25 , probability 0.15
+Label monash_m2.00_mix_2.00E-03_z0028 with goodness of fit 66.32% and dilution 0.33 , probability 0.08
+Label monash_m2.75_mix_2.00E-03_z0028 with goodness of fit 45.06% and dilution 0.19 , probability 0.08
+------
+
+For star HD214579:
+Label monash_m4.00_mix_1.00E-03_z007 with goodness of fit 77.18% and dilution 0.11 , probability 0.12
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 40.97% and dilution 0.06 , probability 0.11
+Label monash_m1.75_mix_2.00E-03_z0028 with goodness of fit 37.07% and dilution 0.11 , probability 0.08
+Label monash_m3.50_mix_1.00E-03_z007 with goodness of fit 88.30% and dilution 0.11 , probability 0.08
+------
+
+For star HD217143:
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 55.46% and dilution 0.09 , probability 0.17
+Label monash_m3.50_mix_1.00E-03_z007 with goodness of fit 69.42% and dilution 0.17 , probability 0.12
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 54.57% and dilution 0.04 , probability 0.12
+Label monash_m2.50_mix_2.00E-03_z0028 with goodness of fit 52.04% and dilution 0.07 , probability 0.08
+------
+
+For star HD217447:
+------
+
+For star HD219116:
+Label monash_m2.75_mix_2.00E-03_z007 with goodness of fit 42.86% and dilution 0.11 , probability 0.10
+------
+
+For star HD223586:
+Label monash_m3.50_mix_1.00E-03_z007 with goodness of fit 51.76% and dilution 0.17 , probability 0.13
+Label monash_m2.00_mix_4.00E-03_z014 with goodness of fit 93.37% and dilution 0.28 , probability 0.13
+------
+
+For star HD223617:
+Label monash_m2.00_mix_2.00E-03_z014 with goodness of fit 75.87% and dilution 0.30 , probability 0.14
+Label monash_m3.00_mix_1.00E-03_z014 with goodness of fit 78.07% and dilution 0.25 , probability 0.09
+Label monash_m4.00_mix_1.00E-03_z007 with goodness of fit 33.69% and dilution 0.10 , probability 0.08
+------
+
+For star HD252117:
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 28.87% and dilution 0.11 , probability 0.10
+Label monash_m4.00_mix_1.00E-03_z007 with goodness of fit 47.46% and dilution 0.20 , probability 0.08
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 79.19% and dilution 0.22 , probability 0.07
+------
+
+For star HD273845:
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 34.07% and dilution 0.13 , probability 0.17
+Label monash_m3.50_mix_1.00E-03_z007 with goodness of fit 39.52% and dilution 0.24 , probability 0.13
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 29.07% and dilution 0.06 , probability 0.11
+Label monash_m2.50_mix_2.00E-03_z0028 with goodness of fit 31.44% and dilution 0.10 , probability 0.10
+------
+
+For star HD288174:
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 62.48% and dilution 0.10 , probability 0.10
+------
+
+For star MFU112:
+Label monash_m4.00_mix_1.00E-03_z007 with goodness of fit 82.94% and dilution 0.65 , probability 0.29
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 77.68% and dilution 0.71 , probability 0.14
+Label monash_m3.75_mix_1.00E-03_z007 with goodness of fit 85.83% and dilution 0.73 , probability 0.09
+Label monash_m3.50_mix_1.00E-03_z007 with goodness of fit 85.74% and dilution 0.66 , probability 0.08
+------
+
+For star BD-18821:
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 34.02% and dilution 0.09 , probability 0.16
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 26.25% and dilution 0.04 , probability 0.15
+Label monash_m2.50_mix_2.00E-03_z0028 with goodness of fit 30.32% and dilution 0.07 , probability 0.15
+Label monash_m1.75_mix_2.00E-03_z0028 with goodness of fit 33.76% and dilution 0.18 , probability 0.11
+------
+
+For star CD-267844:
+Label monash_m2.50_mix_2.00E-03_N_ov_2.5_z03 with goodness of fit 76.66% and dilution 0.18 , probability 0.12
+Label monash_m4.00_mix_1.00E-03_z014 with goodness of fit 92.47% and dilution 0.11 , probability 0.11
+Label monash_m3.00_mix_2.00E-03_z014 with goodness of fit 98.95% and dilution 0.07 , probability 0.11
+Label monash_m3.25_mix_2.00E-03_z014 with goodness of fit 99.31% and dilution 0.06 , probability 0.10
+Label monash_m4.25_mix_1.00E-03_z014 with goodness of fit 77.56% and dilution 0.06 , probability 0.10
+------
+
+For star CD-309005:
+Label monash_m2.00_mix_2.00E-03_z014 with goodness of fit 88.61% and dilution 0.24 , probability 0.10
+Label monash_m4.50_mix_1.00E-03_z014 with goodness of fit 39.47% and dilution 0.12 , probability 0.07
+------
+
+For star CD-346139:
+Label monash_m2.00_mix_2.00E-03_z014 with goodness of fit 34.62% and dilution 0.27 , probability 0.11
+Label monash_m4.00_mix_1.00E-03_z007 with goodness of fit 10.55% and dilution 0.09 , probability 0.09
+------
+
+For star CD-347430:
+Label monash_m2.00_mix_4.00E-03_z014 with goodness of fit 97.21% and dilution 0.10 , probability 0.12
+Label monash_m3.25_mix_2.00E-03_z014 with goodness of fit 97.05% and dilution 0.08 , probability 0.12
+Label monash_m2.00_mix_2.00E-03_z014 with goodness of fit 97.54% and dilution 0.16 , probability 0.12
+Label monash_m3.00_mix_2.00E-03_z014 with goodness of fit 98.49% and dilution 0.09 , probability 0.10
+Label monash_m2.75_mix_2.00E-03_N_ov_0.0_z03 with goodness of fit 82.54% and dilution 0.75 , probability 0.08
+Label monash_m4.25_mix_1.00E-03_z014 with goodness of fit 67.98% and dilution 0.08 , probability 0.08
+Label monash_m4.00_mix_1.00E-03_z014 with goodness of fit 77.89% and dilution 0.13 , probability 0.08
+------
+
+For star CD-463977:
+Label monash_m2.00_mix_2.00E-03_z014 with goodness of fit 86.35% and dilution 0.26 , probability 0.11
+Label monash_m3.00_mix_2.00E-03_z014 with goodness of fit 81.79% and dilution 0.14 , probability 0.08
+------
+
+For star HD18182:
+Label monash_m2.50_mix_2.00E-03_N_ov_2.5_z03 with goodness of fit 23.63% and dilution 0.19 , probability 0.17
+Label monash_m3.25_mix_1.00E-03_z03 with goodness of fit 20.95% and dilution 0.33 , probability 0.10
+Label monash_m4.00_mix_1.00E-03_z007 with goodness of fit 31.80% and dilution 0.04 , probability 0.08
+------
+
+For star HD18361:
+Label monash_m2.00_mix_2.00E-03_z014 with goodness of fit 91.90% and dilution 0.12 , probability 0.17
+Label monash_m3.00_mix_1.00E-03_z014 with goodness of fit 94.65% and dilution 0.10 , probability 0.09
+------
+
+For star HD21682:
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 81.02% and dilution 0.03 , probability 0.23
+Label monash_m2.50_mix_2.00E-03_z0028 with goodness of fit 86.09% and dilution 0.04 , probability 0.18
+------
+
+For star HD26886:
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 87.39% and dilution 0.07 , probability 0.22
+Label monash_m2.75_mix_2.00E-03_z007 with goodness of fit 92.33% and dilution 0.04 , probability 0.15
+Label monash_m3.50_mix_1.00E-03_z007 with goodness of fit 78.61% and dilution 0.07 , probability 0.10
+------
+
+For star HD31812:
+Label monash_m2.50_mix_2.00E-03_N_ov_2.5_z03 with goodness of fit 44.14% and dilution 0.32 , probability 0.18
+Label monash_m3.25_mix_1.00E-03_z03 with goodness of fit 35.23% and dilution 0.55 , probability 0.13
+Label monash_m4.00_mix_1.00E-03_z014 with goodness of fit 49.99% and dilution 0.17 , probability 0.11
+Label monash_m3.00_mix_2.00E-03_z014 with goodness of fit 82.41% and dilution 0.11 , probability 0.10
+Label monash_m4.25_mix_1.00E-03_z014 with goodness of fit 34.22% and dilution 0.10 , probability 0.09
+------
+
+For star HD33709:
+Label monash_m2.00_mix_4.00E-03_z014 with goodness of fit 75.77% and dilution 0.06 , probability 0.09
+Label monash_m2.75_mix_2.00E-03_z007 with goodness of fit 78.24% and dilution 0.02 , probability 0.09
+Label monash_m2.00_mix_2.00E-03_z014 with goodness of fit 76.29% and dilution 0.10 , probability 0.08
+------
+
+For star HD39778:
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 67.69% and dilution 0.16 , probability 0.10
+Label monash_m2.00_mix_4.00E-03_z014 with goodness of fit 89.26% and dilution 0.25 , probability 0.07
+------
+
+For star HD41701:
+------
+
+For star HD45483:
+Label monash_m2.00_mix_2.00E-03_z014 with goodness of fit 81.08% and dilution 0.20 , probability 0.10
+Label monash_m2.50_mix_2.00E-03_N_ov_2.5_z03 with goodness of fit 39.98% and dilution 0.31 , probability 0.09
+Label monash_m4.00_mix_1.00E-03_z014 with goodness of fit 55.14% and dilution 0.16 , probability 0.09
+Label monash_m4.00_mix_1.00E-03_z007 with goodness of fit 39.62% and dilution 0.06 , probability 0.08
+------
+
+For star HD48814:
+Label monash_m2.00_mix_2.00E-03_z014 with goodness of fit 92.77% and dilution 0.07 , probability 0.12
+Label monash_m2.00_mix_4.00E-03_z014 with goodness of fit 92.43% and dilution 0.04 , probability 0.10
+Label monash_m4.25_mix_1.00E-03_z014 with goodness of fit 74.83% and dilution 0.03 , probability 0.08
+------
+
+For star HD49017:
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 10.63% and dilution 0.01 , probability 0.12
+Label monash_m4.25_mix_1.00E-04_z007 with goodness of fit 57.87% and dilution 0.11 , probability 0.09
+Label monash_m2.50_mix_2.00E-03_z0028 with goodness of fit 14.11% and dilution 0.01 , probability 0.08
+Label monash_m2.50_mix_2.00E-03_z007 with goodness of fit 62.12% and dilution 0.01 , probability 0.07
+------
+
+For star HD49661:
+Label monash_m2.00_mix_4.00E-03_z014 with goodness of fit 92.85% and dilution 0.03 , probability 0.10
+Label monash_m4.00_mix_1.00E-03_z007 with goodness of fit 82.84% and dilution 0.01 , probability 0.09
+------
+
+For star HD49778:
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 29.85% and dilution 0.01 , probability 0.13
+Label monash_m4.25_mix_1.00E-04_z007 with goodness of fit 62.57% and dilution 0.16 , probability 0.09
+------
+
+For star HD50075:
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 17.67% and dilution 0.06 , probability 0.16
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 16.51% and dilution 0.03 , probability 0.12
+Label monash_m1.75_mix_2.00E-03_z0028 with goodness of fit 16.34% and dilution 0.13 , probability 0.08
+------
+
+For star HD50843:
+Label monash_m2.00_mix_2.00E-03_z0028 with goodness of fit 63.58% and dilution 0.03 , probability 0.15
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 64.87% and dilution 0.02 , probability 0.15
+Label monash_m2.75_mix_2.00E-03_z007 with goodness of fit 92.47% and dilution 0.03 , probability 0.08
+Label monash_m1.75_mix_2.00E-03_z0028 with goodness of fit 62.97% and dilution 0.04 , probability 0.08
+------
+
+For star HD53199:
+Label monash_m2.00_mix_2.00E-03_z01 with goodness of fit 84.03% and dilution 0.28 , probability 0.15
+Label monash_m2.75_mix_2.00E-03_z007 with goodness of fit 83.38% and dilution 0.08 , probability 0.15
+Label monash_m2.00_mix_4.00E-03_z014 with goodness of fit 77.10% and dilution 0.21 , probability 0.09
+------
+
+For star HD58121:
+Label monash_m2.00_mix_4.00E-03_z014 with goodness of fit 80.09% and dilution 0.04 , probability 0.17
+Label monash_m4.25_mix_1.00E-03_z014 with goodness of fit 59.47% and dilution 0.03 , probability 0.10
+Label monash_m3.00_mix_2.00E-03_z014 with goodness of fit 81.69% and dilution 0.03 , probability 0.09
+Label monash_m2.00_mix_2.00E-03_z014 with goodness of fit 80.76% and dilution 0.06 , probability 0.09
+------
+
+For star HD62017:
+Label monash_m2.00_mix_2.00E-03_z014 with goodness of fit 98.21% and dilution 0.30 , probability 0.10
+Label monash_m4.00_mix_1.00E-03_z014 with goodness of fit 95.97% and dilution 0.28 , probability 0.07
+------
+
+For star HD88495:
+Label monash_m4.25_mix_1.00E-03_z014 with goodness of fit 35.49% and dilution 0.12 , probability 0.10
+Label monash_m4.00_mix_1.00E-03_z007 with goodness of fit 26.18% and dilution 0.08 , probability 0.09
+------
+
+For star HD90167:
+Label monash_m2.00_mix_2.00E-03_z014 with goodness of fit 77.89% and dilution 0.11 , probability 0.13
+Label monash_m2.50_mix_2.00E-03_N_ov_2.5_z03 with goodness of fit 44.89% and dilution 0.16 , probability 0.13
+Label monash_m3.25_mix_1.00E-03_z03 with goodness of fit 36.56% and dilution 0.26 , probability 0.10
+Label monash_m4.00_mix_1.00E-03_z014 with goodness of fit 52.34% and dilution 0.09 , probability 0.08
+Label monash_m3.00_mix_2.00E-03_z014 with goodness of fit 83.84% and dilution 0.06 , probability 0.08
+Label monash_m3.25_mix_2.00E-03_z014 with goodness of fit 80.48% and dilution 0.06 , probability 0.08
+Label monash_m4.25_mix_1.00E-03_z014 with goodness of fit 39.75% and dilution 0.05 , probability 0.08
+Label monash_m2.00_mix_4.00E-03_z014 with goodness of fit 76.60% and dilution 0.07 , probability 0.07
+------
+
+For star HD95193:
+Label monash_m2.00_mix_2.00E-03_z014 with goodness of fit 90.73% and dilution 0.16 , probability 0.14
+Label monash_m3.00_mix_2.00E-03_z014 with goodness of fit 92.91% and dilution 0.08 , probability 0.08
+------
+
+For star HD107270:
+Label monash_m4.00_mix_1.00E-03_z007 with goodness of fit 16.12% and dilution 0.07 , probability 0.12
+Label monash_m3.75_mix_1.00E-03_z007 with goodness of fit 17.07% and dilution 0.08 , probability 0.08
+Label monash_m5.00_mix_1.00E-04_z014 with goodness of fit 36.82% and dilution 0.67 , probability 0.08
+Label monash_m3.00_mix_1.00E-03_z014 with goodness of fit 34.64% and dilution 0.17 , probability 0.07
+------
+
+For star HD109061:
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 72.32% and dilution 0.02 , probability 0.12
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 70.52% and dilution 0.04 , probability 0.11
+Label monash_m2.50_mix_2.00E-03_z0028 with goodness of fit 67.77% and dilution 0.03 , probability 0.11
+Label monash_m1.75_mix_2.00E-03_z0028 with goodness of fit 66.40% and dilution 0.08 , probability 0.08
+------
+
+For star HD113195:
+Label monash_m2.00_mix_2.00E-03_z014 with goodness of fit 75.65% and dilution 0.17 , probability 0.13
+Label monash_m2.50_mix_2.00E-03_N_ov_2.5_z03 with goodness of fit 33.09% and dilution 0.25 , probability 0.10
+Label monash_m4.00_mix_1.00E-03_z014 with goodness of fit 56.09% and dilution 0.14 , probability 0.09
+------
+
+For star HD115277:
+Label monash_m2.00_mix_4.00E-03_z014 with goodness of fit 85.77% and dilution 0.07 , probability 0.17
+Label monash_m2.50_mix_2.00E-03_N_ov_2.5_z03 with goodness of fit 69.29% and dilution 0.17 , probability 0.14
+Label monash_m2.00_mix_2.00E-03_z014 with goodness of fit 86.45% and dilution 0.11 , probability 0.09
+Label monash_m4.00_mix_1.00E-03_z014 with goodness of fit 79.11% and dilution 0.10 , probability 0.08
+Label monash_m3.00_mix_2.00E-03_z014 with goodness of fit 94.44% and dilution 0.06 , probability 0.07
+------
+
+For star HD119650:
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 19.24% and dilution 0.01 , probability 0.10
+Label monash_m2.00_mix_4.00E-03_z014 with goodness of fit 82.48% and dilution 0.03 , probability 0.08
+------
+
+For star HD134698:
+Label monash_m4.00_mix_1.00E-03_z014 with goodness of fit 46.05% and dilution 0.14 , probability 0.16
+Label monash_m3.00_mix_2.00E-03_z01 with goodness of fit 72.19% and dilution 0.05 , probability 0.08
+Label monash_m4.25_mix_1.00E-03_z014 with goodness of fit 41.00% and dilution 0.08 , probability 0.07
+------
+
+For star HD139266:
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 44.24% and dilution 0.07 , probability 0.13
+Label monash_m2.00_mix_2.00E-03_z0028 with goodness of fit 41.79% and dilution 0.09 , probability 0.12
+Label monash_m3.00_mix_1.00E-03_z007 with goodness of fit 84.80% and dilution 0.13 , probability 0.09
+------
+
+For star HD139409:
+Label monash_m4.00_mix_1.00E-03_z014 with goodness of fit 28.17% and dilution 0.13 , probability 0.11
+Label monash_m3.00_mix_2.00E-03_z014 with goodness of fit 35.07% and dilution 0.08 , probability 0.09
+------
+
+For star HD148892:
+Label monash_m2.00_mix_2.00E-03_z014 with goodness of fit 99.71% and dilution 0.31 , probability 0.09
+Label monash_m2.00_mix_1.00E-03_z014 with goodness of fit 99.57% and dilution 0.56 , probability 0.09
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 79.06% and dilution 0.03 , probability 0.08
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 98.99% and dilution 0.12 , probability 0.08
+------
+
+For star HD169106:
+Label monash_m2.00_mix_4.00E-03_z014 with goodness of fit 93.92% and dilution 0.06 , probability 0.12
+Label monash_m2.50_mix_2.00E-03_N_ov_2.5_z03 with goodness of fit 60.72% and dilution 0.14 , probability 0.08
+------
+
+For star HD184001:
+Label monash_m3.00_mix_1.00E-03_z014 with goodness of fit 87.55% and dilution 0.19 , probability 0.10
+Label monash_m4.00_mix_1.00E-03_z007 with goodness of fit 51.87% and dilution 0.08 , probability 0.09
+Label monash_m2.50_mix_2.00E-03_z014 with goodness of fit 87.23% and dilution 0.16 , probability 0.09
+Label monash_m4.00_mix_1.00E-03_z014 with goodness of fit 57.58% and dilution 0.20 , probability 0.08
+Label monash_m4.25_mix_1.00E-03_z014 with goodness of fit 48.37% and dilution 0.12 , probability 0.07
+------
+
+For star HD204886:
+Label monash_m3.50_mix_1.00E-03_z007 with goodness of fit 65.22% and dilution 0.09 , probability 0.13
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 22.49% and dilution 0.04 , probability 0.12
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 74.15% and dilution 0.09 , probability 0.09
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 23.11% and dilution 0.02 , probability 0.07
+------
+
+For star HD213084:
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 70.75% and dilution 0.16 , probability 0.14
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 16.53% and dilution 0.08 , probability 0.11
+Label monash_m2.00_mix_1.00E-03_z014 with goodness of fit 94.53% and dilution 0.75 , probability 0.08
+Label monash_m2.75_mix_2.00E-03_z007 with goodness of fit 84.23% and dilution 0.09 , probability 0.07
+------
+
+For star HD223938:
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 41.77% and dilution 0.06 , probability 0.21
+Label monash_m2.75_mix_2.00E-03_z007 with goodness of fit 80.19% and dilution 0.08 , probability 0.13
+Label monash_m1.75_mix_2.00E-03_z0028 with goodness of fit 37.43% and dilution 0.12 , probability 0.10
+------
+
+For star MFU214:
+Label monash_m2.00_mix_4.00E-03_z014 with goodness of fit 74.66% and dilution 0.04 , probability 0.11
+Label monash_m2.00_mix_2.00E-03_z014 with goodness of fit 75.91% and dilution 0.06 , probability 0.10
+Label monash_m2.50_mix_2.00E-03_N_ov_2.5_z03 with goodness of fit 57.51% and dilution 0.09 , probability 0.10
+Label monash_m3.25_mix_2.00E-03_z014 with goodness of fit 84.44% and dilution 0.03 , probability 0.09
+Label monash_m3.00_mix_2.00E-03_z014 with goodness of fit 83.57% and dilution 0.03 , probability 0.08
+------
+
+For star MFU229:
+Label monash_m2.50_mix_2.00E-03_N_ov_2.5_z03 with goodness of fit 61.23% and dilution 0.25 , probability 0.13
+Label monash_m2.00_mix_4.00E-03_z014 with goodness of fit 95.27% and dilution 0.10 , probability 0.13
+Label monash_m2.00_mix_2.00E-03_z014 with goodness of fit 95.70% and dilution 0.17 , probability 0.13
+Label monash_m3.00_mix_2.00E-03_z014 with goodness of fit 97.66% and dilution 0.09 , probability 0.11
+Label monash_m4.00_mix_1.00E-03_z014 with goodness of fit 67.10% and dilution 0.14 , probability 0.11
+Label monash_m3.25_mix_2.00E-03_z014 with goodness of fit 95.10% and dilution 0.09 , probability 0.09
+------
+
+For star HD12392:
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 25.52% and dilution 0.09 , probability 0.16
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 32.40% and dilution 0.18 , probability 0.15
+Label monash_m1.75_mix_2.00E-03_z0028 with goodness of fit 31.59% and dilution 0.37 , probability 0.15
+Label monash_m2.50_mix_2.00E-03_z0028 with goodness of fit 29.04% and dilution 0.14 , probability 0.14
+------
+
+For star HD17067:
+Label monash_m2.75_mix_2.00E-03_z007 with goodness of fit 89.40% and dilution 0.12 , probability 0.15
+Label monash_m3.00_mix_2.00E-03_z007 with goodness of fit 88.46% and dilution 0.13 , probability 0.11
+Label monash_m2.00_mix_4.00E-03_z014 with goodness of fit 56.91% and dilution 0.33 , probability 0.10
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 75.68% and dilution 0.10 , probability 0.10
+Label monash_m2.00_mix_2.00E-03_z0028 with goodness of fit 71.69% and dilution 0.13 , probability 0.09
+------
+
+For star HD90127:
+Label monash_m3.00_mix_2.00E-03_z007 with goodness of fit 75.15% and dilution 0.09 , probability 0.12
+Label monash_m4.00_mix_1.00E-03_z007 with goodness of fit 65.60% and dilution 0.14 , probability 0.11
+------
+
+For star HD102762:
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 52.40% and dilution 0.13 , probability 0.15
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 48.59% and dilution 0.06 , probability 0.10
+Label monash_m1.75_mix_2.00E-03_z0028 with goodness of fit 48.97% and dilution 0.25 , probability 0.07
+------
+
+For star HD114678:
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 46.32% and dilution 0.20 , probability 0.13
+Label monash_m2.75_mix_2.00E-03_z007 with goodness of fit 88.58% and dilution 0.22 , probability 0.13
+Label monash_m4.00_mix_1.00E-03_z007 with goodness of fit 44.90% and dilution 0.35 , probability 0.09
+Label monash_m3.00_mix_2.00E-03_z007 with goodness of fit 87.04% and dilution 0.23 , probability 0.09
+------
+
+For star HD180622:
+Label monash_m2.50_mix_2.00E-03_N_ov_2.5_z03 with goodness of fit 63.52% and dilution 0.17 , probability 0.11
+Label monash_m3.25_mix_2.00E-03_z014 with goodness of fit 87.99% and dilution 0.06 , probability 0.10
+Label monash_m3.00_mix_2.00E-03_z014 with goodness of fit 88.50% and dilution 0.06 , probability 0.09
+------
+
+For star HD200063:
+Label monash_m2.00_mix_4.00E-03_z014 with goodness of fit 84.24% and dilution 0.22 , probability 0.18
+Label monash_m2.75_mix_2.00E-03_z007 with goodness of fit 95.27% and dilution 0.08 , probability 0.10
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 59.97% and dilution 0.07 , probability 0.09
+Label monash_m2.00_mix_2.00E-03_z0028 with goodness of fit 57.20% and dilution 0.09 , probability 0.08
+------
+
+For star HD210030:
+Label monash_m4.00_mix_1.00E-03_z014 with goodness of fit 59.66% and dilution 0.05 , probability 0.08
+Label monash_m4.00_mix_1.00E-03_z007 with goodness of fit 34.37% and dilution 0.02 , probability 0.08
+------
+
+For star HD214889:
+Label monash_m2.00_mix_2.00E-03_z014 with goodness of fit 90.77% and dilution 0.19 , probability 0.13
+Label monash_m4.00_mix_1.00E-03_z014 with goodness of fit 57.79% and dilution 0.16 , probability 0.10
+Label monash_m2.00_mix_4.00E-03_z014 with goodness of fit 89.63% and dilution 0.12 , probability 0.09
+Label monash_m3.00_mix_2.00E-03_z014 with goodness of fit 88.84% and dilution 0.10 , probability 0.09
+------
+
+For star HD215555:
+Label monash_m2.50_mix_2.00E-03_N_ov_2.5_z03 with goodness of fit 42.61% and dilution 0.68 , probability 0.16
+Label monash_m4.00_mix_1.00E-03_z014 with goodness of fit 42.90% and dilution 0.37 , probability 0.12
+Label monash_m4.25_mix_1.00E-03_z014 with goodness of fit 24.96% and dilution 0.21 , probability 0.09
+Label monash_m3.00_mix_2.00E-03_z014 with goodness of fit 77.25% and dilution 0.23 , probability 0.08
+------
+
+For star HD216809:
+Label monash_m4.00_mix_1.00E-03_z007 with goodness of fit 20.11% and dilution 0.04 , probability 0.08
+Label monash_m4.25_mix_1.00E-03_z014 with goodness of fit 33.05% and dilution 0.07 , probability 0.08
+------
+
+For star HD221879:
+Label monash_m3.00_mix_2.00E-03_z014 with goodness of fit 81.06% and dilution 0.11 , probability 0.11
+Label monash_m4.00_mix_1.00E-03_z014 with goodness of fit 63.00% and dilution 0.18 , probability 0.10
+Label monash_m4.25_mix_1.00E-03_z014 with goodness of fit 42.44% and dilution 0.10 , probability 0.09
+Label monash_m3.75_mix_1.00E-03_z014 with goodness of fit 80.03% and dilution 0.19 , probability 0.08
+Label monash_m3.25_mix_2.00E-03_z014 with goodness of fit 83.22% and dilution 0.11 , probability 0.08
+------
+
+For star HD749:
+Label monash_m2.50_mix_4.00E-03_z0028 with goodness of fit 18.64% and dilution 0.05 , probability 0.08
+------
+
+For star HD88927:
+Label monash_m2.00_mix_4.00E-03_z014 with goodness of fit 73.53% and dilution 0.04 , probability 0.15
+Label monash_m4.25_mix_1.00E-03_z014 with goodness of fit 54.27% and dilution 0.03 , probability 0.10
+Label monash_m2.50_mix_2.00E-03_N_ov_2.5_z03 with goodness of fit 61.68% and dilution 0.11 , probability 0.10
+------
+
+For star BD+092384:
+Label monash_m3.25_mix_1.00E-03_z0028 with goodness of fit 58.60% and dilution 0.13 , probability 0.16
+Label monash_m4.00_mix_1.00E-03_z007 with goodness of fit 18.01% and dilution 0.14 , probability 0.09
+Label monash_m3.50_mix_1.00E-03_z0028 with goodness of fit 58.01% and dilution 0.13 , probability 0.08
+------
+
+For star HD89638:
+------
+
+For star HD187762:
+Label monash_m1.50_mix_2.00E-03_N_ov_1.0_z007 with goodness of fit 86.95% and dilution 0.16 , probability 0.12
+------
+
+For star CD-256606:
+Label monash_m4.00_mix_1.00E-03_z007 with goodness of fit 67.23% and dilution 0.05 , probability 0.09
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 69.44% and dilution 0.05 , probability 0.07
+------
+
+For star HD46040:
+------
+
+For star HD49841:
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 42.73% and dilution 0.09 , probability 0.10
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 10.73% and dilution 0.04 , probability 0.10
+Label monash_m2.00_mix_1.00E-03_z014 with goodness of fit 82.37% and dilution 0.46 , probability 0.09
+------
+
+For star HD82765:
+Label monash_m2.50_mix_2.00E-03_N_ov_2.5_z03 with goodness of fit 70.23% and dilution 0.16 , probability 0.12
+Label monash_m2.00_mix_2.00E-03_z014 with goodness of fit 65.91% and dilution 0.10 , probability 0.11
+------
+
+For star HD84734:
+------
+
+For star HD85205:
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 23.30% and dilution 0.02 , probability 0.09
+------
+
+For star HD101079:
+Label monash_m2.00_mix_2.00E-03_z014 with goodness of fit 92.58% and dilution 0.12 , probability 0.10
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 15.71% and dilution 0.02 , probability 0.09
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 58.41% and dilution 0.04 , probability 0.08
+------
+
+For star HD130386:
+Label monash_m3.25_mix_2.00E-03_z014 with goodness of fit 88.51% and dilution 0.08 , probability 0.09
+Label monash_m4.00_mix_1.00E-03_z007 with goodness of fit 39.17% and dilution 0.05 , probability 0.09
+Label monash_m4.00_mix_1.00E-03_z014 with goodness of fit 78.02% and dilution 0.13 , probability 0.08
+------
+
+For star HD139660:
+Label monash_m3.50_mix_1.00E-03_z007 with goodness of fit 35.57% and dilution 0.04 , probability 0.12
+Label monash_m3.25_mix_1.00E-03_z007 with goodness of fit 37.75% and dilution 0.05 , probability 0.08
+------
+
+For star HD198590:
+Label monash_m2.00_mix_2.00E-03_z014 with goodness of fit 91.48% and dilution 0.09 , probability 0.09
+Label monash_m2.50_mix_2.00E-03_N_ov_2.5_z03 with goodness of fit 96.55% and dilution 0.15 , probability 0.09
+Label monash_m4.00_mix_1.00E-03_z014 with goodness of fit 85.94% and dilution 0.07 , probability 0.08
+Label monash_m2.25_mix_2.00E-03_z0028 with goodness of fit 20.57% and dilution 0.01 , probability 0.08
+------
+
+For star HD212209:
+Label monash_m2.75_mix_2.00E-03_z007 with goodness of fit 37.96% and dilution 0.01 , probability 0.09
+------
+
