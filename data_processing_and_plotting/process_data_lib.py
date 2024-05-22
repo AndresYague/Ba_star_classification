@@ -143,7 +143,7 @@ def get_data_values(data_file, names=None):
         # Construct a names list if not provided
         if names is None:
             names = []
-            for elem in header[1:-1]:
+            for elem in header[1:-4]:
                 if "err" not in elem:
                     if "/" in elem:
                         names.append(elem)
@@ -300,9 +300,8 @@ def get_data_monash(directory):
                         name = lnlst[0].capitalize()
                         if name == "Fe":
                             feH = float(lnlst[3])
-                        else:
-                            name += "/Fe"
-                            elems[name] = float(lnlst[4])
+                        name += "/Fe"
+                        elems[name] = float(lnlst[4])
 
                     # Store
                     all_models[label] = elems
@@ -322,7 +321,6 @@ def apply_dilution(elems, kk, names, zero=0):
 
     # Just apply the formula to each element in name
     new_elements = {}
-
     for name in elems:
 
         # Skip metallicity
@@ -338,7 +336,6 @@ def apply_dilution(elems, kk, names, zero=0):
 
     # It may happen that all the abundances are very low, so skip those cases
     all_zero = True
-
     for name in names:
 
         # Skip metallicity
@@ -363,7 +360,7 @@ def get_clean_filename(filen):
 
     return filen
 
-def get_clean_lnlst(line):
+def get_clean_lnlst(line, cm=False):
     """
     Clean the input data so it's easier to handle
     """
@@ -373,7 +370,8 @@ def get_clean_lnlst(line):
 
     # Return proper value
     if "Label" in line:
-        return [lnlst[1], lnlst[-1]]
+        if cm == True: return [lnlst[1], float(lnlst[-1]), float(lnlst[-4][:-1]), 0]
+        else: return [lnlst[1], float(lnlst[-4]), float(lnlst[6][:-1]), float(lnlst[-1])] # label, dil, gof, proba
     elif "star" in line:
         return lnlst
     else:
@@ -398,9 +396,6 @@ def get_clean_lnlst_final(line):
     elif 'probability' in line:
         name = name_check(lnlst[1])
         return [name, lnlst[5], lnlst[7]]
-
-    elif 'Fail' in line:
-        return None
 
     # Group label and number of matches
     elif len(lnlst) == 2:
@@ -492,47 +487,3 @@ def name_check(name, dir_=None):
         pass
 
     return name
-
-def load_ba_stars(file_data):
-    # Now load Ba stars data
-    missing_values = dict()
-    all_data = []; all_names = []; all_errors = []
-    with open(file_data, "r") as fread:
-        header = fread.readline().split()[1:]
-        for line in fread:
-            lnlst = line.split()
-            all_names.append(lnlst[-1])
-
-            # Put values in an array
-            arr = []; arr_err = []; missing = []
-            for ii in range(len(header)):
-                # Skip name
-                if "Name" in header[ii]:
-                    continue
-
-                # Transform to float
-                try:
-                    val = float(lnlst[ii])
-                except ValueError:
-                    val = 1
-                    missing.append(header[ii])
-                except:
-                    raise
-
-                # Put errors and values in different arrays
-                if "_err" in header[ii]:
-                    arr_err.append(val)
-                else:
-                    arr.append(val)
-
-            # Convert to numpy arrays
-            arr = np.array(arr)
-            arr_err = np.array(arr_err)
-
-            # Save data
-            all_data.append(arr)
-            all_errors.append(arr_err)
-            if len(missing) > 0:
-                missing_values[lnlst[-1]]=missing
-
-    return all_data, all_errors, all_names, missing_values

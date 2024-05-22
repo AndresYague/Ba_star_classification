@@ -46,7 +46,6 @@ def process_data(data_file, output_file, names):
 def get_string_names(elems, names, label):
     """
     Transform the list of values into a string to write
-
     elems is a dictionary with the values
     names is the selected keys we want for the output
     label is the model label
@@ -91,8 +90,8 @@ def process_models(directory, outpt, names, zero=0, with_dilution=True):
         elems = all_models[label]
 
         # If calculating for the NN, then shorten the label
-        if with_dilution:
-            label = short_name_generator(label)
+        #if with_dilution:
+        #    label = short_name_generator(label)
 
         # Apply dilutions from kk = 0 to kk = 1 with DK_STEP size
         kk_arr = np.arange(0, 1 + DK_STEP, DK_STEP)
@@ -175,7 +174,7 @@ def main():
     print(s)
 
     # Load element set
-    with open("element_set.dat", "r") as fread:
+    with open(os.path.join(sys.path[0],"element_set.dat"), "r") as fread:
         for line in fread:
             lnlst = line.split()
 
@@ -190,8 +189,8 @@ def main():
     print(f"Element list: {' '.join(names)}")
 
     # Define all the directories
-    dir_data = "Ba_star_classification_data"
-    fruity_mods = "models_fruity"
+    dir_data = "~/Ba_star_classification_VB/Ba_star_classification_data"
+    fruity_mods = "models_fruity_dec"
     monash_mods = "models_monash"
     #data_file = "all_abund_and_masses.dat"
     data_file = "all_data_w_err.dat"
@@ -201,9 +200,9 @@ def main():
     data_file = os.path.join(dir_data, data_file)
 
     # Names for output files
-    processed_models_fruity = "processed_models_fruity.txt"
-    processed_models_monash = "processed_models_monash.txt"
-    processed_data = "processed_data.txt"
+    processed_models_fruity = os.path.join(sys.path[0], "processed_models_fruity.txt")
+    processed_models_monash = os.path.join(sys.path[0], "processed_models_monash.txt")
+    processed_data = os.path.join(sys.path[0], "processed_data.txt")
 
     # Process data
     print("Processing observations...")
