@@ -26,8 +26,8 @@ class StarStat(object):
         if self.nn > 0:
             dir_path = "data_processing_and_plotting"
             errors = error_propagation.ErrorClass(
-                    error_tables = "error_tables_ba.dat",
-                    temperature_table = "bastars_temp.dat",
+                    error_tables = "data_processing_and_plotting/error_tables_ba.dat",
+                    temperature_table = "data_processing_and_plotting/bastars_temp.dat",
                     element_set = os.path.join(dir_path, "element_set.dat"))
 
             error_diff = errors.calculate_errors(self.star_name,
