@@ -445,7 +445,7 @@ class ErrorClass(object):
         plt.show()
 
 if __name__ == "__main__":
-    errors = ErrorClass(error_tables = "data_processing_and_plotting/error_tables_ba.dat",
-                        temperature_table = "bastars_temp.dat")
+    errors = ErrorClass(error_tables = "data_processing_and_plotting/error_tables_ba.txt",
+                        temperature_table = "bastars_temp.txt")
 
     errors.plot_changes(measure = "temp", type_ = "derivative")

@@ -4,7 +4,9 @@ import os
 from classify_lib import *
 from data_processing_and_plotting.process_data_lib import short_name_generator
 from data_processing_and_plotting.process_data_lib import new_names
-from data_processing_and_plotting.process_data_lib import load_ba_stars
+
+nn = 5 # ntop gofs to be classified, for the old version
+below_top_gof = 0.05 # this is the limit for the gofs to be accepted below the top gof
 
 def get_closest(star_instance, all_models, all_labels, top_n=5):
     """
@@ -17,40 +19,32 @@ def get_closest(star_instance, all_models, all_labels, top_n=5):
         model = all_models[ii]
         label = all_labels[ii]
 
-        pVal, dilution = star_instance.calculate_dilution(model, max_dil=0.9,
-                                                          min_dil=0.1)
+        pVal, dilution = star_instance.calculate_dilution(model, max_dil=0.9)
         best_dilutions.append((pVal, dilution, label))
 
     # Sort
     best_dilutions.sort(reverse=True)
+    top_gof = best_dilutions[0][0] # instead of the ntop best gofs, take the ones that are at max. 0.05 below the top one
+    high_gof_dilutions = []
+    for ii in range(len(best_dilutions)):
+        curr_dilutions = best_dilutions[ii]
+        if curr_dilutions[0] >= (top_gof-below_top_gof): # if the GoF is at max. 0.05 below the top GoF
+            if curr_dilutions[1] < 0.89: high_gof_dilutions.append(curr_dilutions) # if the dilution is not pushed until the artificial limit of 0.9
+        else: break
 
     full_names, short_names = new_names(dir_="data_processing_and_plotting")
 
     # And print the top_n results
-    for result in best_dilutions[:min(top_n, len(best_dilutions))]:
-
+    #for result in best_dilutions[:min(top_n, len(best_dilutions))]:
+    for result in high_gof_dilutions:
         # Index and label for this model
         pVal, dilution, label = result
         if pVal < 0.5:
             break
 
         # Search for index
-        try:
-            index = full_names.index(label)
-        except ValueError:
-            s = "\n======================================================\n"
-            s += "The code just found an error in the model label.\n"
-            s += "\nPlease make sure to have run the process_data.py script\n"
-            s += "without dilution:\n"
-            s += "python3 process_data.py n"
-            s += "\n======================================================\n"
-
-            print(s)
-            raise
-        except:
-            raise
-
-        label = short_names[index]
+        index = full_names.index(label)
+        #label = short_names[index]
 
         # Print
         s = f"Label {label} with goodness of fit {pVal * 100:.2f}%"
@@ -97,11 +91,11 @@ def main():
     Load models and pass the Ba stars data
     """
 
-    if len(sys.argv) < 2:
-        sys.exit(f"Use: python3 {sys.argv[0]} <nn> [models]")
+    #if len(sys.argv) < 2:
+    #    sys.exit(f"Use: python3 {sys.argv[0]} <nn> [models]")
 
     # Get nn
-    nn = int(float(sys.argv[1]))
+    #nn = int(float(sys.argv[1]))
 
     # Get mode
     mode = None
@@ -122,7 +116,43 @@ def main():
     # Load all these models
     models_monash, labels_monash = load_models(file_monash)
     models_fruity, labels_fruity = load_models(file_fruity)
-    all_data, all_errors, all_names, missing_values = load_ba_stars(file_data)
+
+    # Now load Ba stars data
+    all_data = []; all_names = []; all_errors = []
+    with open(file_data, "r") as fread:
+        header = fread.readline().split()[1:]
+        for line in fread:
+            lnlst = line.split()
+            all_names.append(lnlst[-1])
+
+            # Put values in an array
+            arr = []; arr_err = []
+            for ii in range(len(header)):
+                # Skip name
+                if "Name" in header[ii]:
+                    continue
+
+                # Transform to float
+                try:
+                    val = float(lnlst[ii])
+                except ValueError:
+                    val = 1
+                except:
+                    raise
+
+                # Put errors and values in different arrays
+                if "_err" in header[ii]:
+                    arr_err.append(val)
+                else:
+                    arr.append(val)
+
+            # Convert to numpy arrays
+            arr = np.array(arr)
+            arr_err = np.array(arr_err)
+
+            # Save data
+            all_data.append(arr)
+            all_errors.append(arr_err)
 
     # Start
     for ii in range(len(all_names)):
