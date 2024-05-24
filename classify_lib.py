@@ -178,6 +178,7 @@ def predict_with_networks(networks, inputs):
     # Ensemble predictions
     all_predictions = []
     for network in networks:
+        n = network.predict
         all_predictions.append(network.predict(inputs, verbose=0))
 
     # Predict with mean, also return all predictions

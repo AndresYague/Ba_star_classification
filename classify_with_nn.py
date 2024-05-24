@@ -12,6 +12,7 @@ from silence_tensorflow import silence_tensorflow
 silence_tensorflow()
 import tensorflow as tf
 
+dirname = "NN1_monash"
 proba_limit = 0.0001 # minimum pobability above which the model is accepted
 n_above = 3 # number of networks in which the probability should be above proba_limit for the model
 
@@ -53,10 +54,10 @@ def predict_star(networks, data, label_dict):
         else:        # all predictions count to the average, should be divided by ntry
             lab_stars_count = np.add(lab_stars_count, lab_stars_count_now)
 
-    index_best = np.argmax(best_prediction, axis=1)[0]
+    #index_best = np.argmax(best_prediction, axis=1)[0]
 
     # Unroll al indices
-    indices = [x[0] for x in np.argmax(all_predictions, axis=2)]
+    #indices = [x[0] for x in np.argmax(all_predictions, axis=2)]
     #indices = np.where(best_prediction > 0.05)[1]
     indices = np.where(lab_stars_count >= n_above)[1]
     probas = best_prediction[0][indices]
@@ -77,11 +78,11 @@ def main():
     Load network and pass the Ba stars data
     """
 
-    if len(sys.argv) < 2:
-        sys.exit(f"Use: python3 {sys.argv[0]} <network_ensemble>")
+    #if len(sys.argv) < 2:
+    #    sys.exit(f"Use: python3 {sys.argv[0]} <network_ensemble>")
 
     # Load network
-    dirname = sys.argv[1]
+    #dirname = sys.argv[1]
     directories = get_list_networks(dirname)
     networks = []
     for sub_dir in directories:
