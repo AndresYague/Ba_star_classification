@@ -4,7 +4,7 @@ from plot_correl_funcs import *
 import os
 
 # INPUTS ----------------------------------------------------------------
-x_axis = 'obs'      # Quantity on x-axis: res/obs/feh/mass/dil
+x_axis = 'feh'      # Quantity on x-axis: res/obs/feh/mass/dil
 y_axis = 'obs'      # Quantity on y-axis: res/obs
 df_resids = pd.read_csv('boxplot_resids.dat') # input file containing the residuals
 SAVE_DIR = "correl_forgit" # name of output directory
@@ -13,7 +13,7 @@ SAVE_DIR = "correl_forgit" # name of output directory
 
 only_NbZr = False    # if only Nb vs Zr plot
 onlyBa = False       # if only Nb vs Zr: True if only Ba star points, False if AGB too
-Nb_lim = 0          # negative if not Zr-thermometer, 0 if omega-residual, positive if thermometer
+Nb_lim = -1          # negative if not Zr-thermometer, 0 if omega-residual, positive if thermometer
 
 cmass = False       # if colour the points according to the mass of the stars
 solZrNb = 1.18      # solar Zr/Nb
@@ -105,16 +105,18 @@ a = peak1Fe_mean.T[peak1Fe_mean.T['Nb/Fe_res'].isnull()]
 
 # CASES OF WHAT TO PLOT FOR EACH X-Y COMBINATION -------------------------------------------------
 if x_axis == "feh" and y_axis == "obs":
-    # Abundances vs FeH
-    plot_peak(FeH, df_obs_Fe, "feh", "obs", "Fe", 2, len(peak1), mass, p2p1=True, absFe=True)
-    # Peak 1 / Peak 1
-    plot_peak(FeH, peak1p1_obs, "feh", "obs", "p1p1", len(peak1), len(peak1), mass)
-    # Peak 2 / Peak 1
-    plot_peak(FeH, peak2p1_obs, "feh", "obs", "p2p1", len(peak2), len(peak1), mass, p2p1=True)
-    # Peak 2 / Peak 2
-    plot_peak(FeH, peak2p2_obs, "feh", "obs", "p2p2", len(peak2), len(peak2), mass)
-    # Peak 2 / Peak 2: reversed for placing below Peak 1 / Peak 1 figure, if wanted to (that placing is only with external image editor, sorry)
-    plot_peak(FeH, peak2p2_obs_reorder, "feh", "obs", "p2p2_flip", len(peak2), len(peak2), lims, mass, triag2=True)
+    # # Abundances vs FeH
+    # plot_peak(FeH, df_obs_Fe, "feh", "obs", "Fe", 2, len(peak1), mass, p2p1=True, absFe=True)
+    # # Peak 1 / Peak 1
+    # plot_peak(FeH, peak1p1_obs, "feh", "obs", "p1p1", len(peak1), len(peak1), mass)
+    # # Peak 2 / Peak 1
+    # plot_peak(FeH, peak2p1_obs, "feh", "obs", "p2p1", len(peak2), len(peak1), mass, p2p1=True)
+    # Peak 1 / Peak 2
+    plot_peak(FeH, peak1p2_obs, "feh", "obs", "p1p2", len(peak1), len(peak2), mass, p2p1=True)
+    # # Peak 2 / Peak 2
+    # plot_peak(FeH, peak2p2_obs, "feh", "obs", "p2p2", len(peak2), len(peak2), mass)
+    # # Peak 2 / Peak 2: reversed for placing below Peak 1 / Peak 1 figure, if wanted to (that placing is only with external image editor, sorry)
+    # plot_peak(FeH, peak2p2_obs_reorder, "feh", "obs", "p2p2_flip", len(peak2), len(peak2), lims, mass, triag2=True)
 
 
 if x_axis == "feh" and y_axis == "res":
@@ -155,10 +157,10 @@ if x_axis == "obs" and y_axis == "obs":
 if x_axis == "obs" and y_axis == "res":
     # Peak 1 residual vs Peak 1 obs
     plot_peak(peak1Fe_all, peak1Fe_all, "obs", "res", "p1_p1", len(peak1), len(peak1), mass, p2p1=True)
-    # Peak 1 residual vs Peak 2 obs
-    plot_peak(peak1Fe_all, peak2Fe_all, "obs", "res", "p1_p2", len(peak2), len(peak1), mass, p2p1=True)
     # Peak 2 residual vs Peak 1 obs
-    plot_peak(peak2Fe_all, peak1Fe_all, "obs", "res", "p2_p1", len(peak1), len(peak2), mass, p2p1=True)
+    plot_peak(peak1Fe_all, peak2Fe_all, "obs", "res", "p2_p1", len(peak2), len(peak1), mass, p2p1=True)
+    # Peak 1 residual vs Peak 2 obs
+    plot_peak(peak2Fe_all, peak1Fe_all, "obs", "res", "p1_p2", len(peak1), len(peak2), mass, p2p1=True)
     # Peak 2 residual vs Peak 2 obs
     plot_peak(peak2Fe_all, peak2Fe_all, "obs", "res", "p2_p2", len(peak2), len(peak2), mass, p2p1=True)
     # Nb and Mo residual vs Peak 1 obs (for main text)
@@ -180,11 +182,9 @@ if x_axis == "res" and y_axis == "res":
     plot_peak(peak2Fe_all, peak2Fe_all, "res", "res", "p2p2_flip", len(peak2), len(peak2), mass, triag2=True)
 
 if x_axis == "mass" and y_axis == "res":
-    print()
     plot_peak(df_resid_obs, df_resid_Fe, "mass", "res", "massresp1", 2, len(peak1), mass, p2p1=True, absFe=True)
 
 if x_axis == "dil":
-    print()
     if y_axis == "res":
         plot_peak(df_resid_obs, df_resid_Fe, "dil", "res", "dilresp1", 2, len(peak1), mass, p2p1=True, absFe=True)
     if y_axis == "obs":

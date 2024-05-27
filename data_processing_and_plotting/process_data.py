@@ -2,9 +2,11 @@ import os, glob, sys
 import numpy as np
 from process_data_lib import *
 
+if len(sys.argv) < 2:
+    with_dilution = True    # change to False if non-diluted models are required
+else: with_dilution = sys.argv[1]
 DK_STEP = 0.002
 ZERO = 0.2
-with_dilution = True    # change to False if non-diluted models are required
 short_label = False     # use the short or the long labels for the models
 
 def process_data(data_file, output_file, names):

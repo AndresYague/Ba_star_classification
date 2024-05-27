@@ -2,14 +2,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os, sys, random
 from classify_lib import *
-import eli5
-from eli5.sklearn import PermutationImportance
 from eli5.permutation_importance import get_score_importances
 from sklearn import metrics
 
-
-mod_dir = "NN1_monash"
-n_tries = 5
+if len(sys.argv) > 3:
+    mod_dir = sys.argv[1]
+    n_tries = sys.argv[2]
+else: # input here
+    mod_dir = "NN1_monash"
+    n_tries = 5
 
 try:
     from silence_tensorflow import silence_tensorflow

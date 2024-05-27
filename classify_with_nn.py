@@ -12,7 +12,9 @@ from silence_tensorflow import silence_tensorflow
 silence_tensorflow()
 import tensorflow as tf
 
-dirname = "NN1_monash"
+if len(sys.argv) >= 2:
+    dirname = sys.argv[1]
+else: dirname = "NN1_monash"
 proba_limit = 0.0001 # minimum pobability above which the model is accepted
 n_above = 3 # number of networks in which the probability should be above proba_limit for the model
 

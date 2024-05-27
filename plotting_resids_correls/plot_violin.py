@@ -50,7 +50,8 @@ def boxplot_main(files, clf_name, pathn, set, monfru, FIGNAME, fig, boxcolor="co
     if not os.path.exists(pathn): os.makedirs(pathn)
 
     # Define all the directories
-    dir_data = "/home/blans/Ba_star_classification/Ba_star_classification_data"
+    cwd = os.getcwd()
+    dir_data = cwd+"/Ba_star_classification_data"
     fruity_mods = "models_fruity_dec"
     monash_mods = "models_monash"
     data_file = "all_data_w_err.dat"

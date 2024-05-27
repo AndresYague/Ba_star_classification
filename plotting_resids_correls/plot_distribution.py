@@ -15,20 +15,35 @@ sys.path.insert(0, "/data_processing_and_plotting")
 # PARAMETERS TO SET
 distr_mode = 'dil' # 'dil', 'mass', 'gof'
 mass_dil = False # if dil vs. mass 2D histograms
-FIGNAME_DISTR = "dil-distr-supsol-fru-setA-DEC"
-XLABEL = r"$\delta$ factor" #r"$\delta$ factor" #r"Mass [M$_{\odot}$]"
-TITLE_DISTR = r"$\delta$ distribution, FRUITY, set A"
 dir = "./try3/" # output directory
 files = ["APUB_out-cm-fru.txt", "APUB_out-rf-fru.txt", "APUB_out-nn-fru.txt"]  # input files with classification results
 
-distr_step = 0.05 # binsize -- mass: 0.5; dil: 0.1; gof: 5
-distr_factor = float(1/distr_step)
-distr_min = 0   # minimum value
-distr_max = 1   # max. value -- ranges: mass: 1-5; dil: 0-1; gof: 1-100
+FIGNAME_DISTR = "dil-distr-supsol-fru-setA-DEC"
+XLABEL = r"$\delta$ factor" #r"$\delta$ factor" #r"Mass [M$_{\odot}$]"
+TITLE_DISTR = r"$\delta$ distribution, FRUITY, set A"
+
 intersect = 'on' # if to show the intersect of the three classifiers
 distr_colors = ['crimson', 'lime', 'royalblue', 'crimson', 'lime', 'royalblue'] # colours of histograms
 distr_hatch = ['.o', '\\', '/', '.o', '\\', '/'] # hatches of histograms
 
+if distr_mode == 'mass':
+    distr_step = 0.5 # binsize -- mass: 0.5; dil: 0.1; gof: 5
+    distr_min = 1   # minimum value
+    distr_max = 5   # max. value -- ranges: mass: 1-5; dil: 0-1; gof: 1-100
+
+elif distr_mode == 'dil':
+    distr_step = 0.1 # binsize -- mass: 0.5; dil: 0.1; gof: 5
+    distr_min = 0   # minimum value
+    distr_max = 1   # max. value -- ranges: mass: 1-5; dil: 0-1; gof: 1-100
+
+elif distr_mode == 'gof':
+    distr_step = 5 # binsize -- mass: 0.5; dil: 0.1; gof: 5
+    distr_min = 1   # minimum value
+    distr_max = 100   # max. value -- ranges: mass: 1-5; dil: 0-1; gof: 1-100
+
+else: raise("Mode is not appropriate")
+
+distr_factor = float(1/distr_step)
 font = {'family': 'sans-serif', 'size': 30}
 matplotlib.rc('font', **font)
 

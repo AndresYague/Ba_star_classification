@@ -12,14 +12,17 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.ensemble import GradientBoostingClassifier
 from xgboost import XGBClassifier
 
+if len(sys.argv) >= 2:
+    mod_dir = sys.argv[1]
+else: mod_dir = "rf_forgit_fruity" # output directory; please include the term "fruity" or "monash" accordingly
+
 order = 1   # subtraction order, if 1, [A/B] is used, if 2, [A/B]-[C/D] too
-ntry = 5    # number of RF classifiers that are used for the evaluation
+n_classifier = 5    # number of RF classifiers that are used for the evaluation
 fit_if_min_classifier = 3   # if the probability is above probability limit in fit_if_min_classifier number classifiers, counts as a potential polluter AGB
 probability_limit = 0.075
 normalise = False # True if features are normalised, for RF, unnecessary
 visualize = False # True if create image of a decision tree
 mode = "rf"       # "rf" or "gb" for random forest or gradient boosting; latter is under construction
-mod_dir = "rf_forgit_fruity" # output directory; please include the term "fruity" or "monash" accordingly
 
 font = {'family': 'sans-serif', 'size': 21}
 matplotlib.rc('font', **font)
@@ -70,7 +73,7 @@ lab_enc = LabelEncoder() # label encoding for XGB
 lab_enc = lab_enc.fit(labels)
 
 
-for ii in range(ntry): # for ntry numbers of different classifiers with separate randomisation
+for ii in range(n_classifier): # for ntry numbers of different classifiers with separate randomisation
     df_tr, df_tst, lab_tr, lab_tst = train_test_split(df_models_extraf, labels, test_size=0.2)  # Training and test sets
 
     dirname_curr = os.path.join(dirname, "{:}_{:}.joblib".format(mode, ii)) # current path for the model to be saved
@@ -96,13 +99,13 @@ for ii in range(ntry): # for ntry numbers of different classifiers with separate
     lab_stars_count_now[lab_stars_count_now < probability_limit] = 0
 
     if ii == 0:  # if first classifier, initialize labels and importances
-        lab_stars_pred = lab_stars_pred_now.div(ntry)
+        lab_stars_pred = lab_stars_pred_now.div(n_classifier)
         lab_stars_count = lab_stars_count_now.copy()
-        importances = importance_now.div(ntry) # importances are averaged over the n random models
+        importances = importance_now.div(n_classifier) # importances are averaged over the n random models
     else:        # all predictions count to the average, should be divided by ntry
-        lab_stars_pred = lab_stars_pred.add(lab_stars_pred_now.div(ntry))
+        lab_stars_pred = lab_stars_pred.add(lab_stars_pred_now.div(n_classifier))
         lab_stars_count = lab_stars_count.add(lab_stars_count_now)
-        importances = importances.add(importance_now.div(ntry))
+        importances = importances.add(importance_now.div(n_classifier))
 
 
     # IMPORTANCES PLOT ----------------------------------------------
