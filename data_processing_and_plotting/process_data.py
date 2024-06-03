@@ -2,8 +2,12 @@ import os, glob, sys
 import numpy as np
 from process_data_lib import *
 
+if len(sys.argv) < 2:
+    with_dilution = True    # change to False if non-diluted models are required
+else: with_dilution = sys.argv[1]
 DK_STEP = 0.002
 ZERO = 0.2
+short_label = False     # use the short or the long labels for the models
 
 def process_data(data_file, output_file, names):
     """
@@ -46,7 +50,6 @@ def process_data(data_file, output_file, names):
 def get_string_names(elems, names, label):
     """
     Transform the list of values into a string to write
-
     elems is a dictionary with the values
     names is the selected keys we want for the output
     label is the model label
@@ -84,6 +87,7 @@ def process_models(directory, outpt, names, zero=0, with_dilution=True):
     else:
         raise Exception("Only implemented for fruity or monash models")
 
+    if not with_dilution: label_prev = ""
     for label in all_models:
         # Ignore T60 label
         if "T60" in label:
@@ -91,8 +95,8 @@ def process_models(directory, outpt, names, zero=0, with_dilution=True):
         elems = all_models[label]
 
         # If calculating for the NN, then shorten the label
-        if with_dilution:
-            label = short_name_generator(label)
+        #if with_dilution:
+        if short_label: label = short_name_generator(label)
 
         # Apply dilutions from kk = 0 to kk = 1 with DK_STEP size
         kk_arr = np.arange(0, 1 + DK_STEP, DK_STEP)
@@ -112,8 +116,15 @@ def process_models(directory, outpt, names, zero=0, with_dilution=True):
             ss = get_string_names(new_elements, names, label)
 
             # Now write this string
-            with open(outpt, "a") as fappend:
-                fappend.write(ss)
+            if not with_dilution:
+                if label_prev != label:
+                    with open(outpt, "a") as fappend:
+                        fappend.write(ss)
+                label_prev = label
+
+            else:
+                with open(outpt, "a") as fappend:
+                    fappend.write(ss)
 
 def eliminate_same_models(processed_models):
     """
@@ -152,87 +163,81 @@ def eliminate_same_models(processed_models):
 
     os.rename("temp.txt", processed_models)
 
-def main():
-    """
-    Just process all the data to create consistent models
-    """
 
-    s = f'Use: python3 {sys.argv[0]} [y/n]\n'
-    s += 'Where "y" indicates the use of dilution for the models.\n'
-    s += 'Default option is y.\n'
-    print(s)
+s = f'Use: python3 {sys.argv[0]} [y/n]\n'
+s += 'Where "y" indicates the use of dilution for the models.\n'
+s += 'Default option is y.\n'
+print(s)
 
-    with_dilution = True
-    if len(sys.argv) > 1:
-        with_dilution = True if  sys.argv[1] == "y" else False
+if len(sys.argv) > 1:
+    with_dilution = True if  sys.argv[1] == "y" else False
 
-    s = "Processing data "
-    if with_dilution:
-        s += "with "
-    else:
-        s += "without "
-    s += "dilution\n"
-    print(s)
+s = "Processing data "
+if with_dilution:
+    s += "with "
+else:
+    s += "without "
+s += "dilution\n"
+print(s)
 
-    # Load element set
-    with open("element_set.dat", "r") as fread:
-        for line in fread:
-            lnlst = line.split()
+# Load element set
+with open(os.path.join(sys.path[0],"element_set.dat"), "r") as fread:
+    for line in fread:
+        lnlst = line.split()
 
-            # Skip comments and empty lines
-            if len(lnlst) == 0 or "#" in lnlst[0]:
-                continue
+        # Skip comments and empty lines
+        if len(lnlst) == 0 or "#" in lnlst[0]:
+            continue
 
-            names = lnlst
-            break
+        names = lnlst
+        break
 
-    # Echo element list
-    print(f"Element list: {' '.join(names)}")
+# Echo element list
+print(f"Element list: {' '.join(names)}")
 
-    # Define all the directories
-    dir_data = "Ba_star_classification_data"
-    fruity_mods = "models_fruity"
-    monash_mods = "models_monash"
-    #data_file = "all_abund_and_masses.dat"
-    data_file = "all_data_w_err.dat"
+# Define all the directories
+dir_data = "/home/blans/Ba_star_classification/Ba_star_classification_data"
+fruity_mods = "models_fruity_dec"
+monash_mods = "models_monash"
+#data_file = "all_abund_and_masses.dat"
+data_file = "all_data_w_err.dat"
 
-    fruity_dir = os.path.join(dir_data, fruity_mods)
-    monash_dir = os.path.join(dir_data, monash_mods)
-    data_file = os.path.join(dir_data, data_file)
+fruity_dir = os.path.join(dir_data, fruity_mods)
+monash_dir = os.path.join(dir_data, monash_mods)
+data_file = os.path.join(dir_data, data_file)
 
-    # Names for output files
-    processed_models_fruity = "processed_models_fruity.txt"
-    processed_models_monash = "processed_models_monash.txt"
-    processed_data = "processed_data.txt"
+# Names for output files
+dilstring = ""
+if not with_dilution: dilstring = "_nondil"
+processed_models_fruity = os.path.join(sys.path[0], "processed{:}_models_fruity.txt".format(dilstring))
+processed_models_monash = os.path.join(sys.path[0], "processed{:}_models_monash.txt".format(dilstring))
+processed_data = os.path.join(sys.path[0], "processed_data.txt")
 
-    # Process data
-    print("Processing observations...")
-    process_data(data_file, processed_data, names)
+# Process data
+print("Processing observations...")
+process_data(data_file, processed_data, names)
 
-    # Write the header
-    header = "# " + " ".join(names) + " Label " + "\n"
+# Write the header
+header = "# " + " ".join(names) + " Label " + "\n"
 
-    # Process fruity
-    print("Processing fruity...")
-    with open(processed_models_fruity, "w") as fwrite:
-        fwrite.write(header)
-    process_models(fruity_dir, processed_models_fruity, names, zero=ZERO,
-                    with_dilution=with_dilution)
+# Process fruity
+print("Processing fruity...")
+with open(processed_models_fruity, "w") as fwrite:
+    fwrite.write(header)
+process_models(fruity_dir, processed_models_fruity, names, zero=ZERO,
+                with_dilution=with_dilution)
 
-    # Process monash
-    print("Processing monash...")
-    with open(processed_models_monash, "w") as fwrite:
-        fwrite.write(header)
-    process_models(monash_dir, processed_models_monash, names, zero=ZERO,
-                    with_dilution=with_dilution)
+# Process monash
+print("Processing monash...")
+with open(processed_models_monash, "w") as fwrite:
+    fwrite.write(header)
+process_models(monash_dir, processed_models_monash, names, zero=ZERO,
+                with_dilution=with_dilution)
 
-    # Check that all models are different enough
-    if with_dilution:
-        print("Eliminating same models...")
-        eliminate_same_models(processed_models_fruity)
-        eliminate_same_models(processed_models_monash)
+# Check that all models are different enough
+if with_dilution:
+    print("Eliminating same models...")
+    eliminate_same_models(processed_models_fruity)
+    eliminate_same_models(processed_models_monash)
 
-    print("Done!")
-
-if __name__ == "__main__":
-    main()
+print("Done!")

@@ -1,0 +1,1134 @@
+Now fitting the classifier
+Accuracy:  0.9949412086409626
+
+Now fitting the classifier
+Accuracy:  0.9964451736395953
+
+Now fitting the classifier
+Accuracy:  0.9961717254580257
+
+Now fitting the classifier
+Accuracy:  0.9961717254580257
+
+Now fitting the classifier
+Accuracy:  0.9965818977303801
+
+For star BD-083194:
+Label fruity_m2p5z6m3_000 with goodness of fit 56.13% and dilution 0.41 , probability 0.09
+------
+
+For star BD-094337:
+------
+
+For star BD-142678:
+Label fruity_m2p5z8m3_000 with goodness of fit 80.02% and dilution 0.24 , probability 0.17
+Label fruity_m3p0z8m3_000 with goodness of fit 76.25% and dilution 0.42 , probability 0.16
+------
+
+For star CD-272233:
+Label fruity_m1p5z6m3_ext with goodness of fit 79.09% and dilution 0.31 , probability 0.23
+Label fruity_m2p0z8m3_000 with goodness of fit 94.29% and dilution 0.40 , probability 0.16
+Label fruity_m2p0z6m3_ext with goodness of fit 75.17% and dilution 0.12 , probability 0.08
+------
+
+For star CD-298822:
+Label fruity_m2p5z8m3_000 with goodness of fit 69.26% and dilution 0.30 , probability 0.21
+Label fruity_m2p0z1m2_000 with goodness of fit 79.75% and dilution 0.58 , probability 0.13
+Label fruity_m1p5z6m3_ext with goodness of fit 36.61% and dilution 0.32 , probability 0.09
+Label fruity_m2p0z8m3_000 with goodness of fit 66.88% and dilution 0.43 , probability 0.08
+Label fruity_m2p5z1m2_000 with goodness of fit 77.69% and dilution 0.42 , probability 0.08
+------
+
+For star CD-308774:
+Label fruity_m1p5z6m3_ext with goodness of fit 62.18% and dilution 0.05 , probability 0.15
+Label fruity_m2p5z8m3_000 with goodness of fit 78.88% and dilution 0.05 , probability 0.12
+------
+
+For star CD-38585:
+Label fruity_m1p5z6m3_ext with goodness of fit 80.70% and dilution 0.66 , probability 0.27
+Label fruity_m1p5z3m3_ext with goodness of fit 72.58% and dilution 0.44 , probability 0.14
+Label fruity_m2p5z6m3_000 with goodness of fit 83.88% and dilution 0.44 , probability 0.13
+Label fruity_m2p0z3m3_ext with goodness of fit 68.67% and dilution 0.22 , probability 0.11
+Label fruity_m1p5z2m3_ext with goodness of fit 39.96% and dilution 0.29 , probability 0.08
+------
+
+For star CD-422048:
+Label fruity_m1p5z6m3_ext with goodness of fit 46.99% and dilution 0.56 , probability 0.13
+Label fruity_m2p0z6m3_ext with goodness of fit 45.20% and dilution 0.22 , probability 0.13
+Label fruity_m1p5z3m3_ext with goodness of fit 18.27% and dilution 0.37 , probability 0.09
+------
+
+For star CD-538144:
+Label fruity_m3p0z8m3_000 with goodness of fit 91.84% and dilution 0.45 , probability 0.20
+Label fruity_m2p5z8m3_000 with goodness of fit 94.36% and dilution 0.26 , probability 0.15
+Label fruity_m2p0z8m3_000 with goodness of fit 93.09% and dilution 0.36 , probability 0.07
+------
+
+For star CD-611941:
+Label fruity_m3p0z6m3_000 with goodness of fit 52.55% and dilution 0.48 , probability 0.13
+Label fruity_m1p5z6m3_000 with goodness of fit 59.46% and dilution 0.54 , probability 0.13
+Label fruity_m2p5z6m3_000 with goodness of fit 58.93% and dilution 0.20 , probability 0.08
+------
+
+For star CPD-621013:
+Label fruity_m2p5zsun_000 with goodness of fit 85.96% and dilution 0.53 , probability 0.15
+Label fruity_m2p5z1m2_000 with goodness of fit 93.20% and dilution 0.28 , probability 0.15
+Label fruity_m1p5z1m2_ext with goodness of fit 86.65% and dilution 0.50 , probability 0.10
+Label fruity_m2p0zsun_ext with goodness of fit 86.19% and dilution 0.38 , probability 0.09
+Label fruity_m2p0z1m2_ext with goodness of fit 85.88% and dilution 0.20 , probability 0.09
+------
+
+For star CPD-643333:
+Label fruity_m2p5z6m3_000 with goodness of fit 70.48% and dilution 0.52 , probability 0.19
+------
+
+For star HD4084:
+Label fruity_m2p5z1m2_000 with goodness of fit 38.95% and dilution 0.42 , probability 0.12
+Label fruity_m2p5z8m3_000 with goodness of fit 35.78% and dilution 0.29 , probability 0.08
+Label fruity_m3p0z1m2_000 with goodness of fit 36.78% and dilution 0.74 , probability 0.08
+------
+
+For star HD5424:
+Label fruity_m2p0z2m3_000 with goodness of fit 39.11% and dilution 0.72 , probability 0.18
+Label fruity_m2p0z6m3_000 with goodness of fit 76.20% and dilution 0.81 , probability 0.14
+Label fruity_m2p5z6m3_000 with goodness of fit 70.05% and dilution 0.62 , probability 0.09
+------
+
+For star HD5825:
+Label fruity_m1p5z6m3_ext with goodness of fit 94.16% and dilution 0.26 , probability 0.42
+Label fruity_m2p5z6m3_000 with goodness of fit 96.08% and dilution 0.17 , probability 0.15
+------
+
+For star HD15589:
+Label fruity_m2p5z6m3_000 with goodness of fit 77.94% and dilution 0.47 , probability 0.09
+Label fruity_m2p0z2m3_000 with goodness of fit 15.22% and dilution 0.56 , probability 0.08
+------
+
+For star HD20394:
+Label fruity_m2p5z8m3_000 with goodness of fit 85.61% and dilution 0.54 , probability 0.21
+Label fruity_m2p0z8m3_000 with goodness of fit 91.16% and dilution 0.79 , probability 0.12
+------
+
+For star HD21989:
+Label fruity_m1p5z8m3_000 with goodness of fit 91.07% and dilution 0.31 , probability 0.24
+Label fruity_m1p3z6m3_000 with goodness of fit 79.65% and dilution 0.62 , probability 0.19
+Label fruity_m2p5z6m3_000 with goodness of fit 78.89% and dilution 0.05 , probability 0.12
+------
+
+For star HD22285:
+Label fruity_m2p5z6m3_000 with goodness of fit 86.02% and dilution 0.40 , probability 0.20
+Label fruity_m1p5z2m3_ext with goodness of fit 82.26% and dilution 0.26 , probability 0.08
+------
+
+For star HD22772:
+Label fruity_m3p0z8m3_000 with goodness of fit 89.96% and dilution 0.33 , probability 0.17
+Label fruity_m2p5z8m3_000 with goodness of fit 92.35% and dilution 0.19 , probability 0.17
+Label fruity_m1p5z8m3_000 with goodness of fit 88.23% and dilution 0.75 , probability 0.16
+------
+
+For star HD24035:
+Label fruity_m2p0z6m3_000 with goodness of fit 83.24% and dilution 0.88 , probability 0.16
+------
+
+For star HD29370:
+Label fruity_m2p0z6m3_ext with goodness of fit 78.61% and dilution 0.11 , probability 0.39
+Label fruity_m2p0z1m2_000 with goodness of fit 90.17% and dilution 0.50 , probability 0.10
+------
+
+For star HD29685:
+Label fruity_m2p5z8m3_000 with goodness of fit 87.86% and dilution 0.08 , probability 0.37
+Label fruity_m4p0z1m2_000 with goodness of fit 87.64% and dilution 0.81 , probability 0.18
+Label fruity_m1p5z1m2_000 with goodness of fit 91.36% and dilution 0.45 , probability 0.13
+------
+
+For star HD30240:
+Label fruity_m2p5z8m3_000 with goodness of fit 75.83% and dilution 0.12 , probability 0.26
+Label fruity_m2p0z1m2_ext with goodness of fit 86.01% and dilution 0.13 , probability 0.13
+Label fruity_m2p5z1m2_000 with goodness of fit 90.00% and dilution 0.17 , probability 0.12
+Label fruity_m2p5zsun_000 with goodness of fit 80.48% and dilution 0.30 , probability 0.09
+Label fruity_m1p5z1m2_ext with goodness of fit 85.47% and dilution 0.32 , probability 0.08
+------
+
+For star HD30554:
+Label fruity_m1p5z1m2_000 with goodness of fit 83.35% and dilution 0.83 , probability 0.13
+Label fruity_m3p0z8m3_000 with goodness of fit 85.68% and dilution 0.27 , probability 0.13
+Label fruity_m1p5z8m3_000 with goodness of fit 84.57% and dilution 0.61 , probability 0.11
+Label fruity_m2p5z1m2_000 with goodness of fit 77.72% and dilution 0.22 , probability 0.10
+------
+
+For star HD32712:
+Label fruity_m3p0z6m3_000 with goodness of fit 87.98% and dilution 0.43 , probability 0.18
+Label fruity_m2p0z2m3_000 with goodness of fit 28.08% and dilution 0.20 , probability 0.14
+Label fruity_m2p5z6m3_000 with goodness of fit 81.22% and dilution 0.18 , probability 0.11
+Label fruity_m1p5z6m3_000 with goodness of fit 91.05% and dilution 0.48 , probability 0.10
+------
+
+For star HD32901:
+Label fruity_m2p0z3m3_ext with goodness of fit 69.75% and dilution 0.05 , probability 0.28
+Label fruity_m1p5z6m3_ext with goodness of fit 78.68% and dilution 0.14 , probability 0.11
+Label fruity_m1p5z3m3_ext with goodness of fit 69.96% and dilution 0.09 , probability 0.11
+Label fruity_m1p3z3m3_000 with goodness of fit 83.88% and dilution 0.58 , probability 0.09
+Label fruity_m3p0z6m3_000 with goodness of fit 91.01% and dilution 0.22 , probability 0.08
+------
+
+For star HD35993:
+Label fruity_m3p0z8m3_000 with goodness of fit 84.32% and dilution 0.65 , probability 0.31
+Label fruity_m2p0z8m3_000 with goodness of fit 88.11% and dilution 0.52 , probability 0.16
+------
+
+For star HD36650:
+Label fruity_m2p5z8m3_000 with goodness of fit 75.76% and dilution 0.12 , probability 0.28
+Label fruity_m2p5z1m2_000 with goodness of fit 77.44% and dilution 0.17 , probability 0.09
+Label fruity_m2p0z1m2_000 with goodness of fit 72.75% and dilution 0.24 , probability 0.08
+------
+
+For star HD38488:
+Label fruity_m1p5z8m3_000 with goodness of fit 52.60% and dilution 0.73 , probability 0.20
+Label fruity_m2p5z6m3_000 with goodness of fit 26.27% and dilution 0.13 , probability 0.11
+Label fruity_m2p0z6m3_000 with goodness of fit 26.52% and dilution 0.17 , probability 0.09
+------
+
+For star HD40430:
+Label fruity_m2p5z8m3_000 with goodness of fit 96.48% and dilution 0.17 , probability 0.26
+Label fruity_m2p0z8m3_000 with goodness of fit 95.61% and dilution 0.24 , probability 0.18
+Label fruity_m1p5z6m3_ext with goodness of fit 77.83% and dilution 0.18 , probability 0.13
+Label fruity_m2p5z1m2_000 with goodness of fit 91.33% and dilution 0.24 , probability 0.09
+Label fruity_m2p0z1m2_000 with goodness of fit 93.09% and dilution 0.33 , probability 0.08
+------
+
+For star HD43389:
+Label fruity_m2p5z8m3_000 with goodness of fit 86.17% and dilution 0.88 , probability 0.12
+------
+
+For star HD49641:
+Label fruity_m1p5z6m3_ext with goodness of fit 99.83% and dilution 0.28 , probability 0.18
+Label fruity_m2p5z8m3_000 with goodness of fit 99.54% and dilution 0.26 , probability 0.12
+Label fruity_m2p0z8m3_000 with goodness of fit 99.77% and dilution 0.37 , probability 0.11
+------
+
+For star HD51959:
+Label fruity_m2p5z8m3_000 with goodness of fit 96.45% and dilution 0.21 , probability 0.33
+Label fruity_m3p0z8m3_000 with goodness of fit 93.47% and dilution 0.38 , probability 0.31
+Label fruity_m2p0z8m3_000 with goodness of fit 94.26% and dilution 0.30 , probability 0.10
+------
+
+For star HD58368:
+Label fruity_m3p0z8m3_000 with goodness of fit 53.89% and dilution 0.31 , probability 0.11
+Label fruity_m1p5z8m3_000 with goodness of fit 47.05% and dilution 0.68 , probability 0.10
+Label fruity_m2p5z1m2_000 with goodness of fit 64.33% and dilution 0.24 , probability 0.07
+------
+
+For star HD59852:
+Label fruity_m2p5z1m2_000 with goodness of fit 94.34% and dilution 0.06 , probability 0.14
+Label fruity_m2p0z1m2_ext with goodness of fit 93.46% and dilution 0.05 , probability 0.14
+Label fruity_m2p0z6m3_ext with goodness of fit 84.07% and dilution 0.02 , probability 0.14
+------
+
+For star HD61332:
+Label fruity_m1p5z6m3_ext with goodness of fit 34.18% and dilution 0.06 , probability 0.42
+Label fruity_m2p0z6m3_ext with goodness of fit 32.72% and dilution 0.02 , probability 0.14
+------
+
+For star HD64425:
+Label fruity_m2p5z8m3_000 with goodness of fit 76.91% and dilution 0.23 , probability 0.49
+Label fruity_m2p0z8m3_000 with goodness of fit 75.80% and dilution 0.33 , probability 0.08
+------
+
+For star HD66291:
+Label fruity_m2p0z6m3_ext with goodness of fit 92.66% and dilution 0.07 , probability 0.16
+Label fruity_m2p5z6m3_000 with goodness of fit 94.46% and dilution 0.10 , probability 0.11
+------
+
+For star HD67036:
+Label fruity_m3p0z8m3_000 with goodness of fit 91.88% and dilution 0.45 , probability 0.25
+Label fruity_m2p0z8m3_000 with goodness of fit 93.77% and dilution 0.36 , probability 0.10
+Label fruity_m1p5z6m3_ext with goodness of fit 95.41% and dilution 0.28 , probability 0.09
+------
+
+For star HD71458:
+Label fruity_m1p5z8m3_000 with goodness of fit 73.17% and dilution 0.47 , probability 0.23
+Label fruity_m2p5z6m3_000 with goodness of fit 43.54% and dilution 0.08 , probability 0.16
+Label fruity_m2p0z6m3_000 with goodness of fit 43.34% and dilution 0.11 , probability 0.10
+------
+
+For star HD74950:
+Label fruity_m1p5z8m3_000 with goodness of fit 94.64% and dilution 0.52 , probability 0.22
+Label fruity_m2p5z6m3_000 with goodness of fit 83.91% and dilution 0.09 , probability 0.13
+------
+
+For star HD82221:
+Label fruity_m2p5z8m3_000 with goodness of fit 99.14% and dilution 0.18 , probability 0.47
+------
+
+For star HD83548:
+Label fruity_m3p0z8m3_000 with goodness of fit 61.04% and dilution 0.21 , probability 0.26
+Label fruity_m2p5z8m3_000 with goodness of fit 64.94% and dilution 0.12 , probability 0.20
+Label fruity_m1p5z1m2_000 with goodness of fit 78.52% and dilution 0.63 , probability 0.16
+Label fruity_m2p5z1m2_000 with goodness of fit 77.99% and dilution 0.16 , probability 0.12
+Label fruity_m2p0z8m3_000 with goodness of fit 62.52% and dilution 0.17 , probability 0.09
+------
+
+For star HD84610:
+Label fruity_m2p5z8m3_000 with goodness of fit 69.48% and dilution 0.09 , probability 0.15
+Label fruity_m2p5zsun_000 with goodness of fit 81.85% and dilution 0.24 , probability 0.13
+Label fruity_m2p0zsun_ext with goodness of fit 84.69% and dilution 0.18 , probability 0.10
+------
+
+For star HD84678:
+Label fruity_m2p0z3m3_ext with goodness of fit 15.23% and dilution 0.30 , probability 0.13
+Label fruity_m2p0z6m3_000 with goodness of fit 49.98% and dilution 0.79 , probability 0.12
+------
+
+For star HD88035:
+Label fruity_m2p5z6m3_000 with goodness of fit 48.03% and dilution 0.26 , probability 0.18
+------
+
+For star HD88562:
+Label fruity_m2p0z6m3_000 with goodness of fit 88.20% and dilution 0.25 , probability 0.11
+Label fruity_m1p5z6m3_000 with goodness of fit 87.11% and dilution 0.52 , probability 0.09
+Label fruity_m3p0z6m3_000 with goodness of fit 82.55% and dilution 0.46 , probability 0.08
+Label fruity_m2p5z6m3_000 with goodness of fit 86.40% and dilution 0.19 , probability 0.08
+------
+
+For star HD89175:
+Label fruity_m2p0z3m3_ext with goodness of fit 66.72% and dilution 0.34 , probability 0.32
+Label fruity_m1p5z3m3_ext with goodness of fit 72.19% and dilution 0.70 , probability 0.29
+Label fruity_m1p5z2m3_ext with goodness of fit 47.71% and dilution 0.44 , probability 0.13
+------
+
+For star HD91208:
+Label fruity_m2p5z8m3_000 with goodness of fit 55.29% and dilution 0.18 , probability 0.25
+Label fruity_m2p5zsun_000 with goodness of fit 64.60% and dilution 0.45 , probability 0.14
+Label fruity_m2p0z1m2_ext with goodness of fit 68.41% and dilution 0.19 , probability 0.09
+Label fruity_m1p5z6m3_ext with goodness of fit 23.99% and dilution 0.20 , probability 0.08
+------
+
+For star HD91979:
+Label fruity_m2p5z8m3_000 with goodness of fit 92.12% and dilution 0.19 , probability 0.25
+Label fruity_m2p5z1m2_000 with goodness of fit 98.49% and dilution 0.27 , probability 0.20
+Label fruity_m2p0z1m2_ext with goodness of fit 97.26% and dilution 0.20 , probability 0.18
+Label fruity_m1p5z6m3_ext with goodness of fit 55.40% and dilution 0.21 , probability 0.11
+------
+
+For star HD92626:
+Label fruity_m2p5z6m3_000 with goodness of fit 90.71% and dilution 0.79 , probability 0.09
+------
+
+For star HD105902:
+Label fruity_m2p0z6m3_ext with goodness of fit 78.45% and dilution 0.28 , probability 0.30
+Label fruity_m2p0z1m2_ext with goodness of fit 95.86% and dilution 0.65 , probability 0.12
+------
+
+For star HD107264:
+Label fruity_m2p0z1m2_000 with goodness of fit 99.61% and dilution 0.64 , probability 0.27
+Label fruity_m2p0z1m2_ext with goodness of fit 99.39% and dilution 0.34 , probability 0.21
+Label fruity_m1p5z1m2_ext with goodness of fit 99.32% and dilution 0.87 , probability 0.18
+Label fruity_m3p0z1m2_000 with goodness of fit 99.56% and dilution 0.81 , probability 0.13
+------
+
+For star HD107541:
+Label fruity_m2p0z3m3_ext with goodness of fit 94.83% and dilution 0.60 , probability 0.11
+Label fruity_m1p5z2m3_ext with goodness of fit 82.19% and dilution 0.78 , probability 0.08
+------
+
+For star HD110483:
+Label fruity_m3p0z8m3_000 with goodness of fit 93.03% and dilution 0.43 , probability 0.32
+Label fruity_m2p0z8m3_000 with goodness of fit 93.97% and dilution 0.34 , probability 0.16
+------
+
+For star HD110591:
+Label fruity_m1p5z6m3_ext with goodness of fit 82.56% and dilution 0.14 , probability 0.27
+Label fruity_m1p5z3m3_ext with goodness of fit 87.46% and dilution 0.10 , probability 0.15
+------
+
+For star HD111315:
+Label fruity_m2p5z1m2_000 with goodness of fit 79.41% and dilution 0.11 , probability 0.16
+Label fruity_m2p0z1m2_ext with goodness of fit 78.82% and dilution 0.08 , probability 0.14
+Label fruity_m2p0z6m3_ext with goodness of fit 24.48% and dilution 0.03 , probability 0.13
+Label fruity_m2p5zsun_000 with goodness of fit 80.00% and dilution 0.19 , probability 0.12
+Label fruity_m1p5z1m2_ext with goodness of fit 78.25% and dilution 0.20 , probability 0.08
+------
+
+For star HD113291:
+Label fruity_m2p5z6m3_000 with goodness of fit 64.73% and dilution 0.21 , probability 0.15
+Label fruity_m2p0z6m3_000 with goodness of fit 63.31% and dilution 0.28 , probability 0.09
+------
+
+For star HD116869:
+Label fruity_m1p5z6m3_ext with goodness of fit 95.65% and dilution 0.22 , probability 0.33
+Label fruity_m1p5z3m3_ext with goodness of fit 58.83% and dilution 0.15 , probability 0.16
+Label fruity_m2p5z6m3_000 with goodness of fit 97.58% and dilution 0.14 , probability 0.10
+------
+
+For star HD119185:
+Label fruity_m1p5z6m3_ext with goodness of fit 64.77% and dilution 0.08 , probability 0.26
+Label fruity_m1p5z3m3_ext with goodness of fit 43.44% and dilution 0.05 , probability 0.11
+Label fruity_m2p5z6m3_000 with goodness of fit 69.39% and dilution 0.05 , probability 0.07
+------
+
+For star HD120571:
+Label fruity_m1p5z6m3_ext with goodness of fit 99.28% and dilution 0.12 , probability 0.34
+Label fruity_m1p5z3m3_ext with goodness of fit 69.18% and dilution 0.08 , probability 0.19
+Label fruity_m1p5z2m3_ext with goodness of fit 29.18% and dilution 0.05 , probability 0.09
+------
+
+For star HD120620:
+------
+
+For star HD122687:
+Label fruity_m2p5z8m3_000 with goodness of fit 93.19% and dilution 0.26 , probability 0.24
+Label fruity_m1p5z6m3_ext with goodness of fit 63.75% and dilution 0.30 , probability 0.20
+Label fruity_m2p0z8m3_000 with goodness of fit 93.20% and dilution 0.38 , probability 0.19
+Label fruity_m2p0z1m2_ext with goodness of fit 91.23% and dilution 0.27 , probability 0.08
+------
+
+For star HD123396:
+Label fruity_m1p5z2m3_ext with goodness of fit 50.72% and dilution 0.22 , probability 0.21
+Label fruity_m1p5z3m3_ext with goodness of fit 32.07% and dilution 0.33 , probability 0.11
+Label fruity_m2p0z3m3_ext with goodness of fit 30.71% and dilution 0.16 , probability 0.10
+Label fruity_m1p5z1m3_ext with goodness of fit 46.72% and dilution 0.21 , probability 0.08
+------
+
+For star HD123701:
+Label fruity_m2p5z8m3_000 with goodness of fit 75.58% and dilution 0.49 , probability 0.21
+Label fruity_m2p0z8m3_000 with goodness of fit 70.69% and dilution 0.70 , probability 0.14
+Label fruity_m1p5z6m3_ext with goodness of fit 67.04% and dilution 0.56 , probability 0.12
+Label fruity_m2p5z1m2_000 with goodness of fit 45.28% and dilution 0.68 , probability 0.08
+------
+
+For star HD123949:
+Label fruity_m2p5z6m3_000 with goodness of fit 83.98% and dilution 0.39 , probability 0.20
+Label fruity_m2p0z8m3_000 with goodness of fit 90.40% and dilution 0.77 , probability 0.12
+------
+
+For star HD126313:
+Label fruity_m1p5z6m3_ext with goodness of fit 56.22% and dilution 0.32 , probability 0.21
+Label fruity_m2p5z8m3_000 with goodness of fit 88.22% and dilution 0.29 , probability 0.16
+Label fruity_m2p0z8m3_000 with goodness of fit 86.54% and dilution 0.41 , probability 0.11
+Label fruity_m2p0z6m3_ext with goodness of fit 52.49% and dilution 0.13 , probability 0.08
+Label fruity_m2p0z1m2_000 with goodness of fit 88.86% and dilution 0.57 , probability 0.07
+------
+
+For star HD130255:
+------
+
+For star HD131670:
+Label fruity_m2p5z1m2_000 with goodness of fit 92.73% and dilution 0.17 , probability 0.23
+Label fruity_m2p5zsun_000 with goodness of fit 86.95% and dilution 0.31 , probability 0.19
+Label fruity_m2p0zsun_ext with goodness of fit 89.84% and dilution 0.23 , probability 0.11
+Label fruity_m2p0zsun_000 with goodness of fit 89.44% and dilution 0.46 , probability 0.09
+------
+
+For star HD136636:
+Label fruity_m2p5z8m3_000 with goodness of fit 94.46% and dilution 0.29 , probability 0.24
+Label fruity_m2p0z8m3_000 with goodness of fit 95.66% and dilution 0.42 , probability 0.23
+Label fruity_m1p5z6m3_ext with goodness of fit 74.12% and dilution 0.33 , probability 0.10
+------
+
+For star HD142571:
+Label fruity_m1p5z6m3_ext with goodness of fit 61.07% and dilution 0.14 , probability 0.18
+Label fruity_m2p0zsun_ext with goodness of fit 75.29% and dilution 0.25 , probability 0.16
+Label fruity_m2p0z1m2_ext with goodness of fit 90.31% and dilution 0.14 , probability 0.12
+Label fruity_m2p5z8m3_000 with goodness of fit 85.16% and dilution 0.13 , probability 0.10
+------
+
+For star HD143899:
+Label fruity_m2p5z8m3_000 with goodness of fit 94.55% and dilution 0.15 , probability 0.31
+Label fruity_m2p0z8m3_000 with goodness of fit 95.15% and dilution 0.21 , probability 0.18
+Label fruity_m1p5z6m3_ext with goodness of fit 83.51% and dilution 0.16 , probability 0.14
+Label fruity_m2p0z1m2_ext with goodness of fit 81.63% and dilution 0.15 , probability 0.08
+------
+
+For star HD147884:
+Label fruity_m2p5z1m2_000 with goodness of fit 98.62% and dilution 0.31 , probability 0.40
+Label fruity_m2p5z8m3_000 with goodness of fit 87.34% and dilution 0.22 , probability 0.24
+Label fruity_m1p5z6m3_ext with goodness of fit 45.48% and dilution 0.24 , probability 0.09
+Label fruity_m1p5z1m2_ext with goodness of fit 93.61% and dilution 0.56 , probability 0.07
+------
+
+For star HD148177:
+Label fruity_m1p5z1m2_000 with goodness of fit 97.85% and dilution 0.54 , probability 0.24
+Label fruity_m2p5z8m3_000 with goodness of fit 93.37% and dilution 0.10 , probability 0.10
+------
+
+For star HD154430:
+Label fruity_m2p5z8m3_000 with goodness of fit 95.16% and dilution 0.40 , probability 0.38
+Label fruity_m2p0z8m3_000 with goodness of fit 97.56% and dilution 0.57 , probability 0.20
+Label fruity_m3p0z8m3_000 with goodness of fit 96.43% and dilution 0.72 , probability 0.08
+------
+
+For star HD162806:
+Label fruity_m2p5z8m3_000 with goodness of fit 99.93% and dilution 0.18 , probability 0.41
+Label fruity_m1p5z6m3_ext with goodness of fit 97.46% and dilution 0.19 , probability 0.15
+Label fruity_m2p0z1m2_ext with goodness of fit 98.47% and dilution 0.19 , probability 0.08
+------
+
+For star HD168214:
+Label fruity_m2p5zsun_000 with goodness of fit 95.30% and dilution 0.75 , probability 0.40
+------
+
+For star HD168560:
+Label fruity_m1p5z6m3_ext with goodness of fit 80.34% and dilution 0.07 , probability 0.43
+Label fruity_m1p5z3m3_ext with goodness of fit 27.89% and dilution 0.05 , probability 0.16
+------
+
+For star HD168791:
+Label fruity_m2p0zsun_ext with goodness of fit 93.20% and dilution 0.46 , probability 0.35
+Label fruity_m1p5z1m2_ext with goodness of fit 99.28% and dilution 0.60 , probability 0.17
+Label fruity_m2p5z1m2_000 with goodness of fit 98.74% and dilution 0.32 , probability 0.15
+------
+
+For star HD176105:
+Label fruity_m2p0z1m2_ext with goodness of fit 93.56% and dilution 0.07 , probability 0.39
+Label fruity_m2p0zsun_ext with goodness of fit 90.06% and dilution 0.14 , probability 0.20
+Label fruity_m1p5z1m2_ext with goodness of fit 93.29% and dilution 0.19 , probability 0.15
+------
+
+For star HD177192:
+Label fruity_m2p0zsun_010 with goodness of fit 98.90% and dilution 0.46 , probability 0.37
+Label fruity_m2p5zsun_000 with goodness of fit 98.37% and dilution 0.23 , probability 0.19
+Label fruity_m2p5z8m3_000 with goodness of fit 83.73% and dilution 0.07 , probability 0.17
+Label fruity_m1p5z6m3_ext with goodness of fit 66.72% and dilution 0.07 , probability 0.08
+------
+
+For star HD180996:
+Label fruity_m2p5zsun_000 with goodness of fit 97.47% and dilution 0.24 , probability 0.22
+Label fruity_m2p5z2m2_000 with goodness of fit 88.59% and dilution 0.41 , probability 0.16
+Label fruity_m2p0zsun_ext with goodness of fit 96.98% and dilution 0.18 , probability 0.15
+Label fruity_m2p0zsun_010 with goodness of fit 96.67% and dilution 0.47 , probability 0.11
+Label fruity_m2p0zsun_030 with goodness of fit 90.58% and dilution 0.82 , probability 0.11
+------
+
+For star HD182300:
+Label fruity_m2p5z8m3_000 with goodness of fit 82.86% and dilution 0.21 , probability 0.31
+Label fruity_m1p5z6m3_ext with goodness of fit 52.51% and dilution 0.24 , probability 0.14
+Label fruity_m2p0z8m3_000 with goodness of fit 82.19% and dilution 0.30 , probability 0.11
+Label fruity_m2p0z1m2_ext with goodness of fit 89.99% and dilution 0.22 , probability 0.10
+------
+
+For star HD183915:
+Label fruity_m1p5z6m3_ext with goodness of fit 88.96% and dilution 0.36 , probability 0.29
+Label fruity_m2p0z8m3_000 with goodness of fit 78.28% and dilution 0.46 , probability 0.13
+Label fruity_m1p5z3m3_ext with goodness of fit 65.12% and dilution 0.24 , probability 0.10
+Label fruity_m2p0z3m3_ext with goodness of fit 63.29% and dilution 0.12 , probability 0.09
+Label fruity_m2p0z6m3_ext with goodness of fit 73.85% and dilution 0.14 , probability 0.08
+------
+
+For star HD187308:
+Label fruity_m2p5z8m3_000 with goodness of fit 56.30% and dilution 0.12 , probability 0.18
+Label fruity_m2p0z1m2_000 with goodness of fit 64.06% and dilution 0.23 , probability 0.13
+Label fruity_m2p0z8m3_000 with goodness of fit 54.11% and dilution 0.17 , probability 0.10
+Label fruity_m2p5z1m2_000 with goodness of fit 64.32% and dilution 0.17 , probability 0.09
+Label fruity_m1p5z6m3_ext with goodness of fit 28.18% and dilution 0.13 , probability 0.08
+------
+
+For star HD193530:
+Label fruity_m3p0z8m3_000 with goodness of fit 94.23% and dilution 0.19 , probability 0.18
+Label fruity_m2p5z8m3_000 with goodness of fit 95.79% and dilution 0.11 , probability 0.17
+Label fruity_m1p5z8m3_000 with goodness of fit 93.73% and dilution 0.43 , probability 0.14
+------
+
+For star HD196445:
+Label fruity_m2p5z8m3_000 with goodness of fit 98.77% and dilution 0.38 , probability 0.28
+Label fruity_m2p0z1m2_ext with goodness of fit 97.65% and dilution 0.40 , probability 0.08
+------
+
+For star HD199435:
+Label fruity_m1p5z6m3_ext with goodness of fit 70.86% and dilution 0.53 , probability 0.24
+Label fruity_m1p5z3m3_ext with goodness of fit 41.56% and dilution 0.35 , probability 0.15
+Label fruity_m2p5z6m3_000 with goodness of fit 79.48% and dilution 0.35 , probability 0.12
+Label fruity_m1p5z2m3_ext with goodness of fit 23.45% and dilution 0.23 , probability 0.08
+------
+
+For star HD200995:
+Label fruity_m2p5z8m3_000 with goodness of fit 93.20% and dilution 0.13 , probability 0.33
+Label fruity_m3p0z1m2_000 with goodness of fit 95.58% and dilution 0.31 , probability 0.16
+Label fruity_m2p0z1m2_ext with goodness of fit 94.74% and dilution 0.13 , probability 0.11
+Label fruity_m2p5z1m2_000 with goodness of fit 95.19% and dilution 0.18 , probability 0.10
+------
+
+For star HD201657:
+Label fruity_m1p5z6m3_ext with goodness of fit 96.53% and dilution 0.67 , probability 0.46
+Label fruity_m2p5z6m3_000 with goodness of fit 98.60% and dilution 0.43 , probability 0.16
+Label fruity_m1p5z3m3_ext with goodness of fit 62.92% and dilution 0.45 , probability 0.11
+------
+
+For star HD201824:
+Label fruity_m1p5z6m3_ext with goodness of fit 96.19% and dilution 0.56 , probability 0.31
+Label fruity_m2p5z6m3_000 with goodness of fit 97.37% and dilution 0.37 , probability 0.17
+Label fruity_m1p5z3m3_ext with goodness of fit 68.53% and dilution 0.37 , probability 0.14
+Label fruity_m2p0z6m3_000 with goodness of fit 98.58% and dilution 0.48 , probability 0.09
+------
+
+For star HD204075:
+Label fruity_m2p0zsun_000 with goodness of fit 99.95% and dilution 0.81 , probability 0.29
+Label fruity_m2p0zsun_ext with goodness of fit 99.79% and dilution 0.40 , probability 0.19
+Label fruity_m3p0z1m2_000 with goodness of fit 94.48% and dilution 0.48 , probability 0.09
+Label fruity_m2p5z1m2_000 with goodness of fit 95.99% and dilution 0.28 , probability 0.08
+------
+
+For star HD207277:
+Label fruity_m1p5z6m3_ext with goodness of fit 65.17% and dilution 0.18 , probability 0.43
+Label fruity_m1p5z3m3_ext with goodness of fit 22.19% and dilution 0.12 , probability 0.17
+------
+
+For star HD210709:
+Label fruity_m1p5z3m3_ext with goodness of fit 29.02% and dilution 0.09 , probability 0.24
+Label fruity_m1p5z6m3_ext with goodness of fit 79.07% and dilution 0.13 , probability 0.24
+Label fruity_m2p0z3m3_ext with goodness of fit 28.10% and dilution 0.04 , probability 0.12
+Label fruity_m1p5z2m3_ext with goodness of fit 11.80% and dilution 0.06 , probability 0.11
+------
+
+For star HD210946:
+Label fruity_m2p5z8m3_000 with goodness of fit 76.68% and dilution 0.11 , probability 0.27
+Label fruity_m2p0z1m2_000 with goodness of fit 87.27% and dilution 0.22 , probability 0.13
+Label fruity_m2p5z1m2_000 with goodness of fit 90.13% and dilution 0.16 , probability 0.11
+Label fruity_m2p0z1m2_ext with goodness of fit 82.07% and dilution 0.12 , probability 0.08
+------
+
+For star HD211173:
+Label fruity_m1p5z1m2_ext with goodness of fit 77.32% and dilution 0.15 , probability 0.33
+Label fruity_m2p5z1m2_000 with goodness of fit 77.90% and dilution 0.08 , probability 0.14
+Label fruity_m2p0zsun_ext with goodness of fit 39.14% and dilution 0.11 , probability 0.12
+Label fruity_m3p0z1m2_000 with goodness of fit 77.95% and dilution 0.14 , probability 0.12
+Label fruity_m2p0z1m2_ext with goodness of fit 77.69% and dilution 0.06 , probability 0.09
+------
+
+For star HD211594:
+Label fruity_m2p5z8m3_000 with goodness of fit 95.59% and dilution 0.83 , probability 0.26
+------
+
+For star HD211954:
+Label fruity_m2p0z6m3_000 with goodness of fit 78.28% and dilution 0.70 , probability 0.16
+Label fruity_m2p0z3m3_ext with goodness of fit 60.99% and dilution 0.27 , probability 0.16
+Label fruity_m2p0z1m3_ext with goodness of fit 13.62% and dilution 0.23 , probability 0.12
+Label fruity_m2p0z2m3_000 with goodness of fit 55.13% and dilution 0.62 , probability 0.09
+------
+
+For star HD214579:
+Label fruity_m3p0z8m3_000 with goodness of fit 99.70% and dilution 0.32 , probability 0.24
+Label fruity_m2p5z8m3_000 with goodness of fit 99.70% and dilution 0.18 , probability 0.22
+Label fruity_m1p5z8m3_000 with goodness of fit 99.47% and dilution 0.71 , probability 0.22
+------
+
+For star HD217143:
+Label fruity_m2p5z6m3_000 with goodness of fit 99.43% and dilution 0.18 , probability 0.33
+Label fruity_m1p5z2m3_ext with goodness of fit 47.10% and dilution 0.12 , probability 0.18
+Label fruity_m2p0z3m3_ext with goodness of fit 75.31% and dilution 0.09 , probability 0.12
+Label fruity_m1p5z6m3_ext with goodness of fit 98.38% and dilution 0.28 , probability 0.08
+------
+
+For star HD217447:
+Label fruity_m2p5z8m3_000 with goodness of fit 76.26% and dilution 0.22 , probability 0.25
+Label fruity_m2p5z1m2_000 with goodness of fit 80.95% and dilution 0.31 , probability 0.20
+Label fruity_m2p0z1m2_ext with goodness of fit 75.17% and dilution 0.23 , probability 0.14
+Label fruity_m1p5z6m3_ext with goodness of fit 41.94% and dilution 0.24 , probability 0.11
+------
+
+For star HD219116:
+Label fruity_m1p5z6m3_ext with goodness of fit 41.95% and dilution 0.31 , probability 0.15
+Label fruity_m2p5z8m3_000 with goodness of fit 32.69% and dilution 0.29 , probability 0.12
+Label fruity_m1p5z3m3_ext with goodness of fit 49.17% and dilution 0.20 , probability 0.12
+------
+
+For star HD223586:
+Label fruity_m3p0z8m3_000 with goodness of fit 84.46% and dilution 0.45 , probability 0.32
+Label fruity_m2p5z8m3_000 with goodness of fit 88.10% and dilution 0.25 , probability 0.12
+------
+
+For star HD223617:
+Label fruity_m2p5z8m3_000 with goodness of fit 88.96% and dilution 0.15 , probability 0.31
+Label fruity_m1p5z1m2_000 with goodness of fit 94.66% and dilution 0.80 , probability 0.21
+Label fruity_m2p5z1m2_000 with goodness of fit 97.40% and dilution 0.21 , probability 0.08
+------
+
+For star HD252117:
+Label fruity_m2p5z8m3_000 with goodness of fit 98.97% and dilution 0.31 , probability 0.41
+Label fruity_m2p0z8m3_000 with goodness of fit 98.94% and dilution 0.44 , probability 0.18
+Label fruity_m3p0z8m3_000 with goodness of fit 98.18% and dilution 0.55 , probability 0.08
+------
+
+For star HD273845:
+Label fruity_m1p5z6m3_ext with goodness of fit 74.96% and dilution 0.41 , probability 0.22
+Label fruity_m2p5z6m3_000 with goodness of fit 82.78% and dilution 0.26 , probability 0.17
+Label fruity_m2p0z3m3_ext with goodness of fit 31.42% and dilution 0.13 , probability 0.15
+Label fruity_m1p5z3m3_ext with goodness of fit 32.48% and dilution 0.27 , probability 0.10
+Label fruity_m1p5z6m3_000 with goodness of fit 88.17% and dilution 0.73 , probability 0.07
+------
+
+For star HD288174:
+Label fruity_m2p5z8m3_000 with goodness of fit 86.21% and dilution 0.12 , probability 0.43
+Label fruity_m1p5z1m2_000 with goodness of fit 89.97% and dilution 0.65 , probability 0.13
+Label fruity_m2p0z8m3_000 with goodness of fit 85.68% and dilution 0.17 , probability 0.12
+------
+
+For star MFU112:
+------
+
+For star BD-18821:
+Label fruity_m1p5z6m3_ext with goodness of fit 61.77% and dilution 0.30 , probability 0.20
+Label fruity_m2p0z3m3_ext with goodness of fit 33.46% and dilution 0.10 , probability 0.16
+Label fruity_m1p5z3m3_ext with goodness of fit 35.00% and dilution 0.20 , probability 0.11
+Label fruity_m1p5z6m3_000 with goodness of fit 81.78% and dilution 0.55 , probability 0.09
+Label fruity_m2p0z6m3_000 with goodness of fit 76.61% and dilution 0.26 , probability 0.09
+------
+
+For star CD-267844:
+Label fruity_m2p5zsun_000 with goodness of fit 99.93% and dilution 0.18 , probability 0.32
+Label fruity_m2p0zsun_ext with goodness of fit 99.96% and dilution 0.14 , probability 0.28
+Label fruity_m2p0zsun_000 with goodness of fit 99.96% and dilution 0.26 , probability 0.12
+Label fruity_m3p0zsun_000 with goodness of fit 99.95% and dilution 0.24 , probability 0.11
+Label fruity_m2p0zsun_010 with goodness of fit 99.77% and dilution 0.34 , probability 0.08
+------
+
+For star CD-309005:
+Label fruity_m2p5z1m2_000 with goodness of fit 82.70% and dilution 0.16 , probability 0.30
+Label fruity_m2p5z8m3_000 with goodness of fit 63.60% and dilution 0.11 , probability 0.18
+Label fruity_m2p5zsun_000 with goodness of fit 72.26% and dilution 0.28 , probability 0.10
+------
+
+For star CD-346139:
+Label fruity_m2p5z8m3_000 with goodness of fit 47.12% and dilution 0.12 , probability 0.27
+Label fruity_m2p5z1m2_000 with goodness of fit 69.52% and dilution 0.18 , probability 0.14
+Label fruity_m1p5z1m2_000 with goodness of fit 60.50% and dilution 0.67 , probability 0.11
+------
+
+For star CD-347430:
+Label fruity_m2p0zsun_ext with goodness of fit 98.70% and dilution 0.16 , probability 0.47
+Label fruity_m2p5z8m3_000 with goodness of fit 83.30% and dilution 0.08 , probability 0.21
+Label fruity_m1p5z6m3_ext with goodness of fit 54.97% and dilution 0.08 , probability 0.10
+------
+
+For star CD-463977:
+Label fruity_m2p5z8m3_000 with goodness of fit 82.33% and dilution 0.13 , probability 0.20
+Label fruity_m2p5zsun_000 with goodness of fit 77.22% and dilution 0.34 , probability 0.11
+Label fruity_m1p5z1m2_ext with goodness of fit 85.37% and dilution 0.34 , probability 0.08
+------
+
+For star HD18182:
+Label fruity_m2p5zsun_000 with goodness of fit 78.98% and dilution 0.15 , probability 0.18
+Label fruity_m2p0zsun_ext with goodness of fit 75.21% and dilution 0.11 , probability 0.18
+Label fruity_m2p5z2m2_000 with goodness of fit 50.24% and dilution 0.26 , probability 0.16
+Label fruity_m2p0zsun_010 with goodness of fit 78.47% and dilution 0.30 , probability 0.16
+Label fruity_m2p0zsun_030 with goodness of fit 75.76% and dilution 0.52 , probability 0.12
+------
+
+For star HD18361:
+Label fruity_m2p5z8m3_000 with goodness of fit 68.88% and dilution 0.05 , probability 0.25
+Label fruity_m1p5z1m2_000 with goodness of fit 82.16% and dilution 0.28 , probability 0.13
+Label fruity_m2p5z1m2_000 with goodness of fit 85.88% and dilution 0.08 , probability 0.09
+------
+
+For star HD21682:
+Label fruity_m1p5z6m3_000 with goodness of fit 92.36% and dilution 0.32 , probability 0.20
+Label fruity_m2p5z6m3_000 with goodness of fit 90.46% and dilution 0.12 , probability 0.18
+Label fruity_m3p0z6m3_000 with goodness of fit 90.28% and dilution 0.29 , probability 0.17
+Label fruity_m2p0z6m3_000 with goodness of fit 91.80% and dilution 0.16 , probability 0.13
+------
+
+For star HD26886:
+Label fruity_m3p0z8m3_000 with goodness of fit 88.19% and dilution 0.20 , probability 0.32
+Label fruity_m2p5z8m3_000 with goodness of fit 90.36% and dilution 0.11 , probability 0.25
+Label fruity_m2p0z8m3_000 with goodness of fit 89.09% and dilution 0.16 , probability 0.12
+Label fruity_m1p5z1m2_000 with goodness of fit 81.19% and dilution 0.62 , probability 0.09
+------
+
+For star HD31812:
+Label fruity_m2p5zsun_000 with goodness of fit 88.68% and dilution 0.30 , probability 0.29
+Label fruity_m2p0zsun_000 with goodness of fit 87.83% and dilution 0.43 , probability 0.11
+Label fruity_m2p0z2m2_000 with goodness of fit 59.15% and dilution 0.76 , probability 0.10
+Label fruity_m3p0zsun_000 with goodness of fit 86.98% and dilution 0.40 , probability 0.09
+------
+
+For star HD33709:
+Label fruity_m2p5z8m3_000 with goodness of fit 77.29% and dilution 0.05 , probability 0.25
+Label fruity_m2p0z1m2_ext with goodness of fit 75.91% and dilution 0.06 , probability 0.11
+Label fruity_m2p5z1m2_000 with goodness of fit 79.14% and dilution 0.08 , probability 0.11
+Label fruity_m1p5z6m3_ext with goodness of fit 62.65% and dilution 0.05 , probability 0.09
+------
+
+For star HD39778:
+Label fruity_m2p5z8m3_000 with goodness of fit 89.39% and dilution 0.22 , probability 0.36
+Label fruity_m1p5z6m3_ext with goodness of fit 59.00% and dilution 0.24 , probability 0.10
+Label fruity_m2p0z1m2_000 with goodness of fit 93.41% and dilution 0.44 , probability 0.09
+Label fruity_m2p5z1m2_000 with goodness of fit 92.48% and dilution 0.32 , probability 0.08
+------
+
+For star HD41701:
+Label fruity_m2p5z8m3_000 with goodness of fit 88.23% and dilution 0.04 , probability 0.12
+Label fruity_m2p5z1m2_000 with goodness of fit 96.54% and dilution 0.05 , probability 0.11
+Label fruity_m2p5zsun_000 with goodness of fit 97.11% and dilution 0.09 , probability 0.11
+Label fruity_m1p5z6m3_ext with goodness of fit 63.97% and dilution 0.04 , probability 0.10
+Label fruity_m2p0z1m2_ext with goodness of fit 96.59% and dilution 0.04 , probability 0.09
+Label fruity_m2p0z8m3_000 with goodness of fit 87.73% and dilution 0.05 , probability 0.08
+------
+
+For star HD45483:
+Label fruity_m2p5zsun_000 with goodness of fit 92.77% and dilution 0.24 , probability 0.24
+Label fruity_m2p5z8m3_000 with goodness of fit 93.42% and dilution 0.08 , probability 0.20
+Label fruity_m2p0zsun_ext with goodness of fit 94.02% and dilution 0.18 , probability 0.19
+Label fruity_m2p0zsun_000 with goodness of fit 95.17% and dilution 0.35 , probability 0.09
+------
+
+For star HD48814:
+Label fruity_m2p5z8m3_000 with goodness of fit 91.93% and dilution 0.03 , probability 0.20
+Label fruity_m2p0zsun_ext with goodness of fit 98.19% and dilution 0.06 , probability 0.18
+Label fruity_m2p5z1m2_000 with goodness of fit 98.53% and dilution 0.05 , probability 0.15
+Label fruity_m2p0zsun_000 with goodness of fit 98.39% and dilution 0.12 , probability 0.14
+Label fruity_m1p5z6m3_ext with goodness of fit 69.00% and dilution 0.03 , probability 0.08
+------
+
+For star HD49017:
+Label fruity_m1p5z6m3_ext with goodness of fit 40.67% and dilution 0.03 , probability 0.25
+Label fruity_m1p5z8m3_000 with goodness of fit 61.49% and dilution 0.13 , probability 0.08
+------
+
+For star HD49661:
+Label fruity_m2p5z1m2_000 with goodness of fit 96.50% and dilution 0.05 , probability 0.20
+Label fruity_m2p5z8m3_000 with goodness of fit 93.49% and dilution 0.03 , probability 0.19
+Label fruity_m2p5zsun_000 with goodness of fit 89.36% and dilution 0.08 , probability 0.07
+------
+
+For star HD49778:
+Label fruity_m1p3z3m3_000 with goodness of fit 27.31% and dilution 0.15 , probability 0.12
+Label fruity_m3p0z6m3_000 with goodness of fit 61.16% and dilution 0.06 , probability 0.11
+Label fruity_m1p5z8m3_000 with goodness of fit 66.50% and dilution 0.15 , probability 0.10
+Label fruity_m1p5z6m3_000 with goodness of fit 61.63% and dilution 0.07 , probability 0.10
+------
+
+For star HD50075:
+Label fruity_m2p5z6m3_000 with goodness of fit 51.49% and dilution 0.14 , probability 0.21
+Label fruity_m1p5z6m3_000 with goodness of fit 45.89% and dilution 0.38 , probability 0.16
+Label fruity_m2p0z6m3_000 with goodness of fit 49.29% and dilution 0.18 , probability 0.14
+Label fruity_m1p5z8m3_000 with goodness of fit 65.14% and dilution 0.80 , probability 0.11
+------
+
+For star HD50843:
+Label fruity_m1p5z6m3_ext with goodness of fit 95.67% and dilution 0.08 , probability 0.27
+Label fruity_m2p5z8m3_000 with goodness of fit 91.64% and dilution 0.07 , probability 0.14
+Label fruity_m2p0z8m3_000 with goodness of fit 94.21% and dilution 0.10 , probability 0.11
+------
+
+For star HD53199:
+Label fruity_m2p5z8m3_000 with goodness of fit 89.95% and dilution 0.21 , probability 0.26
+Label fruity_m2p0z8m3_000 with goodness of fit 88.37% and dilution 0.30 , probability 0.13
+Label fruity_m1p5z6m3_ext with goodness of fit 64.26% and dilution 0.23 , probability 0.11
+Label fruity_m2p5z1m2_000 with goodness of fit 84.73% and dilution 0.30 , probability 0.10
+Label fruity_m2p0z1m2_000 with goodness of fit 86.54% and dilution 0.41 , probability 0.09
+------
+
+For star HD58121:
+Label fruity_m2p5z8m3_000 with goodness of fit 61.48% and dilution 0.03 , probability 0.22
+Label fruity_m2p0zsun_ext with goodness of fit 80.21% and dilution 0.06 , probability 0.21
+Label fruity_m2p0z1m2_ext with goodness of fit 75.18% and dilution 0.03 , probability 0.18
+Label fruity_m1p5z6m3_ext with goodness of fit 40.40% and dilution 0.03 , probability 0.11
+------
+
+For star HD62017:
+Label fruity_m2p5z1m2_000 with goodness of fit 99.79% and dilution 0.21 , probability 0.20
+Label fruity_m2p5z8m3_000 with goodness of fit 99.95% and dilution 0.14 , probability 0.16
+Label fruity_m1p5z6m3_ext with goodness of fit 99.73% and dilution 0.14 , probability 0.10
+Label fruity_m2p5zsun_000 with goodness of fit 95.53% and dilution 0.44 , probability 0.09
+Label fruity_m2p0z8m3_000 with goodness of fit 99.91% and dilution 0.19 , probability 0.08
+------
+
+For star HD88495:
+Label fruity_m2p0z1m2_ext with goodness of fit 79.31% and dilution 0.14 , probability 0.30
+Label fruity_m2p0zsun_ext with goodness of fit 87.02% and dilution 0.26 , probability 0.27
+Label fruity_m2p5z1m2_000 with goodness of fit 82.73% and dilution 0.19 , probability 0.10
+Label fruity_m1p5z1m2_ext with goodness of fit 79.81% and dilution 0.34 , probability 0.09
+------
+
+For star HD90167:
+Label fruity_m2p5z8m3_000 with goodness of fit 55.29% and dilution 0.06 , probability 0.21
+Label fruity_m2p5zsun_000 with goodness of fit 85.86% and dilution 0.16 , probability 0.12
+Label fruity_m2p0zsun_000 with goodness of fit 87.55% and dilution 0.23 , probability 0.10
+Label fruity_m3p0z1m2_000 with goodness of fit 75.85% and dilution 0.15 , probability 0.10
+------
+
+For star HD95193:
+Label fruity_m2p0zsun_ext with goodness of fit 95.65% and dilution 0.13 , probability 0.35
+Label fruity_m2p5z8m3_000 with goodness of fit 65.40% and dilution 0.07 , probability 0.21
+Label fruity_m2p0zsun_000 with goodness of fit 96.59% and dilution 0.26 , probability 0.15
+Label fruity_m2p5z1m2_000 with goodness of fit 90.30% and dilution 0.10 , probability 0.11
+------
+
+For star HD107270:
+Label fruity_m1p5z1m2_000 with goodness of fit 60.65% and dilution 0.40 , probability 0.10
+------
+
+For star HD109061:
+Label fruity_m1p5z3m3_ext with goodness of fit 93.30% and dilution 0.10 , probability 0.51
+Label fruity_m1p5z6m3_ext with goodness of fit 84.13% and dilution 0.14 , probability 0.14
+------
+
+For star HD113195:
+Label fruity_m2p5z8m3_000 with goodness of fit 80.93% and dilution 0.09 , probability 0.17
+Label fruity_m2p5zsun_000 with goodness of fit 83.81% and dilution 0.23 , probability 0.14
+Label fruity_m2p0zsun_ext with goodness of fit 85.00% and dilution 0.17 , probability 0.11
+Label fruity_m2p0z2m2_000 with goodness of fit 40.48% and dilution 0.54 , probability 0.10
+Label fruity_m2p0zsun_030 with goodness of fit 61.64% and dilution 0.73 , probability 0.08
+Label fruity_m1p5z6m3_ext with goodness of fit 48.89% and dilution 0.09 , probability 0.08
+------
+
+For star HD115277:
+Label fruity_m2p5zsun_000 with goodness of fit 97.79% and dilution 0.14 , probability 0.23
+Label fruity_m2p5z8m3_000 with goodness of fit 73.73% and dilution 0.05 , probability 0.18
+Label fruity_m2p0z1m2_ext with goodness of fit 90.38% and dilution 0.06 , probability 0.13
+Label fruity_m2p0zsun_010 with goodness of fit 97.64% and dilution 0.27 , probability 0.09
+------
+
+For star HD119650:
+Label fruity_m2p0z1m2_ext with goodness of fit 90.05% and dilution 0.03 , probability 0.19
+Label fruity_m1p5z6m3_ext with goodness of fit 67.62% and dilution 0.02 , probability 0.19
+Label fruity_m2p5z8m3_000 with goodness of fit 84.52% and dilution 0.02 , probability 0.11
+------
+
+For star HD134698:
+Label fruity_m1p5z1m2_000 with goodness of fit 66.30% and dilution 0.42 , probability 0.24
+Label fruity_m2p5z1m2_000 with goodness of fit 67.49% and dilution 0.11 , probability 0.21
+Label fruity_m3p0z1m2_000 with goodness of fit 66.82% and dilution 0.19 , probability 0.14
+Label fruity_m2p0zsun_000 with goodness of fit 36.81% and dilution 0.32 , probability 0.08
+Label fruity_m2p0zsun_ext with goodness of fit 37.69% and dilution 0.16 , probability 0.07
+------
+
+For star HD139266:
+Label fruity_m1p5z6m3_ext with goodness of fit 98.15% and dilution 0.22 , probability 0.54
+Label fruity_m1p5z3m3_ext with goodness of fit 66.86% and dilution 0.14 , probability 0.13
+------
+
+For star HD139409:
+Label fruity_m2p5zsun_000 with goodness of fit 28.90% and dilution 0.19 , probability 0.24
+Label fruity_m2p0zsun_ext with goodness of fit 29.37% and dilution 0.15 , probability 0.20
+Label fruity_m1p5zsun_000 with goodness of fit 28.72% and dilution 0.83 , probability 0.12
+Label fruity_m2p0zsun_000 with goodness of fit 29.22% and dilution 0.28 , probability 0.09
+Label fruity_m1p5z3m3_060 with goodness of fit 75.52% and dilution 0.55 , probability 0.08
+------
+
+For star HD148892:
+Label fruity_m1p5z6m3_ext with goodness of fit 98.78% and dilution 0.14 , probability 0.18
+Label fruity_m2p5z8m3_000 with goodness of fit 99.93% and dilution 0.14 , probability 0.17
+------
+
+For star HD169106:
+Label fruity_m1p5z6m3_ext with goodness of fit 46.83% and dilution 0.05 , probability 0.17
+Label fruity_m2p5zsun_000 with goodness of fit 90.65% and dilution 0.12 , probability 0.13
+Label fruity_m2p0z1m2_ext with goodness of fit 88.47% and dilution 0.05 , probability 0.08
+Label fruity_m2p5z8m3_000 with goodness of fit 75.48% and dilution 0.05 , probability 0.08
+Label fruity_m2p0zsun_ext with goodness of fit 92.81% and dilution 0.09 , probability 0.08
+------
+
+For star HD184001:
+Label fruity_m2p5z1m2_000 with goodness of fit 96.81% and dilution 0.19 , probability 0.26
+Label fruity_m1p5z1m2_000 with goodness of fit 92.54% and dilution 0.71 , probability 0.15
+Label fruity_m3p0z1m2_000 with goodness of fit 93.63% and dilution 0.32 , probability 0.11
+Label fruity_m2p5zsun_000 with goodness of fit 83.27% and dilution 0.33 , probability 0.10
+------
+
+For star HD204886:
+Label fruity_m3p0z8m3_000 with goodness of fit 86.71% and dilution 0.22 , probability 0.22
+Label fruity_m1p5z8m3_000 with goodness of fit 87.35% and dilution 0.51 , probability 0.21
+Label fruity_m2p5z8m3_000 with goodness of fit 86.92% and dilution 0.12 , probability 0.17
+Label fruity_m2p0z8m3_000 with goodness of fit 87.76% and dilution 0.18 , probability 0.09
+------
+
+For star HD213084:
+Label fruity_m3p0z8m3_000 with goodness of fit 89.19% and dilution 0.40 , probability 0.23
+Label fruity_m2p5z8m3_000 with goodness of fit 92.37% and dilution 0.22 , probability 0.16
+Label fruity_m2p0z8m3_000 with goodness of fit 91.19% and dilution 0.32 , probability 0.10
+------
+
+For star HD223938:
+Label fruity_m1p5z6m3_ext with goodness of fit 75.74% and dilution 0.22 , probability 0.44
+Label fruity_m2p0z6m3_ext with goodness of fit 74.01% and dilution 0.09 , probability 0.15
+Label fruity_m2p5z6m3_000 with goodness of fit 81.13% and dilution 0.14 , probability 0.09
+------
+
+For star MFU214:
+Label fruity_m2p5z8m3_000 with goodness of fit 64.42% and dilution 0.02 , probability 0.18
+Label fruity_m2p0zsun_000 with goodness of fit 94.87% and dilution 0.10 , probability 0.15
+Label fruity_m2p0z1m2_ext with goodness of fit 82.25% and dilution 0.03 , probability 0.14
+Label fruity_m2p0zsun_ext with goodness of fit 93.79% and dilution 0.05 , probability 0.13
+------
+
+For star MFU229:
+Label fruity_m2p5zsun_000 with goodness of fit 96.36% and dilution 0.23 , probability 0.34
+Label fruity_m2p5z8m3_000 with goodness of fit 72.77% and dilution 0.09 , probability 0.19
+Label fruity_m2p0zsun_000 with goodness of fit 97.87% and dilution 0.34 , probability 0.14
+Label fruity_m3p0zsun_000 with goodness of fit 96.73% and dilution 0.31 , probability 0.11
+------
+
+For star HD12392:
+Label fruity_m2p0z6m3_000 with goodness of fit 76.00% and dilution 0.47 , probability 0.14
+Label fruity_m2p0z2m3_000 with goodness of fit 13.54% and dilution 0.43 , probability 0.12
+------
+
+For star HD17067:
+Label fruity_m2p5z8m3_000 with goodness of fit 86.82% and dilution 0.32 , probability 0.31
+Label fruity_m1p5z1m3_060 with goodness of fit 60.06% and dilution 0.69 , probability 0.15
+Label fruity_m1p5z6m3_ext with goodness of fit 91.96% and dilution 0.36 , probability 0.11
+Label fruity_m2p0z1m2_ext with goodness of fit 71.57% and dilution 0.35 , probability 0.09
+Label fruity_m1p5z3m3_ext with goodness of fit 92.87% and dilution 0.24 , probability 0.08
+------
+
+For star HD90127:
+Label fruity_m2p0zsun_ext with goodness of fit 40.50% and dilution 0.43 , probability 0.22
+Label fruity_m2p0z1m2_ext with goodness of fit 66.22% and dilution 0.22 , probability 0.14
+Label fruity_m2p5z1m2_000 with goodness of fit 62.58% and dilution 0.29 , probability 0.12
+Label fruity_m1p5z1m2_ext with goodness of fit 68.66% and dilution 0.55 , probability 0.12
+------
+
+For star HD102762:
+Label fruity_m2p5z6m3_000 with goodness of fit 94.62% and dilution 0.26 , probability 0.23
+Label fruity_m2p0z6m3_000 with goodness of fit 96.15% and dilution 0.34 , probability 0.15
+------
+
+For star HD114678:
+Label fruity_m2p5z8m3_000 with goodness of fit 87.94% and dilution 0.55 , probability 0.22
+Label fruity_m1p5z6m3_ext with goodness of fit 96.74% and dilution 0.62 , probability 0.19
+Label fruity_m2p0z8m3_000 with goodness of fit 86.02% and dilution 0.79 , probability 0.15
+------
+
+For star HD180622:
+Label fruity_m2p0z1m2_ext with goodness of fit 81.31% and dilution 0.05 , probability 0.27
+Label fruity_m2p0zsun_ext with goodness of fit 93.34% and dilution 0.10 , probability 0.17
+Label fruity_m1p5z1m2_ext with goodness of fit 81.46% and dilution 0.14 , probability 0.09
+------
+
+For star HD200063:
+Label fruity_m1p5z1m3_060 with goodness of fit 20.20% and dilution 0.40 , probability 0.20
+Label fruity_m1p5z6m3_ext with goodness of fit 98.59% and dilution 0.21 , probability 0.18
+Label fruity_m2p5z8m3_000 with goodness of fit 98.32% and dilution 0.19 , probability 0.17
+Label fruity_m2p0z8m3_000 with goodness of fit 98.85% and dilution 0.27 , probability 0.15
+Label fruity_m2p0z1m2_ext with goodness of fit 91.96% and dilution 0.20 , probability 0.10
+------
+
+For star HD210030:
+Label fruity_m2p0zsun_ext with goodness of fit 77.94% and dilution 0.06 , probability 0.49
+Label fruity_m2p0z1m2_ext with goodness of fit 70.77% and dilution 0.03 , probability 0.21
+------
+
+For star HD214889:
+Label fruity_m2p5z1m2_000 with goodness of fit 99.57% and dilution 0.13 , probability 0.24
+Label fruity_m2p5z8m3_000 with goodness of fit 96.83% and dilution 0.09 , probability 0.22
+Label fruity_m2p0zsun_ext with goodness of fit 91.09% and dilution 0.19 , probability 0.16
+Label fruity_m2p0zsun_000 with goodness of fit 91.11% and dilution 0.37 , probability 0.13
+Label fruity_m1p5z6m3_ext with goodness of fit 73.39% and dilution 0.10 , probability 0.08
+------
+
+For star HD215555:
+Label fruity_m2p5zsun_000 with goodness of fit 91.76% and dilution 0.60 , probability 0.25
+Label fruity_m2p5z1m2_000 with goodness of fit 84.59% and dilution 0.31 , probability 0.24
+Label fruity_m2p0zsun_ext with goodness of fit 88.57% and dilution 0.44 , probability 0.16
+------
+
+For star HD216809:
+Label fruity_m2p0zsun_ext with goodness of fit 71.96% and dilution 0.17 , probability 0.20
+Label fruity_m2p0z1m2_ext with goodness of fit 52.09% and dilution 0.09 , probability 0.18
+Label fruity_m3p0zsun_000 with goodness of fit 74.94% and dilution 0.31 , probability 0.10
+------
+
+For star HD221879:
+Label fruity_m2p0zsun_ext with goodness of fit 91.28% and dilution 0.22 , probability 0.15
+Label fruity_m2p0zsun_000 with goodness of fit 93.09% and dilution 0.43 , probability 0.15
+Label fruity_m1p5z1m2_000 with goodness of fit 83.04% and dilution 0.56 , probability 0.12
+Label fruity_m2p5z1m2_000 with goodness of fit 87.54% and dilution 0.15 , probability 0.11
+Label fruity_m3p0z1m2_000 with goodness of fit 85.33% and dilution 0.26 , probability 0.09
+------
+
+For star HD749:
+Label fruity_m2p5z6m3_000 with goodness of fit 55.85% and dilution 0.23 , probability 0.14
+------
+
+For star HD88927:
+Label fruity_m2p0zsun_ext with goodness of fit 82.60% and dilution 0.07 , probability 0.32
+Label fruity_m2p5z8m3_000 with goodness of fit 51.93% and dilution 0.03 , probability 0.16
+Label fruity_m2p0z1m2_ext with goodness of fit 68.63% and dilution 0.04 , probability 0.15
+------
+
+For star BD+092384:
+Label fruity_m3p0z8m3_000 with goodness of fit 12.96% and dilution 0.58 , probability 0.19
+Label fruity_m2p0z8m3_000 with goodness of fit 12.50% and dilution 0.46 , probability 0.10
+Label fruity_m2p5z6m3_000 with goodness of fit 21.58% and dilution 0.23 , probability 0.08
+------
+
+For star HD89638:
+Label fruity_m2p5z8m3_000 with goodness of fit 90.04% and dilution 0.10 , probability 0.16
+Label fruity_m2p5z1m2_000 with goodness of fit 89.62% and dilution 0.15 , probability 0.13
+Label fruity_m2p0z8m3_000 with goodness of fit 88.33% and dilution 0.14 , probability 0.13
+Label fruity_m2p0z1m2_ext with goodness of fit 88.27% and dilution 0.11 , probability 0.10
+Label fruity_m1p5z6m3_ext with goodness of fit 70.97% and dilution 0.11 , probability 0.10
+Label fruity_m2p5zsun_000 with goodness of fit 59.25% and dilution 0.28 , probability 0.08
+------
+
+For star HD187762:
+Label fruity_m1p5z6m3_ext with goodness of fit 87.17% and dilution 0.08 , probability 0.29
+Label fruity_m2p0z1m2_ext with goodness of fit 73.10% and dilution 0.08 , probability 0.13
+Label fruity_m1p5z8m3_000 with goodness of fit 87.05% and dilution 0.30 , probability 0.10
+Label fruity_m1p5z3m3_ext with goodness of fit 47.00% and dilution 0.05 , probability 0.08
+------
+
+For star CD-256606:
+Label fruity_m2p0zsun_ext with goodness of fit 97.53% and dilution 0.21 , probability 0.15
+------
+
+For star HD46040:
+Label fruity_m2p5z8m3_000 with goodness of fit 69.50% and dilution 0.31 , probability 0.43
+Label fruity_m2p5z1m2_000 with goodness of fit 80.95% and dilution 0.43 , probability 0.11
+Label fruity_m3p0z1m2_000 with goodness of fit 79.54% and dilution 0.75 , probability 0.08
+------
+
+For star HD49841:
+Label fruity_m2p0z8m3_000 with goodness of fit 56.38% and dilution 0.17 , probability 0.24
+Label fruity_m2p5z8m3_000 with goodness of fit 55.95% and dilution 0.12 , probability 0.20
+Label fruity_m1p5z1m2_000 with goodness of fit 67.87% and dilution 0.65 , probability 0.11
+Label fruity_m3p0z8m3_000 with goodness of fit 55.13% and dilution 0.21 , probability 0.09
+------
+
+For star HD82765:
+Label fruity_m2p5z8m3_000 with goodness of fit 50.38% and dilution 0.04 , probability 0.25
+Label fruity_m2p0z2m2_000 with goodness of fit 89.73% and dilution 0.19 , probability 0.13
+------
+
+For star HD84734:
+Label fruity_m2p5z8m3_000 with goodness of fit 42.39% and dilution 0.11 , probability 0.35
+Label fruity_m1p5z1m2_000 with goodness of fit 55.53% and dilution 0.57 , probability 0.12
+Label fruity_m2p0z8m3_000 with goodness of fit 41.59% and dilution 0.15 , probability 0.11
+------
+
+For star HD85205:
+Label fruity_m2p5z8m3_000 with goodness of fit 61.23% and dilution 0.09 , probability 0.47
+Label fruity_m1p5z1m2_000 with goodness of fit 74.88% and dilution 0.50 , probability 0.12
+------
+
+For star HD101079:
+Label fruity_m2p5z8m3_000 with goodness of fit 66.51% and dilution 0.05 , probability 0.46
+Label fruity_m1p5z1m2_000 with goodness of fit 80.37% and dilution 0.26 , probability 0.12
+------
+
+For star HD130386:
+Label fruity_m2p0zsun_ext with goodness of fit 97.98% and dilution 0.13 , probability 0.14
+Label fruity_m2p0z1m2_ext with goodness of fit 84.87% and dilution 0.07 , probability 0.13
+Label fruity_m1p5z1m2_000 with goodness of fit 84.81% and dilution 0.36 , probability 0.11
+Label fruity_m2p0zsun_000 with goodness of fit 98.30% and dilution 0.26 , probability 0.08
+------
+
+For star HD139660:
+Label fruity_m1p5z1m2_000 with goodness of fit 68.59% and dilution 0.35 , probability 0.09
+Label fruity_m3p0z8m3_000 with goodness of fit 53.04% and dilution 0.11 , probability 0.08
+------
+
+For star HD198590:
+Label fruity_m2p5z8m3_000 with goodness of fit 69.04% and dilution 0.05 , probability 0.24
+Label fruity_m2p0z2m2_000 with goodness of fit 97.70% and dilution 0.31 , probability 0.13
+Label fruity_m1p5z1m2_000 with goodness of fit 83.44% and dilution 0.26 , probability 0.09
+------
+
+For star HD212209:
+Label fruity_m2p5z8m3_000 with goodness of fit 35.99% and dilution 0.01 , probability 0.18
+Label fruity_m2p0z1m2_ext with goodness of fit 48.83% and dilution 0.02 , probability 0.12
+Label fruity_m2p0zsun_ext with goodness of fit 68.96% and dilution 0.03 , probability 0.11
+Label fruity_m1p5z6m3_ext with goodness of fit 22.82% and dilution 0.01 , probability 0.10
+Label fruity_m4p0z2m2_000 with goodness of fit 82.89% and dilution 0.20 , probability 0.09
+------
+

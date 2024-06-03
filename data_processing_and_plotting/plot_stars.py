@@ -1,4 +1,5 @@
 import sys, os
+import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 import numpy as np
@@ -12,8 +13,8 @@ FONTSIZE = 18
 MARKERSIZE = 16
 LINESIZE = 2
 
+ZMIN = 6
 IRONZ = 26
-ZMIN = IRONZ
 LIMIT_DIL = False
 
 def get_dict_predicted(files):
@@ -37,13 +38,14 @@ def get_dict_predicted(files):
     repeated = {}
     repeated["fruity"] = {}
     repeated["monash"] = {}
+    cm = False # need to know if CM or other model: get_clean_lnlst requres a different input format
 
     # Go for file and line
     for file_ in files:
         with open(file_, "r") as fread:
-
+            if "cm" in file_: cm = True
             for line in fread:
-                lnlst = get_clean_lnlst(line)
+                lnlst = get_clean_lnlst(line, cm)
 
                 # Skipe lines without content
                 if lnlst is None:
@@ -56,17 +58,15 @@ def get_dict_predicted(files):
                     if star_name not in dict_["fruity"]:
 
                         # The starname set
-                        dict_["fruity"][star_name] = set()
-                        dict_["monash"][star_name] = set()
+                        dict_["fruity"][star_name] = []
+                        dict_["monash"][star_name] = []
 
                         # Add the list to the repeated models
                         repeated["fruity"][star_name] = []
                         repeated["monash"][star_name] = []
 
                 # Add this line in fruity or monash
-                else:
-
-                    lnlst[0] = full_names_dict[lnlst[0]]
+                else: # lnlst[0]: label;    lnlst[1]: dil;  lnlst[2]: GoF;  lnlst[3]: proba
                     if "fruity" in lnlst[0]:
                         type_ = "fruity"
                     elif "monash" in lnlst[0]:
@@ -81,15 +81,16 @@ def get_dict_predicted(files):
 
                     # Add to the set
                     lnlst[1] = float(lnlst[1])
-                    dict_[type_][star_name].add(tuple(lnlst))
-
+                    dict_[type_][star_name].append(tuple(lnlst[:-2]))
     return dict_
 
 def plot_this_data(data, name_z, ax1, ax2, fmt, fmtMk="", label=None, mec=None,
-                   mfc=None, error=False, data_compare=None):
+                   mfc=None, error=False, data_compare=None, opacity=1.0):
     '''
     Plot a specific diluted model
     '''
+
+    if data is None: return     # exit the function if data is all zeroes
 
     # Order data
     values = [[]]
@@ -128,29 +129,42 @@ def plot_this_data(data, name_z, ax1, ax2, fmt, fmtMk="", label=None, mec=None,
 
     # Plot the model
     color = None
-    for x_line, y_line, y_err in zip(x_axis, values, vals_err):
+    #for x_line, y_line, y_err in zip(x_axis, values, vals_err):
+    x_line, y_line, y_err = [], [], []
+    for ii in range(len(x_axis)):
+        x_line.extend(x_axis[ii])
+        y_line.extend(values[ii])
+        y_err.extend(vals_err[ii])
+        if ii != (len(x_axis)-1) and len(x_axis[ii]) != 0:
+            x_line.append(x_axis[ii][-1]+1)
+            y_line.append(np.nan)
+            y_err.append(np.nan)
 
-        # Repeating arguments
-        args = {"mec": mec, "ms": MARKERSIZE, "lw": LINESIZE, "mfc": mfc}
-        if not error:
-            args["ms"] /= 3
 
-        # Plot
-        if not error:
+    # Repeating arguments
+    args = {"mec": mec, "ms": MARKERSIZE, "lw": LINESIZE, "mfc": mfc}
+    if not error:
+        args["ms"] /= 3
 
-            # Plotting model
-            if color is None:
-                line = ax1.plot(x_line, y_line, fmtMk + fmt, label=label,
-                                **args)
-                color = line[-1].get_color()
-            else:
-                ax1.plot(x_line, y_line, fmtMk + fmt, color=color, **args)
+    # Plot
+    if not error:
+
+        # Plotting model
+        if color is None:
+            y_line = pd.Series(y_line)
+            line = ax1.plot(x_line, y_line.interpolate(), fmtMk + fmt,
+                            mec=mec, ms=0, lw=LINESIZE, mfc=mfc, alpha=opacity)
+            color = line[-1].get_color()
+            line = ax1.plot(x_line, y_line, fmtMk + fmt, label=label,
+                            **args, alpha=opacity, color=color)
         else:
+            ax1.plot(x_line, y_line, fmtMk + fmt, color=color, **args)
+    else:
 
-            # Plotting data
-            ax1.errorbar(x_line, y_line, yerr=y_err, fmt=fmtMk + fmt,
-                         ecolor=mec, label=label, capsize=3, zorder=5, **args)
-            label = None
+        # Plotting data
+        ax1.errorbar(x_line, y_line, yerr=y_err, fmt=fmtMk + fmt,
+                     ecolor=mec, label=label, capsize=3, zorder=5, **args)
+        label = None
 
     # Plot residuals
     if data_compare is not None:
@@ -203,9 +217,6 @@ def plot_results(predicted_models_dict, fruity_models_dict,
     for z in name_z:
         name = name_z[z]
 
-        if name == "Fe":
-            continue
-
         # To limit to anything above Fe
         if LIMIT_DIL and z > IRONZ:
             names_dil.append(name + "/Fe")
@@ -215,18 +226,14 @@ def plot_results(predicted_models_dict, fruity_models_dict,
     # Each key in dict_data is a star
     for key in dict_data:
 
-        # Calculate metallicity for plots
-        FeH = dict_data[key]["Fe/H"]
-        zz = 0.014 * 10**FeH
-        title = f"{key}; [Fe/H] = {FeH:.2f}; z = {zz:.2e}"
-
         # Figure specification
         fig = plt.figure(figsize=FIGSIZE)
         spec = gridspec.GridSpec(8, 1)
 
         # Axes for abundances
         ax1 = plt.subplot(spec[:4, :])
-        ax1.set_title(title, size=FONTSIZE * 1.5)
+        ax1.set_title(key, size=FONTSIZE * 1.5)
+        #ax1.set_title((key+", XGB"), size=FONTSIZE * 1.5, weight='bold')
         ax1.set_ylabel("[X/Fe]", size=FONTSIZE)
 
         # Axes for residual
@@ -238,7 +245,7 @@ def plot_results(predicted_models_dict, fruity_models_dict,
 
         # Plot the fruity and monash models
         mod_type = ["fruity", "monash"]
-        n_plots = 0
+        n_plots, n_mon, n_fru = 0, 0, 0
         for type_ in mod_type:
 
             # Retrieve name and dilution
@@ -249,10 +256,14 @@ def plot_results(predicted_models_dict, fruity_models_dict,
                     model = fruity_models_dict[model_name]
                     fmt = "-"
                     fmtMk = "v"
+                    n_fru += 1
+                    n_curr = n_fru
                 elif type_ == "monash":
                     model = monash_models_dict[model_name]
                     fmt = "--"
                     fmtMk = "o"
+                    n_mon += 1
+                    n_curr = n_mon
                 else:
                     raise Exception("Only types implemented: fruity and monash")
 
@@ -260,10 +271,11 @@ def plot_results(predicted_models_dict, fruity_models_dict,
 
                 # plot
                 n_plots += 1
+                tot_plots = len(predicted_models_dict[type_][key])
                 short_name = short_names_dict[model_name]
                 plot_this_data(diluted_model, name_z, ax1, ax2,
                                label=short_name, fmt=fmt, fmtMk=fmtMk,
-                               data_compare=dict_data[key])
+                               data_compare=dict_data[key], opacity=0.2+0.8*(tot_plots-n_curr)/tot_plots)
 
         # Plot data and errorbars
         plot_this_data(dict_data[key], name_z, ax1, ax2, label="Data",
@@ -284,21 +296,25 @@ def plot_results(predicted_models_dict, fruity_models_dict,
         # Set horizontal lines
         ax1.axhline(ls="--", color="silver", zorder=0)
         ax2.axhline(ls="-", color="k", zorder=0)
+        ax2.axhline(0.2, ls="--", color="k", zorder=0)
+        ax2.axhline(-0.2, ls="--", color="k", zorder=0)
+        ax2.axhline(0.4, ls=":", color="k", zorder=0)
+        ax2.axhline(-0.4, ls=":", color="k", zorder=0)
 
         # Adjust axes
         ax1.set_xlim([min(name_z.keys()) - 1, max(name_z.keys()) + 1])
         ax2.set_ylim([-0.72, 0.72])
         ax1.tick_params(which="both", right=True, labelsize=FONTSIZE)
-        ax1.tick_params(which="both", top=True)
         ax1.minorticks_on()
         ax2.tick_params(which="both", right=True, labelsize=FONTSIZE)
         ax2.minorticks_on()
 
-        # Change x-axis. Use odd numbers down (major) and even up (minor)
-        x_axis_maj = [z for z in name_z.keys() if z % 2 == 1]
-        x_axis_maj_labs = [name_z[z] for z in name_z.keys() if z % 2 == 1]
-        x_axis_min = [z for z in name_z.keys() if z % 2 == 0]
-        x_axis_min_labs = [name_z[z] for z in name_z.keys() if z % 2 == 0]
+        # Change x-axis. Use only odd numbers. 6, 10, ... for major
+        # 8, 12... for minor
+        x_axis_maj = [z for z in name_z.keys() if (z - 2) % 4 == 0]
+        x_axis_maj_labs = [name_z[z] for z in name_z.keys() if (z - 2) % 4 == 0]
+        x_axis_min = [z for z in name_z.keys() if z % 4 == 0]
+        x_axis_min_labs = [name_z[z] for z in name_z.keys() if z % 4 == 0]
 
         # Major ticks
         ax2.set_xticks(x_axis_maj)
@@ -325,8 +341,8 @@ def plot_results(predicted_models_dict, fruity_models_dict,
             os.mkdir(pathn)
 
         # Save the plot
-        filename = os.path.join(pathn, key + ".pdf")
-        plt.savefig(filename)
+        #filename = os.path.join(pathn, key + ".pdf")
+        #plt.savefig(filename)
         filename = os.path.join(pathn, key + ".png")
         plt.savefig(filename)
 
@@ -348,8 +364,8 @@ def main():
     pathn = sys.argv[-1]
 
     # Define all the directories
-    dir_data = "Ba_star_classification_data"
-    fruity_mods = "models_fruity"
+    dir_data = "~/Ba_star_classification_VB/Ba_star_classification_data"
+    fruity_mods = "models_fruity_dec" # decayed fruity models
     monash_mods = "models_monash"
     #data_file = "all_abund_and_masses.dat"
     data_file = "all_data_w_err.dat"

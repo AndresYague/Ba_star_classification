@@ -2,6 +2,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os, sys, random
 from classify_lib import *
+from eli5.permutation_importance import get_score_importances
+from sklearn import metrics
+
+if len(sys.argv) > 3:
+    mod_dir = sys.argv[1]
+    n_tries = sys.argv[2]
+else: # input here
+    mod_dir = "NN1_monash"
+    n_tries = 5
 
 try:
     from silence_tensorflow import silence_tensorflow
@@ -73,20 +82,24 @@ def create_model(train_inputs, train_labels, label_dict, layers=[],
         model = tf.keras.Sequential()
 
         # Input layer
-        model.add(tf.keras.layers.Dense(layers[0], input_shape=(nn, ),
-                  activation="relu"))
+        model.add(tf.keras.layers.Dense(layers[0], input_shape = (nn, ),
+                  activation = "relu"))
+        #model.add(tf.keras.layers.Dropout(0.3))
 
         # Hidden layers
         for lay in layers[1:]:
-            model.add(tf.keras.layers.Dense(lay, activation="relu"))
+            model.add(tf.keras.layers.Dense(lay, activation = "relu"))
             model.add(tf.keras.layers.Dropout(0.3))
+            print()
 
         # output layer
-        model.add(tf.keras.layers.Dense(outpt, activation="sigmoid"))
+        model.add(tf.keras.layers.Dense(outpt, activation = "softmax"))
+        print(model.summary())
+        print()
 
         # Choose alpha
         alpha = 0.0015
-        epochs = 3
+        epochs = 5
         if mod_dir is not None and "fruity" in mod_dir:
             epochs = 4
             alpha = 0.001
@@ -101,6 +114,20 @@ def create_model(train_inputs, train_labels, label_dict, layers=[],
         model.fit(train_inputs, train_labels, epochs=epochs,
                   validation_split=0.3)
         models.append(model)
+
+        # Feature importance
+        def score(X, y):
+            y_pred = model.predict(train_inputs)
+            m = tf.keras.metrics.SparseCategoricalAccuracy()
+            m.update_state(train_labels, y_pred)
+            print(m.result().numpy())
+            return m.result().numpy()
+
+        base_score, score_decreases = get_score_importances(score, train_inputs, train_labels)
+        feature_importances = np.mean(score_decreases, axis=0)
+        print(base_score)
+        print(feature_importances)
+        #eli5.show_weights(perm, feature_names=train_inputs.columns.tolist())
 
         # Save model
         if mod_dir is not None:
@@ -121,14 +148,11 @@ def check_model(models, inputs, labels, conf_threshold=0.75, verbose=False):
     # Predict
     best_prediction, all_predictions = predict_with_networks(models, inputs)
 
-    add = 0
     if verbose:
         for ii in range(len(best_prediction)):
-            if sum(best_prediction[ii]) < 1e-40:
-                add += 1
 
             # Confidence
-            conf = np.max(best_prediction[ii]) + 1e-30
+            conf = np.max(best_prediction[ii]) + 1e-40
             conf /= np.sum(best_prediction[ii]) + 1e-20
 
             # Check threshold
@@ -167,7 +191,6 @@ def check_model(models, inputs, labels, conf_threshold=0.75, verbose=False):
         s += f"Total confidently correct cases {tot:.2f}%\n"
 
         print(s)
-    print(f"Number of all zeroes: {add}")
 
 def divide(a, b):
     """
@@ -238,15 +261,15 @@ def main():
     """Create and train neural network"""
 
     # Create or load model
-    if len(sys.argv) > 1:
-        mod_dir = sys.argv[1]
-    else:
-        sys.exit(f"Use: python3 {sys.argv[0]} <network_name> [n_tries]")
-
-    if len(sys.argv) > 2:
-        n_tries = int(sys.argv[2])
-    else:
-        n_tries = 1
+    # if len(sys.argv) > 1:
+    #     mod_dir = sys.argv[1]
+    # else:
+    #     sys.exit(f"Use: python3 {sys.argv[0]} <network_name> [n_tries]")
+    #
+    # if len(sys.argv) > 2:
+    #     n_tries = int(sys.argv[2])
+    # else:
+    #     n_tries = 1
 
     np.random.seed()
 

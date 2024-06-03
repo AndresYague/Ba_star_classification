@@ -26,8 +26,8 @@ class StarStat(object):
         if self.nn > 0:
             dir_path = "data_processing_and_plotting"
             errors = error_propagation.ErrorClass(
-                    error_tables = "error_tables_ba.dat",
-                    temperature_table = "bastars_temp.dat",
+                    error_tables = "data_processing_and_plotting/error_tables_ba.txt",
+                    temperature_table = "data_processing_and_plotting/bastars_temp.txt",
                     element_set = os.path.join(dir_path, "element_set.dat"))
 
             error_diff = errors.calculate_errors(self.star_name,
@@ -178,7 +178,8 @@ def predict_with_networks(networks, inputs):
     # Ensemble predictions
     all_predictions = []
     for network in networks:
-        all_predictions.append(network.predict(inputs))
+        n = network.predict
+        all_predictions.append(network.predict(inputs, verbose=0))
 
-    # Predict with median, also return all predictions
-    return np.median(all_predictions, axis=0), all_predictions
+    # Predict with mean, also return all predictions
+    return np.mean(all_predictions, axis=0), all_predictions
